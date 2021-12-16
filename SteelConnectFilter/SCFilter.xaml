@@ -10,44 +10,49 @@
 
         <Popup x:Name="Popup" MinWidth="200" MaxHeight="300" PopupAnimation="Slide" Placement="Bottom">
             <Border BorderBrush="SlateGray" BorderThickness="1">
-                <StackPanel>
-                    <ItemsControl x:Name="LstResultaten" Background="White">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseUp">
-                                            <i:InvokeCommandAction Command="{Binding UitvoerenCommand}"/>
-                                            <i:InvokeCommandAction Command="{Binding FilterGekliktCommand,ElementName=UI}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                    <Grid.Style>
-                                        <Style TargetType="Grid">
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="LightBlue" />
-                                                </Trigger>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="White">
+                        <ItemsControl x:Name="LstResultaten" Background="White">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="30">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseUp">
+                                                <i:InvokeCommandAction Command="{Binding UitvoerenCommand}"/>
+                                                <i:InvokeCommandAction Command="{Binding FilterGekliktCommand,ElementName=UI}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="LightBlue" />
+                                                    </Trigger>
 
-                                            </Style.Triggers>
-                                            <Setter Property="Background" Value="White" />
-                                        </Style>
-                                    </Grid.Style>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Path Data="{Binding Icon.IconPad}" Fill="{Binding Icon.IconKleur}" Height="15" Width="15" Stretch="Uniform" Margin="5,0,5,0">
+                                                </Style.Triggers>
+                                                <Setter Property="Background" Value="White" />
+                                            </Style>
+                                        </Grid.Style>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Path Data="{Binding Icon.IconPad}" Fill="{Binding Icon.IconKleur}" Height="15" Width="15" Stretch="Uniform" Margin="5,0,5,0">
 
-                                    </Path>
-                                    <Label Grid.Column="1" Content="{Binding Filter.ShortCut}" Foreground="SlateGray" Margin="5,0,5,0" />
-                                    <Label Grid.Column="2" Content="{Binding Model.Onderdeel }" />
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <Grid Background="White">
-                        
+                                        </Path>
+                                        <Label VerticalAlignment="Center" Grid.Column="1" Content="{Binding Filter.ShortCut}" Foreground="SlateGray" Margin="5,0,5,0" />
+                                        <Label VerticalAlignment="Center" Grid.Column="2" Content="{Binding Model.Onderdeel }" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Grid Background="White" Grid.Row="1">
                         <ItemsControl Margin="0,5,0,0" Background="White" ItemsSource="{Binding FilterOnderdelen,ElementName=UI}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -56,16 +61,31 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button ToolTip="{Binding Titel}" Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=SetShortCutCommand}" CommandParameter="{Binding ShortCut}" >
-                                        <Path Data="{Binding Icon.IconPad}" Fill="{Binding Icon.IconKleur}" Height="12" Width="12" Margin="2" Stretch="Uniform">
-                                        
+                                    <Border ToolTip="{Binding Titel}" Margin="1" CornerRadius="2" Padding="3">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseUp">
+                                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=SetShortCutCommand}" CommandParameter="{Binding ShortCut}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="LightBlue" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                                        <Setter Property="Background" Value="Transparent" />
+                                            </Style>
+                                        </Border.Style>
+                                        <Path Data="{Binding Icon.IconPad}" Fill="{Binding Icon.IconKleur}" Height="15" Width="15" Margin="2" Stretch="Uniform">
+
                                         </Path>
-                                    </Button>
+                                    </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </Grid>
-                </StackPanel>
+                </Grid>
             </Border>
         </Popup>
     </Grid>

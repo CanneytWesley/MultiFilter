@@ -49,6 +49,7 @@ namespace SteelConnectFilter
         private void SetShortCut(string obj)
         {
             TxtFilter.Text = obj + " ";
+            TxtFilter.CaretIndex = TxtFilter.Text.Length;
         }
 
         private async void FilterTekst_TextChanged(object sender, TextChangedEventArgs e)

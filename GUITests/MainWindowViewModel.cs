@@ -1,6 +1,7 @@
 ﻿using Filter;
 using Filter.Filters;
 using GUITests.Data;
+using GUITests.Data.Kwaliteiten;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -35,6 +36,11 @@ namespace GUITests
             filter2.FilterUitvoeren += Filteren;
             Filters.Add(filter2);
 
+            var filter3 = new KeuzeFilter<DBKwaliteit>(new KwaliteitsData(), "Kwaliteiten", "K");
+            filter3.Icon = new Icon(Brushes.Purple.ToString(), Icons.Mislukt);
+            filter3.FilterUitvoeren += Filteren;
+            Filters.Add(filter3);
+
             Filters.Add(new ActionFilter() { Titel = "Hello world", Action = () => { MessageBox.Show("Hello World"); },Icon = new Icon(Brushes.Blue.ToString(), Icons.Alertbericht) });
         }
 
@@ -50,6 +56,10 @@ namespace GUITests
             else if (s?.Model?.Model is DBProduct pr)
             {
                 loten = AlleLoten.Where(p => p.Afmetingen.IndexOf(pr.Naam) != -1).ToList();
+            }
+            else if (s?.Model.Model is DBKwaliteit kw)
+            {
+                loten = AlleLoten.Where(p => p.Kwaliteit.IndexOf(kw.Naam, StringComparison.OrdinalIgnoreCase) != -1).ToList();
             }
 
             Loten.Clear();
