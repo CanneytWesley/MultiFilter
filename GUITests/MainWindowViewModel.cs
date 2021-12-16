@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
 
 namespace GUITests
 {
@@ -25,14 +26,16 @@ namespace GUITests
             Filteren(null);
 
             var filter = new KeuzeFilter<DBLeverancier>(new LeveranciersData(), "Leveranciers", "L");
+            filter.Icon = new Icon(Brushes.Green.ToString(), Icons.Gelukt);
             filter.FilterUitvoeren += Filteren;
             Filters.Add(filter);
 
             var filter2 = new KeuzeFilter<DBProduct>(new ProductenData(), "Producten", "P");
+            filter2.Icon = new Icon(Brushes.Orange.ToString(), Icons.Freeze);
             filter2.FilterUitvoeren += Filteren;
             Filters.Add(filter2);
 
-            Filters.Add(new ActionFilter() { Titel = "Hello world", Action = () => { MessageBox.Show("Hello World"); } });
+            Filters.Add(new ActionFilter() { Titel = "Hello world", Action = () => { MessageBox.Show("Hello World"); },Icon = new Icon(Brushes.Blue.ToString(), Icons.Alertbericht) });
         }
 
         private void Filteren(IResult s)

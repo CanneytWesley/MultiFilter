@@ -12,7 +12,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <local1:SCFilter FilterOnderdelen="{Binding Filters}" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" />
-        <DataGrid ItemsSource="{Binding Loten}" Grid.Row="1">
+        <DataGrid ItemsSource="{Binding Loten}" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False">
             
         </DataGrid>
     </Grid>

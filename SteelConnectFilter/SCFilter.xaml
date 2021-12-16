@@ -3,52 +3,70 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             mc:Ignorable="d"
-             Height="30" MinWidth="150" Background="White">
+             mc:Ignorable="d" Height="20"
+             MinWidth="150" Background="White" x:Name="UI">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition MinHeight="28" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
         <TextBox x:Name="TxtFilter" Text="" TextChanged="FilterTekst_TextChanged" />
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Label />
-        </Grid>
-        <Popup x:Name="Popup" Width="500" MaxHeight="300" PopupAnimation="Slide" Placement="Bottom">
-            <ItemsControl x:Name="LstResultaten" Background="White">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseUp">
-                                    <i:InvokeCommandAction Command="{Binding UitvoerenCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="LightBlue" />
-                                        </Trigger>
-                                        
-                                    </Style.Triggers>
+
+        <Popup x:Name="Popup" MinWidth="200" MaxHeight="300" PopupAnimation="Slide" Placement="Bottom">
+            <Border BorderBrush="SlateGray" BorderThickness="1">
+                <StackPanel>
+                    <ItemsControl x:Name="LstResultaten" Background="White">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseUp">
+                                            <i:InvokeCommandAction Command="{Binding UitvoerenCommand}"/>
+                                            <i:InvokeCommandAction Command="{Binding FilterGekliktCommand,ElementName=UI}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightBlue" />
+                                                </Trigger>
+
+                                            </Style.Triggers>
                                             <Setter Property="Background" Value="White" />
-                                </Style>
-                            </Grid.Style>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Label Content="{Binding Filter.ShortCut}" Foreground="SlateGray" />
-                            <Label Grid.Column="1" Content="{Binding Model.Onderdeel }" />
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Path Data="{Binding Icon.IconPad}" Fill="{Binding Icon.IconKleur}" Height="15" Width="15" Stretch="Uniform" Margin="5,0,5,0">
+
+                                    </Path>
+                                    <Label Grid.Column="1" Content="{Binding Filter.ShortCut}" Foreground="SlateGray" Margin="5,0,5,0" />
+                                    <Label Grid.Column="2" Content="{Binding Model.Onderdeel }" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Grid Background="White">
+                        
+                        <ItemsControl Margin="0,5,0,0" Background="White" ItemsSource="{Binding FilterOnderdelen,ElementName=UI}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button ToolTip="{Binding Titel}" Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=SetShortCutCommand}" CommandParameter="{Binding ShortCut}" >
+                                        <Path Data="{Binding Icon.IconPad}" Fill="{Binding Icon.IconKleur}" Height="12" Width="12" Margin="2" Stretch="Uniform">
+                                        
+                                        </Path>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </StackPanel>
+            </Border>
         </Popup>
     </Grid>
 </UserControl>

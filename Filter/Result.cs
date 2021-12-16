@@ -10,17 +10,19 @@ namespace Filter.Filters
         public IFilter Filter { get; set; }
         public KeuzeModel Model { get; set; }
         public Action<IResult> Actie { get; set; }
+        public Icon Icon { get; set; }
 
-        public Result(IFilter filter, Action<IResult> actie)
+        public Result(IFilter filter, Action<IResult> actie, Icon icon)
         {
             Filter = filter;
             UitvoerenCommand = new RelayCommand(Uitvoeren);
             Actie = actie;
+            Icon = icon;
         }
-        public Result(IFilter filter, string onderdeel, object model,  Action<IResult> actie) : this(filter,actie)
+        public Result(IFilter filter, string onderdeel, object model,  Action<IResult> actie, Icon icon) : this(filter,actie, icon)
         => Model = new KeuzeModel(onderdeel, model);
 
-        public Result(IFilter filter, string onderdeel, Action<IResult> actie) : this(filter,actie)
+        public Result(IFilter filter, string onderdeel, Action<IResult> actie, Icon icon) : this(filter,actie, icon)
         => Model = new KeuzeModel(onderdeel);
 
         private void Uitvoeren()

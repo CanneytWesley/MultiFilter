@@ -13,6 +13,7 @@ namespace GUITests
                 new ProductenModel(new DBProduct("PL10")),
                 new ProductenModel(new DBProduct("PL20")),
                 new ProductenModel(new DBProduct("PL30")),
+                new ProductenModel(new DBProduct("HEA400") ),
                 new ProductenModel(new DBProduct("PL40") )
             });
         }

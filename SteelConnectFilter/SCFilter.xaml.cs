@@ -1,8 +1,10 @@
 ﻿using Filter;
 using Filter.Filters;
+using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,11 +35,22 @@ namespace SteelConnectFilter
         public static readonly DependencyProperty FilterOnderdelenProperty =
             DependencyProperty.Register("FilterOnderdelen", typeof(ObservableCollection<IFilter>), typeof(SCFilter), new PropertyMetadata(null));
 
+        public ICommand FilterGekliktCommand { get; set; }
+        public ICommand SetShortCutCommand { get; set; }
+
         public SCFilter()
         {
             InitializeComponent();
+            FilterGekliktCommand = new RelayCommand(() => { SetPopupState(false); });
+            SetShortCutCommand = new RelayCommand<string>(SetShortCut);
 
         }
+
+        private void SetShortCut(string obj)
+        {
+            TxtFilter.Text = obj + " ";
+        }
+
         private async void FilterTekst_TextChanged(object sender, TextChangedEventArgs e)
         {
             await OnderdelenInitialiseren();
@@ -55,7 +68,7 @@ namespace SteelConnectFilter
             LstResultaten.Items.Clear();
             result.ForEach(p => LstResultaten.Items.Add(p));
 
-            SetPopupState(result.Count > 0);
+            SetPopupState(result.Count > 0 && TxtFilter.Text.Length > 0);
         }
 
         public void SetPopupState(bool state)
@@ -70,7 +83,10 @@ namespace SteelConnectFilter
         {
             foreach (var filter in FilterOnderdelen)
             {
-                if (filter is IInitialiseren ini) await ini.Initialiseren();
+                if (filter is IInitialiseren ini && !ini.IsGeinitialiseerd)
+                {
+                    await ini.Initialiseren();
+                }
             }
         }
 

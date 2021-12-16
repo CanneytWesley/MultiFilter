@@ -13,6 +13,8 @@ namespace Filter.Filters
         public KeuzeModel Model { get; set; }
 
         Action<IResult> Actie { get; set; }
+
+        public Icon Icon { get; set; }
     }
 
 }

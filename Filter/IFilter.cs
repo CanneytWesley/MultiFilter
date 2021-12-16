@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Drawing;
 
 namespace Filter
 {
@@ -11,5 +12,7 @@ namespace Filter
 
         public string Titel { get; }
         string ShortCut { get; set; }
+
+        Icon Icon { get; set; }
     }
 }
