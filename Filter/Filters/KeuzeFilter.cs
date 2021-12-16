@@ -36,7 +36,8 @@ namespace Filter.Filters
             AlleOnderdelen = new List<IModel<T>>();
 
             var result = await Data.GetData();
-            result.ForEach(p => AlleOnderdelen.Add(p));
+
+            result.ForEach(p => AlleOnderdelen.Add(new FilterModel<T>(p,Data.Property.Invoke(p))));
         }
 
         public KeuzeFilter(IData<T> data, string titel, string shortcut)

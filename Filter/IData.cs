@@ -7,25 +7,8 @@ namespace Filter
 {
     public interface IData<T>
     {
-        public Task<List<IModel<T>>> GetData();
-    }
+        Func<T, string> Property { get; set; }
 
-    public interface IModel<T>
-    { 
-        public T Model { get; }
-
-        public string Naam { get; set; }
-    }
-
-    public class FilterModel<T> : IModel<T>
-    {
-        public string Naam { get; set; }
-        public T Model { get; }
-
-        public FilterModel(T model, string naam)
-        {
-            Model = model;
-            Naam = naam;
-        }
+        public Task<List<T>> GetData();
     }
 }

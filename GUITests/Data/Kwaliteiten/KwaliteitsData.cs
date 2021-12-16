@@ -9,36 +9,39 @@ namespace GUITests.Data.Kwaliteiten
 {
     public class KwaliteitsData : IData<DBKwaliteit>
     {
-        public Task<List<IModel<DBKwaliteit>>> GetData()
+        public Func<DBKwaliteit, string> Property { get; set; }
+        = p => p.Naam;
+
+        public Task<List<DBKwaliteit>> GetData()
         {
-            return Task.FromResult(new List<IModel<DBKwaliteit>>()
+            return Task.FromResult(new List<DBKwaliteit>()
             {
-                new KwaliteitModel(new DBKwaliteit("A")),
-                new KwaliteitModel(new DBKwaliteit("B")),
-                new KwaliteitModel(new DBKwaliteit("C")),
-                new KwaliteitModel(new DBKwaliteit("D") ),
-                new KwaliteitModel(new DBKwaliteit("E") ),
-                new KwaliteitModel(new DBKwaliteit("F") ),
-                new KwaliteitModel(new DBKwaliteit("G") ),
-                new KwaliteitModel(new DBKwaliteit("H") ),
-                new KwaliteitModel(new DBKwaliteit("I") ),
-                new KwaliteitModel(new DBKwaliteit("J") ),
-                new KwaliteitModel(new DBKwaliteit("K") ),
-                new KwaliteitModel(new DBKwaliteit("L") ),
-                new KwaliteitModel(new DBKwaliteit("M") ),
-                new KwaliteitModel(new DBKwaliteit("N") ),
-                new KwaliteitModel(new DBKwaliteit("O") ),
-                new KwaliteitModel(new DBKwaliteit("P") ),
-                new KwaliteitModel(new DBKwaliteit("Q") ),
-                new KwaliteitModel(new DBKwaliteit("R") ),
-                new KwaliteitModel(new DBKwaliteit("S") ),
-                new KwaliteitModel(new DBKwaliteit("T") ),
-                new KwaliteitModel(new DBKwaliteit("U") ),
-                new KwaliteitModel(new DBKwaliteit("V") ),
-                new KwaliteitModel(new DBKwaliteit("W") ),
-                new KwaliteitModel(new DBKwaliteit("X") ),
-                new KwaliteitModel(new DBKwaliteit("Y") ),
-                new KwaliteitModel(new DBKwaliteit("Z") ),
+                new DBKwaliteit("A"),
+                new DBKwaliteit("B"),
+                new DBKwaliteit("C"),
+                new DBKwaliteit("D" ),
+                new DBKwaliteit("E" ),
+                new DBKwaliteit("F" ),
+                new DBKwaliteit("G" ),
+                new DBKwaliteit("H" ),
+                new DBKwaliteit("I" ),
+                new DBKwaliteit("J" ),
+                new DBKwaliteit("K" ),
+                new DBKwaliteit("L" ),
+                new DBKwaliteit("M" ),
+                new DBKwaliteit("N" ),
+                new DBKwaliteit("O" ),
+                new DBKwaliteit("P" ),
+                new DBKwaliteit("Q" ),
+                new DBKwaliteit("R" ),
+                new DBKwaliteit("S" ),
+                new DBKwaliteit("T" ),
+                new DBKwaliteit("U" ),
+                new DBKwaliteit("V" ),
+                new DBKwaliteit("W" ),
+                new DBKwaliteit("X" ),
+                new DBKwaliteit("Y" ),
+                new DBKwaliteit("Z" ),
             });
         }
     }

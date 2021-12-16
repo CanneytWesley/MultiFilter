@@ -1,4 +1,5 @@
 ﻿using Filter;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,14 +7,17 @@ namespace GUITests
 {
     public class LeveranciersData : IData<DBLeverancier>
     {
-        public Task<List<IModel<DBLeverancier>>> GetData()
+        public Func<DBLeverancier, string> Property { get; set; }
+        = p => p.Naam;
+
+        public Task<List<DBLeverancier>> GetData()
         {
-            return Task.FromResult(new List<IModel<DBLeverancier>>() 
+            return Task.FromResult(new List<DBLeverancier>() 
             { 
-                new LeverancierModel(new DBLeverancier("Bakker")),
-                new LeverancierModel(new DBLeverancier("Boekhouder")),
-                new LeverancierModel(new DBLeverancier("Slager")),
-                new LeverancierModel(new DBLeverancier("Groentewinkel") )
+                new DBLeverancier("Bakker"),
+                new DBLeverancier("Boekhouder"),
+                new DBLeverancier("Slager"),
+                new DBLeverancier("Groentewinkel") 
             });
         }
     }

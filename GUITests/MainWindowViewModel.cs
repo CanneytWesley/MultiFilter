@@ -1,6 +1,7 @@
 ﻿using Filter;
 using Filter.Filters;
 using GUITests.Data;
+using GUITests.Data.Certificaat;
 using GUITests.Data.Kwaliteiten;
 using System;
 using System.Collections.ObjectModel;
@@ -41,6 +42,11 @@ namespace GUITests
             filter3.FilterUitvoeren += Filteren;
             Filters.Add(filter3);
 
+            var filter4 = new KeuzeFilter<DBCertificaat>(new CertificaatData(), "Certificaten", "C");
+            filter4.Icon = new Icon(Brushes.Pink.ToString(), Icons.Bericht);
+            filter4.FilterUitvoeren += Filteren;
+            Filters.Add(filter4);
+
             Filters.Add(new ActionFilter() { Titel = "Hello world", Action = () => { MessageBox.Show("Hello World"); },Icon = new Icon(Brushes.Blue.ToString(), Icons.Alertbericht) });
         }
 
@@ -60,6 +66,10 @@ namespace GUITests
             else if (s?.Model.Model is DBKwaliteit kw)
             {
                 loten = AlleLoten.Where(p => p.Kwaliteit.IndexOf(kw.Naam, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+            }
+            else if (s?.Model.Model is DBCertificaat ce)
+            {
+                loten = AlleLoten.Where(p => p.Certificaat.IndexOf(ce.Naam, StringComparison.OrdinalIgnoreCase) != -1).ToList();
             }
 
             Loten.Clear();

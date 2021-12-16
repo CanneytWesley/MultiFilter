@@ -1,4 +1,5 @@
 ﻿using Filter;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,15 +7,18 @@ namespace GUITests
 {
     public class ProductenData : IData<DBProduct>
     {
-        public Task<List<IModel<DBProduct>>> GetData()
+        public Func<DBProduct, string> Property { get; set; }
+        = p => p.Naam;
+
+        public Task<List<DBProduct>> GetData()
         {
-            return Task.FromResult(new List<IModel<DBProduct>>() 
+            return Task.FromResult(new List<DBProduct>() 
             { 
-                new ProductenModel(new DBProduct("PL10")),
-                new ProductenModel(new DBProduct("PL20")),
-                new ProductenModel(new DBProduct("PL30")),
-                new ProductenModel(new DBProduct("HEA400") ),
-                new ProductenModel(new DBProduct("PL40") )
+                new DBProduct("PL10"),
+                new DBProduct("PL20"),
+                new DBProduct("PL30"),
+                new DBProduct("HEA400"),
+                new DBProduct("PL40") 
             });
         }
     }
