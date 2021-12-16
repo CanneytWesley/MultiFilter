@@ -12,9 +12,37 @@ namespace Filter.Filters.Tests
     public class ActionFilterTests
     {
         [TestMethod()]
-        public void FilterenTest()
+        public async Task FilterenTest_ZonderShortcut()
         {
-            Assert.Fail();
+            ActionFilter af = new ActionFilter();
+            af.Titel = "Leverancier starten";
+            af.ShortCut = "A";
+
+            var result = await af.Filteren("l");
+
+            Assert.AreEqual(1, result.Count);
+        }
+        [TestMethod()]
+        public async Task FilterenTest_MetShortcut()
+        {
+            ActionFilter af = new ActionFilter();
+            af.Titel = "Leverancier starten";
+            af.ShortCut = "A";
+
+            var result = await af.Filteren("A l");
+
+            Assert.AreEqual(1, result.Count);
+        }
+        [TestMethod()]
+        public async Task FilterenTest_NietToepasselijk()
+        {
+            ActionFilter af = new ActionFilter();
+            af.Titel = "Leverancier starten";
+            af.ShortCut = "A";
+
+            var result = await af.Filteren("qsfd");
+
+            Assert.AreEqual(0, result.Count);
         }
     }
 }

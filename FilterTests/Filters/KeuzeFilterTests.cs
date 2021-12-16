@@ -12,9 +12,64 @@ namespace Filter.Filters.Tests
     public class KeuzeFilterTests
     {
         [TestMethod()]
-        public void FilterenTest()
+        public async Task FilterenTest()
         {
-            Assert.Fail();
+            KeuzeFilter<string> kf = new KeuzeFilter<string>(new Testdata(), "Producten", "P");
+            await kf.Initialiseren();
+
+            var result = await kf.Filteren("bl");
+
+            Assert.AreEqual(1, result.Count);
         }
+        [TestMethod()]
+        public async Task FilterenTest_2()
+        {
+            KeuzeFilter<string> kf = new KeuzeFilter<string>(new Testdata(), "Producten", "P");
+            await kf.Initialiseren();
+
+            var result = await kf.Filteren("A bl");
+
+            Assert.AreEqual(0, result.Count);
+        }
+        [TestMethod()]
+        public async Task FilterenTest_3()
+        {
+            KeuzeFilter<string> kf = new KeuzeFilter<string>(new Testdata(), "Producten", "P");
+            await kf.Initialiseren();
+
+            var result = await kf.Filteren("P bl");
+
+            Assert.AreEqual(1, result.Count);
+        }
+        [TestMethod()]
+        public async Task FilterenTest_4()
+        {
+            KeuzeFilter<string> kf = new KeuzeFilter<string>(new Testdata(), "Producten", "P");
+            await kf.Initialiseren();
+
+            var result = await kf.Filteren("P a");
+
+            Assert.AreEqual(2, result.Count);
+        }
+    }
+
+    public class Testdata : IData<string>
+    {
+        public Task<List<IModel<string>>> GetData()
+        {
+            return Task.FromResult(new List<IModel<string>>() { 
+                new TestModel(){ Naam = "Bla" },
+                new TestModel(){ Naam = "Oef" },
+                new TestModel(){ Naam = "aaa" },
+                new TestModel(){ Naam = "wes" },
+                new TestModel(){ Naam = "ttt" },
+            });
+        }
+    }
+
+    public class TestModel : IModel<string>
+    {
+        public string Naam { get; set; }
+        public string Model { get; set; }
     }
 }

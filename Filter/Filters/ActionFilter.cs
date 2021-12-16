@@ -7,29 +7,6 @@ using System.Windows.Input;
 
 namespace Filter.Filters
 {
-    public abstract class BaseFilter
-    {
-        public string Titel { get; set; }
-        public string ShortCut { get; set; } = "A";
-        public Icon Icon { get; set; }
-        public bool TestShortCut(string uitvoeren, string shortCut)
-        {
-            if (uitvoeren?.Length > 0)
-            { 
-                
-            }
-
-            return false;
-        }
-
-        public string VerwijderShortCut(string uitvoeren)
-        {
-
-
-
-            return null;
-        }
-    }
 
     public class ActionFilter : BaseFilter, IFilter
     {
@@ -37,7 +14,7 @@ namespace Filter.Filters
 
         public Task<List<IResult>> Filteren(string uitvoeren)
         {
-            var result = Titel.IndexOf(VerwijderShortCut(uitvoeren), StringComparison.OrdinalIgnoreCase) != -1 && TestShortCut(uitvoeren,ShortCut);
+            var result = Titel.IndexOf(VerwijderShortCut(uitvoeren), StringComparison.OrdinalIgnoreCase) != -1 && TestShortCut(uitvoeren);
 
             if (result)
                 return Task.FromResult( new List<IResult>() { new Result(this, Titel, (IResult result) => { Action.Invoke(); },Icon) });

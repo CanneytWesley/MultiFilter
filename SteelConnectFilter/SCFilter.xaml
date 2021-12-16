@@ -6,7 +6,7 @@
              mc:Ignorable="d" Height="20"
              MinWidth="150" Background="White" x:Name="UI">
     <Grid>
-        <TextBox x:Name="TxtFilter" Text="" TextChanged="FilterTekst_TextChanged" />
+        <TextBox x:Name="TxtFilter" Text="" TextChanged="FilterTekst_TextChanged" PreviewMouseLeftButtonUp="TxtFilter_MouseDown" />
 
         <Popup x:Name="Popup" MinWidth="200" MaxHeight="300" PopupAnimation="Slide" Placement="Bottom">
             <Border BorderBrush="SlateGray" BorderThickness="1">

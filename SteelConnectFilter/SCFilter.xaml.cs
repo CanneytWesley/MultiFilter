@@ -90,5 +90,9 @@ namespace SteelConnectFilter
             }
         }
 
+        private void TxtFilter_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            FilterTekst_TextChanged(this, null);
+        }
     }
 }

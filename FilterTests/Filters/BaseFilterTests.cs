@@ -15,7 +15,7 @@ namespace Filter.Filters.Tests
         public void VerwijderShortCutTest()
         {
             ActionFilter actie = new ActionFilter();
-            actie.ShortCut = "B ";
+            actie.ShortCut = "B";
 
             var result = actie.VerwijderShortCut("B boe");
 
@@ -26,7 +26,7 @@ namespace Filter.Filters.Tests
         public void VerwijderShortCutTest2()
         {
             ActionFilter actie = new ActionFilter();
-            actie.ShortCut = "B ";
+            actie.ShortCut = "B";
 
             var result = actie.VerwijderShortCut("B");
 
@@ -37,7 +37,7 @@ namespace Filter.Filters.Tests
         public void VerwijderShortCutTest3()
         {
             ActionFilter actie = new ActionFilter();
-            actie.ShortCut = "B ";
+            actie.ShortCut = "B";
 
             var result = actie.VerwijderShortCut("Babd");
 
@@ -45,9 +45,36 @@ namespace Filter.Filters.Tests
         }
 
         [TestMethod()]
-        public void TestShortCutTest()
+        public void TestShortCutTest_GeenShortCut()
         {
-            Assert.Fail();
+            ActionFilter actie = new ActionFilter();
+            actie.ShortCut = "B";
+
+            var result = actie.TestShortCut("Babd");
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod()]
+        public void TestShortCutTest_VerkeerdeShortCut()
+        {
+            ActionFilter actie = new ActionFilter();
+            actie.ShortCut = "B";
+
+            var result = actie.TestShortCut("A Babd");
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod()]
+        public void TestShortCutTest_JuisteShortCut()
+        {
+            ActionFilter actie = new ActionFilter();
+            actie.ShortCut = "A";
+
+            var result = actie.TestShortCut("A Babd");
+
+            Assert.IsTrue(result);
         }
     }
 }
