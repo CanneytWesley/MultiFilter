@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="SteelConnectFilter.SCFilter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d"
+             Height="30" MinWidth="150" Background="White">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="28" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox x:Name="TxtFilter" Text="" TextChanged="FilterTekst_TextChanged" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label />
+        </Grid>
+        <Popup x:Name="Popup" Width="500" MaxHeight="300" PopupAnimation="Slide" Placement="Bottom">
+            <ItemsControl x:Name="LstResultaten" Background="White">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseUp">
+                                    <i:InvokeCommandAction Command="{Binding UitvoerenCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="LightBlue" />
+                                        </Trigger>
+                                        
+                                    </Style.Triggers>
+                                            <Setter Property="Background" Value="White" />
+                                </Style>
+                            </Grid.Style>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Label Content="{Binding Filter.ShortCut}" Foreground="SlateGray" />
+                            <Label Grid.Column="1" Content="{Binding Model.Onderdeel }" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Popup>
+    </Grid>
+</UserControl>
