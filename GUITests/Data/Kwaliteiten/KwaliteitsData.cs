@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace GUITests.Data.Kwaliteiten
 {
+
     public class KwaliteitsData : IData<DBKwaliteit>
     {
         public Func<DBKwaliteit, string> Property { get; set; }

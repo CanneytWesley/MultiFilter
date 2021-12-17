@@ -14,7 +14,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public async Task FilterenTest_ZonderShortcut()
         {
-            ActionFilter af = new ActionFilter();
+            ActieFilter af = new ActieFilter();
             af.Titel = "Leverancier starten";
             af.ShortCut = "A";
 
@@ -25,7 +25,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public async Task FilterenTest_MetShortcut()
         {
-            ActionFilter af = new ActionFilter();
+            ActieFilter af = new ActieFilter();
             af.Titel = "Leverancier starten";
             af.ShortCut = "A";
 
@@ -36,7 +36,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public async Task FilterenTest_NietToepasselijk()
         {
-            ActionFilter af = new ActionFilter();
+            ActieFilter af = new ActieFilter();
             af.Titel = "Leverancier starten";
             af.ShortCut = "A";
 

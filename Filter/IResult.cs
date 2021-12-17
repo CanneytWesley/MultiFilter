@@ -16,5 +16,4 @@ namespace Filter.Filters
 
         public Icon Icon { get; set; }
     }
-
 }

@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 
 namespace Filter.Filters
 {
-    public delegate void FilterEventHandler(IResult resultaat);
-    public class KeuzeFilter<T> : BaseFilter, IInitialiseren, IFilter
+    public interface IFilterUitvoerenEvent
     {
-        public event FilterEventHandler FilterUitvoeren;
+        event FilterEventHandler FilterUitvoeren;
+    }
 
+    public delegate void FilterEventHandler(IResult resultaat);
+    public class KeuzeFilter<T> : BaseFilter, IInitialiseren, IFilter, IFilterUitvoerenEvent
+    {
         public List<IModel<T>> AlleOnderdelen { get; private set; }
         public IData<T> Data { get; }
 
         public bool IsGeinitialiseerd { get; private set; }
+        public event FilterEventHandler FilterUitvoeren;
 
 
         public async Task<List<IResult>> Filteren(string uitvoeren)

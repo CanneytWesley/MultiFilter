@@ -8,7 +8,7 @@ using System.Windows.Input;
 namespace Filter.Filters
 {
 
-    public class ActionFilter : BaseFilter, IFilter
+    public class ActieFilter : BaseFilter, IFilter
     {
         public Action Action { get; set; }
 

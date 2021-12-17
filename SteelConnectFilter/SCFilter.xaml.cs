@@ -33,7 +33,23 @@ namespace SteelConnectFilter
 
         // Using a DependencyProperty as the backing store for FilterOnderdelen.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FilterOnderdelenProperty =
-            DependencyProperty.Register("FilterOnderdelen", typeof(ObservableCollection<IFilter>), typeof(SCFilter), new PropertyMetadata(null));
+            DependencyProperty.Register("FilterOnderdelen", typeof(ObservableCollection<IFilter>), typeof(SCFilter), new PropertyMetadata(null, CollectionChangedCallBack));
+
+
+
+        public ICommand Command
+        {
+            get { return (ICommand)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register("Command", typeof(ICommand), typeof(SCFilter), new PropertyMetadata(null));
+
+        public List<IResult> ActieveFilter { get; set; }
+
+        public Soort Soort { get; set; }
 
         public ICommand FilterGekliktCommand { get; set; }
         public ICommand SetShortCutCommand { get; set; }
@@ -41,9 +57,41 @@ namespace SteelConnectFilter
         public SCFilter()
         {
             InitializeComponent();
+            ActieveFilter = new List<IResult>();
             FilterGekliktCommand = new RelayCommand(() => { SetPopupState(false); });
             SetShortCutCommand = new RelayCommand<string>(SetShortCut);
 
+        }
+
+        private static void CollectionChangedCallBack(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var pz = (SCFilter)d;
+            if (pz.FilterOnderdelen != null && e.NewValue != e.OldValue)
+            {
+                pz.FilterOnderdelen.CollectionChanged += FilterOnderdelen_CollectionChanged;
+                FilterOnderdelen_CollectionChanged(pz, null);
+            }
+        }
+
+        private static void FilterOnderdelen_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var pz = (SCFilter)sender;
+            foreach (var item in pz.FilterOnderdelen)
+            {
+                if (item is IFilterUitvoerenEvent fu)
+                {
+                    fu.FilterUitvoeren -= pz.FilterUitvoeren;
+                    fu.FilterUitvoeren += pz.FilterUitvoeren;
+                }
+            }
+        }
+
+        private void FilterUitvoeren(IResult resultaat)
+        {
+            if (ActieveFilter != null)
+                ActieveFilter.Add(resultaat);
+
+            Command.Execute(new FilterResultaat() { Resultaten = ActieveFilter, Soort = Soort });
         }
 
         private void SetShortCut(string obj)
