@@ -57,6 +57,7 @@ namespace SteelConnectFilter
         public SCFilter()
         {
             InitializeComponent();
+            SetEnOfInformatie(Soort.En);
             ActieveFilter = new List<IResult>();
             FilterGekliktCommand = new RelayCommand(() => { SetPopupState(false); });
             SetShortCutCommand = new RelayCommand<string>(SetShortCut);
@@ -70,6 +71,39 @@ namespace SteelConnectFilter
             {
                 pz.FilterOnderdelen.CollectionChanged += FilterOnderdelen_CollectionChanged;
                 FilterOnderdelen_CollectionChanged(pz, null);
+            }
+        }
+
+
+        private void ButtonToonActieveFilters_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            LstResultaten.Items.Clear();
+            ActieveFilter.ForEach(p => LstResultaten.Items.Add(p));
+        }
+
+        private void ButtonEnOf_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Soort == Soort.En)
+                SetEnOfInformatie(Soort.Of);
+            else if (Soort == Soort.Of)
+                SetEnOfInformatie(Soort.En);
+
+            Command.Execute(new FilterResultaat() { Resultaten = ActieveFilter, Soort = Soort });
+        }
+
+        private void SetEnOfInformatie(Soort soort)
+        {
+            if (soort == Soort.En)
+            {
+                Soort = Soort.En;
+                PathEnOf.Data = Geometry.Parse(Icons.En);
+                GridEnOf.ToolTip = "Elke filter wordt als een geheel getoond.";
+            }
+            else if (soort == Soort.Of)
+            {
+                Soort = Soort.Of;
+                PathEnOf.Data = Geometry.Parse(Icons.Of);
+                GridEnOf.ToolTip = "Elke filter wordt appart uitgezocht en getoond.";
             }
         }
 
@@ -88,8 +122,12 @@ namespace SteelConnectFilter
 
         private void FilterUitvoeren(IResult resultaat)
         {
-            if (ActieveFilter != null)
+            if (ActieveFilter == null) return;
+
+            if (ActieveFilter != null && !ActieveFilter.Contains(resultaat) && resultaat != null)
                 ActieveFilter.Add(resultaat);
+
+            LblActieveFilterCount.Content = ActieveFilter.Count;
 
             Command.Execute(new FilterResultaat() { Resultaten = ActieveFilter, Soort = Soort });
         }
@@ -143,5 +181,7 @@ namespace SteelConnectFilter
         {
             FilterTekst_TextChanged(this, null);
         }
+
+
     }
 }

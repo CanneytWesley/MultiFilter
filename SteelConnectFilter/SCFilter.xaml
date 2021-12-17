@@ -5,6 +5,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" Height="20"
              MinWidth="150" Background="White" x:Name="UI">
+    <UserControl.Resources>
+        <Style TargetType="Grid" x:Key="ButtonStyle">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightBlue" />
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="Background" Value="White" />
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <TextBox x:Name="TxtFilter" Text="" TextChanged="FilterTekst_TextChanged" PreviewMouseLeftButtonUp="TxtFilter_MouseDown" />
 
@@ -14,29 +24,19 @@
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" Background="White">
                         <ItemsControl x:Name="LstResultaten" Background="White">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Height="30">
+                                    <Grid Height="30" Style="{StaticResource ButtonStyle}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseUp">
                                                 <i:InvokeCommandAction Command="{Binding UitvoerenCommand}"/>
                                                 <i:InvokeCommandAction Command="{Binding FilterGekliktCommand,ElementName=UI}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
-                                        <Grid.Style>
-                                            <Style TargetType="Grid">
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="LightBlue" />
-                                                    </Trigger>
-
-                                                </Style.Triggers>
-                                                <Setter Property="Background" Value="White" />
-                                            </Style>
-                                        </Grid.Style>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
@@ -84,6 +84,27 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                    </Grid>
+                    <Grid Background="White" Grid.Row="2">
+                        <Border BorderBrush="SlateGray" BorderThickness="1" Margin="-1">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid  Style="{StaticResource ButtonStyle}" ToolTip="Aantal actieve filters" Height="20" HorizontalAlignment="Stretch" MouseUp="ButtonToonActieveFilters_MouseUp" Grid.Column="0">
+                                    <Label x:Name="LblActieveFilterCount" Content="0" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2">
+
+                                    </Label>
+                                </Grid>
+                                <Grid x:Name="GridEnOf" Grid.Column="1" Style="{StaticResource ButtonStyle}" Height="20" HorizontalAlignment="Stretch" MouseUp="ButtonEnOf_MouseUp" >
+                                    <Path Fill="Black" x:Name="PathEnOf" Margin="2" Stretch="Uniform">
+                                        
+                                    </Path>
+                                </Grid>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Grid>
             </Border>

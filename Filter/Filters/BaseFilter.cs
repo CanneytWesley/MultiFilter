@@ -43,5 +43,10 @@ namespace Filter.Filters
 
             return gevonden == 1 && spatie;
         }
+
+        public BaseFilter()
+        {
+            Icon = new Icon();
+        }
     }
 }

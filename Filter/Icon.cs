@@ -14,6 +14,11 @@ namespace Filter.Filters
         public string IconPad { get; set; }
 
         public string IconKleur { get; set; }
+
+        public Icon()
+        {
+
+        }
     }
 
 }

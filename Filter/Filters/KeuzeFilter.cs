@@ -50,5 +50,6 @@ namespace Filter.Filters
             Titel = titel;
             ShortCut = shortcut;
         }
+
     }
 }

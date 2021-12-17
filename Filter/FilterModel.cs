@@ -1,4 +1,6 @@
-﻿namespace Filter
+﻿using System;
+
+namespace Filter
 {
     public class FilterModel<T> : IModel<T>
     {

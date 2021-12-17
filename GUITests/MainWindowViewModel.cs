@@ -35,6 +35,7 @@ namespace GUITests
 
             var filter = new KeuzeFilter<DBLeverancier>(new LeveranciersData(), "Leveranciers", "L");
             filter.Icon = new Icon(Brushes.Green.ToString(), Icons.Gelukt);
+ 
             Filters.Add(filter);
 
             var filter2 = new KeuzeFilter<DBProduct>(new ProductenData(), "Producten", "P");
@@ -57,30 +58,30 @@ namespace GUITests
             if (result == null)
                 result = new();
 
-            var loten = AlleLoten.ToList();
+            var berekenaar = new FilterBerekenen<Lot>(AlleLoten.ToList(), result.Soort);
 
             foreach (var s in result.Resultaten)
             {
                 if (s?.Model?.Model is DBLeverancier l)
                 {
-                    loten = AlleLoten.Where(p => p.Leverancier == l.Naam).ToList();
+                    berekenaar.Add(AlleLoten.ToList().Where(p => p.Leverancier == l.Naam));
                 }
                 else if (s?.Model?.Model is DBProduct pr)
                 {
-                    loten = AlleLoten.Where(p => p.Afmetingen.IndexOf(pr.Naam) != -1).ToList();
+                    berekenaar.Add(AlleLoten.Where(p => p.Afmetingen.IndexOf(pr.Naam) != -1));
                 }
                 else if (s?.Model.Model is DBKwaliteit kw)
                 {
-                    loten = AlleLoten.Where(p => p.Kwaliteit.IndexOf(kw.Naam, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+                    berekenaar.Add(AlleLoten.Where(p => p.Kwaliteit.IndexOf(kw.Naam, StringComparison.OrdinalIgnoreCase) != -1));
                 }
                 else if (s?.Model.Model is DBCertificaat ce)
                 {
-                    loten = AlleLoten.Where(p => p.Certificaat.IndexOf(ce.Naam, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+                    berekenaar.Add(AlleLoten.Where(p => p.Certificaat.IndexOf(ce.Naam, StringComparison.OrdinalIgnoreCase) != -1));
                 }
             }
 
             Loten.Clear();
-            loten.ForEach(p => Loten.Add(p));
+            berekenaar.Resultaat.ForEach(p => Loten.Add(p));
         }
     }
 }

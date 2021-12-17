@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Filter.Filters
 {
@@ -6,17 +7,17 @@ namespace Filter.Filters
     {
         private List<IResult> resultaten;
 
-        public List<IResult> Resultaten 
-        { 
-            get 
+        public List<IResult> Resultaten
+        {
+            get
             {
-                return resultaten; 
-            } 
-            set 
-            { 
+                return resultaten;
+            }
+            set
+            {
                 if (value != null)
-                    resultaten = value; 
-            } 
+                    resultaten = value;
+            }
         }
 
         public Soort Soort { get; set; }
@@ -25,5 +26,8 @@ namespace Filter.Filters
         {
             Resultaten = new List<IResult>();
         }
+
+
+
     }
 }
