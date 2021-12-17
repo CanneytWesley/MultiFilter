@@ -91,18 +91,25 @@ namespace SteelConnectFilter
             Command.Execute(new FilterResultaat() { Resultaten = ActieveFilter, Soort = Soort });
         }
 
+
+        private void FilterReset_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ActieveFilter.Clear(); 
+            LblActieveFilterCount.Content = ActieveFilter.Count;
+            Command.Execute(new FilterResultaat() { Resultaten = ActieveFilter, Soort = Soort });
+        }
         private void SetEnOfInformatie(Soort soort)
         {
             if (soort == Soort.En)
             {
                 Soort = Soort.En;
-                PathEnOf.Data = Geometry.Parse(Icons.En);
+                PathEnOf.Data = Geometry.Parse(new Icons().En);
                 GridEnOf.ToolTip = "Elke filter wordt als een geheel getoond.";
             }
             else if (soort == Soort.Of)
             {
                 Soort = Soort.Of;
-                PathEnOf.Data = Geometry.Parse(Icons.Of);
+                PathEnOf.Data = Geometry.Parse(new Icons().Of);
                 GridEnOf.ToolTip = "Elke filter wordt appart uitgezocht en getoond.";
             }
         }
@@ -181,7 +188,6 @@ namespace SteelConnectFilter
         {
             FilterTekst_TextChanged(this, null);
         }
-
 
     }
 }
