@@ -5,8 +5,8 @@
              xmlns:local="clr-namespace:SteelConnectFilter"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             mc:Ignorable="d" Height="20"
-             MinWidth="150" Background="White" x:Name="UI">
+             mc:Ignorable="d" 
+             MinWidth="150" Background="Transparent" x:Name="UI">
     <UserControl.Resources>
             <local:Icons x:Key="IconPaths" />
         <Style TargetType="Grid" x:Key="ButtonStyle">
@@ -19,9 +19,25 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <TextBox x:Name="TxtFilter" Text="" TextChanged="FilterTekst_TextChanged" PreviewMouseLeftButtonUp="TxtFilter_MouseDown" />
-
-        <Popup x:Name="Popup" MinWidth="200" MaxHeight="300" PopupAnimation="Slide" Placement="Bottom">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="SlateGray" Padding="3,6,0,0" >
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=TxtFilter, Path=Text.Length}" Value="0">
+                            <Setter Property="Content" Value="Filteren..." />
+                        </DataTrigger>
+                    </Style.Triggers>
+                            <Setter Property="Content" Value="" />
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBox Background="Transparent" Width="150" Height="28" VerticalAlignment="Top" VerticalContentAlignment="Center" x:Name="TxtFilter" Text="" TextChanged="FilterTekst_TextChanged" PreviewMouseLeftButtonUp="TxtFilter_MouseDown" KeyUp="TxtFilter_KeyUp" />
+        <Popup x:Name="Popup" MinWidth="200" Height="300" PopupAnimation="Slide" Placement="Bottom" PlacementTarget="{Binding ElementName=TxtFilter}">
             <Border BorderBrush="SlateGray" BorderThickness="1">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -30,33 +46,40 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" Background="White">
-                        <ItemsControl x:Name="LstResultaten" Background="White">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Height="30" Style="{StaticResource ButtonStyle}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseUp">
-                                                <i:InvokeCommandAction Command="{Binding UitvoerenCommand}"/>
-                                                <i:InvokeCommandAction Command="{Binding FilterGekliktCommand,ElementName=UI}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <Path Data="{Binding Icon.IconPad}" Fill="{Binding Icon.IconKleur}" Height="15" Width="15" Stretch="Uniform" Margin="5,0,5,0">
+                        <Grid>
+                            
+                            <ItemsControl x:Name="LstResultaten" Background="White">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Height="30" Style="{StaticResource ButtonStyle}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseUp">
+                                                    <i:InvokeCommandAction Command="{Binding UitvoerenCommand}"/>
+                                                    <i:InvokeCommandAction Command="{Binding FilterGekliktCommand,ElementName=UI}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Path Data="{Binding Icon.IconPad}" Fill="{Binding Icon.IconKleur}" Height="15" Width="15" Stretch="Uniform" Margin="5,0,5,0">
 
-                                        </Path>
-                                        <Label VerticalAlignment="Center" Grid.Column="1" Content="{Binding Filter.ShortCut}" Foreground="SlateGray" Margin="5,0,5,0" />
-                                        <Label VerticalAlignment="Center" Grid.Column="2" Content="{Binding Model.Onderdeel }" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                                            </Path>
+                                            <Label VerticalAlignment="Center" Grid.Column="1" Content="{Binding Filter.ShortCut}" Foreground="SlateGray" Margin="5,0,5,0" />
+                                            <Label VerticalAlignment="Center" Grid.Column="2" Content="{Binding Model.Onderdeel }" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <TextBlock Text="Er zijn geen resultaten die voldoen aan uw criteria..." x:Name="TxtGeenResultaten" Width="200" TextWrapping="Wrap" Margin="5" >
+                            </TextBlock>
+                        </Grid>
+                            
+
                     </ScrollViewer>
-                    <Grid Background="White" Grid.Row="1">
-                        <ItemsControl Margin="0,5,0,0" Background="White" ItemsSource="{Binding FilterOnderdelen,ElementName=UI}">
+                    <Grid Grid.Row="1" Background="White" >
+                        <ItemsControl Margin="0,13,0,0" Background="WhiteSmoke" ItemsSource="{Binding FilterOnderdelen,ElementName=UI}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel />
@@ -77,7 +100,7 @@
                                                         <Setter Property="Background" Value="LightBlue" />
                                                     </Trigger>
                                                 </Style.Triggers>
-                                                        <Setter Property="Background" Value="Transparent" />
+                                                <Setter Property="Background" Value="Transparent" />
                                             </Style>
                                         </Border.Style>
                                         <Path Data="{Binding Icon.IconPad}" Fill="{Binding Icon.IconKleur}" Height="15" Width="15" Margin="2" Stretch="Uniform">
@@ -88,16 +111,16 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </Grid>
-                    <Grid Background="White" Grid.Row="2">
-                        <Border BorderBrush="SlateGray" BorderThickness="1" Margin="-1">
+                    <Grid Background="WhiteSmoke" Grid.Row="2" Height="30">
+                        <Border BorderBrush="SlateGray" BorderThickness="0" Margin="0">
                             <Grid >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <Grid  Style="{StaticResource ButtonStyle}" ToolTip="Aantal actieve filters" Height="20" HorizontalAlignment="Stretch" MouseUp="ButtonToonActieveFilters_MouseUp" Grid.Column="0">
-                                    <Label x:Name="LblActieveFilterCount" Content="0" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2">
+                                <Grid  Style="{StaticResource ButtonStyle}" Background="WhiteSmoke" ToolTip="Aantal actieve filters" Height="20" HorizontalAlignment="Stretch" MouseUp="ButtonToonActieveFilters_MouseUp" Grid.Column="0">
+                                    <Label x:Name="LblActieveFilterCount" Content="0" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2" Background="Transparent">
 
                                     </Label>
                                 </Grid>
@@ -117,5 +140,55 @@
                 </Grid>
             </Border>
         </Popup>
+        <Border Grid.Column="1" BorderThickness="1" BorderBrush="SlateGray" Margin="5,0,0,5" CornerRadius="3" x:Name="BorderLblEnOf" VerticalAlignment="Top">
+
+            <Grid Background="SlateGray">
+                <Label Grid.Column="1" x:Name="LblEnofOf" Foreground="WhiteSmoke" MouseUp="ButtonEnOf_MouseUp" >
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True" >
+                                    <Setter Property="Cursor"  Value="Hand"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+            </Grid>
+        </Border>
+        <ItemsControl Grid.Column="2" x:Name="FilterOverzicht" Background="Transparent" HorizontalAlignment="Stretch">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1" BorderBrush="CornflowerBlue" Margin="5,0,0,5" CornerRadius="3">
+                        <Grid Background="CornflowerBlue">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Path Data="{Binding Icon.IconPad}" Fill="WhiteSmoke" Height="15" Width="15" Margin="5,0,0,0" Stretch="Uniform"/>
+                            <Label Grid.Column="1" Content="{Binding Model.Onderdeel}" Foreground="WhiteSmoke" />
+                            <Label Grid.Column="2" Content="x" Padding="0" MouseUp="ResultVerwijderen_Click" Tag="{Binding }" Margin="7,0,5,3" VerticalContentAlignment="Center" VerticalAlignment="Top" Foreground="White" >
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True" >
+                                                <Setter Property="Cursor"  Value="Hand"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
     </Grid>
 </UserControl>

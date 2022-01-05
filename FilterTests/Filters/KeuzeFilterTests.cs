@@ -55,21 +55,19 @@ namespace Filter.Filters.Tests
 
     public class Testdata : IData<string>
     {
-        public Task<List<IModel<string>>> GetData()
+        public Func<string, string> Property { get; set; }
+        = p => p;
+
+        public Task<List<string>> GetData()
         {
-            return Task.FromResult(new List<IModel<string>>() { 
-                new TestModel(){ Naam = "Bla" },
-                new TestModel(){ Naam = "Oef" },
-                new TestModel(){ Naam = "aaa" },
-                new TestModel(){ Naam = "wes" },
-                new TestModel(){ Naam = "ttt" },
+            return Task.FromResult(new List<string>() { 
+                "Bla",
+                "Oef" ,
+                "aaa" ,
+                "wes" ,
+                "ttt" ,
             });
         }
-    }
 
-    public class TestModel : IModel<string>
-    {
-        public string Naam { get; set; }
-        public string Model { get; set; }
     }
 }

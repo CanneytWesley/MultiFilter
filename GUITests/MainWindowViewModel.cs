@@ -50,6 +50,10 @@ namespace GUITests
             filter4.Icon = new Icon(Brushes.Pink.ToString(), Icons.Bericht);
             Filters.Add(filter4);
 
+            var filter5 = new LogischeFilter("Gereserveerde afmetingen", "GA");
+            filter5.Icon = new Icon(Brushes.Red.ToString(), Icons.Alertbericht);
+            Filters.Add(filter5);
+
             Filters.Add(new ActieFilter() { Titel = "Hello world", Action = () => { MessageBox.Show("Hello World"); },Icon = new Icon(Brushes.Blue.ToString(), Icons.Alertbericht) });
         }
 
@@ -60,25 +64,12 @@ namespace GUITests
 
             var berekenaar = new FilterBerekenen<Lot>(AlleLoten.ToList(), result.Soort);
 
-            foreach (var s in result.Resultaten)
-            {
-                if (s?.Model?.Model is DBLeverancier l)
-                {
-                    berekenaar.Add(AlleLoten.ToList().Where(p => p.Leverancier == l.Naam));
-                }
-                else if (s?.Model?.Model is DBProduct pr)
-                {
-                    berekenaar.Add(AlleLoten.Where(p => p.Afmetingen.IndexOf(pr.Naam) != -1));
-                }
-                else if (s?.Model.Model is DBKwaliteit kw)
-                {
-                    berekenaar.Add(AlleLoten.Where(p => p.Kwaliteit.IndexOf(kw.Naam, StringComparison.OrdinalIgnoreCase) != -1));
-                }
-                else if (s?.Model.Model is DBCertificaat ce)
-                {
-                    berekenaar.Add(AlleLoten.Where(p => p.Certificaat.IndexOf(ce.Naam, StringComparison.OrdinalIgnoreCase) != -1));
-                }
-            }
+            berekenaar.Instellen("Leveranciers",typeof(DBLeverancier), p => p.Leverancier, FilterOptie.Exact);
+            berekenaar.Instellen("Producten",typeof(DBProduct), p => p.Product, FilterOptie.IndexOf);
+            berekenaar.Instellen("Kwaliteiten",typeof(DBKwaliteit), p => p.Kwaliteit, FilterOptie.IndexOf);
+            berekenaar.Instellen("Certificaten",typeof(DBCertificaat), p => p.Certificaat, FilterOptie.IndexOf);
+
+            berekenaar.Filteren(result.Resultaten);
 
             Loten.Clear();
             berekenaar.Resultaat.ForEach(p => Loten.Add(p));

@@ -14,5 +14,7 @@ namespace Filter
         string ShortCut { get; set; }
 
         Icon Icon { get; set; }
+
+     
     }
 }

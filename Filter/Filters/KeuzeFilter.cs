@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Filter.Filters
@@ -12,6 +13,7 @@ namespace Filter.Filters
     }
 
     public delegate void FilterEventHandler(IResult resultaat);
+
     public class KeuzeFilter<T> : BaseFilter, IInitialiseren, IFilter, IFilterUitvoerenEvent
     {
         public List<IModel<T>> AlleOnderdelen { get; private set; }
@@ -50,6 +52,7 @@ namespace Filter.Filters
             Titel = titel;
             ShortCut = shortcut;
         }
+
 
     }
 }

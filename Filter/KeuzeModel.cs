@@ -1,4 +1,6 @@
-﻿namespace Filter.Filters
+﻿using System;
+
+namespace Filter.Filters
 {
     public class KeuzeModel
     {
@@ -15,6 +17,8 @@
         public object Model { get; private set; }
 
         public string Onderdeel { get; private set; }
+
+       
     }
 
 }

@@ -8,10 +8,10 @@
         Title="MainWindow" Height="450" Width="800" Background="AliceBlue">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <local1:SCFilter FilterOnderdelen="{Binding Filters}" Command="{Binding FilterenCommand}" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" />
+        <local1:SCFilter FilterOnderdelen="{Binding Filters}" Command="{Binding FilterenCommand}" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" />
         <DataGrid ItemsSource="{Binding Loten}" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False">
             
         </DataGrid>
