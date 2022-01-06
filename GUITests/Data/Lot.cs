@@ -31,7 +31,7 @@ namespace GUITests.Data
                 new Lot() {Certificaat = "2.2", Kwaliteit = "E",Product="PL20",  Breedte=2500, Lengte = 12000, Leverancier = "Slager" },
                 new Lot() {Certificaat = "2.2", Kwaliteit = "E",Product="PL20",  Breedte=2500, Lengte = 12000, Leverancier = "Slager" },
                 new Lot() {Certificaat = "3.2", Kwaliteit = "D",Product="PL20",  Breedte=2500, Lengte = 12000, Leverancier = "Groentewinkel" },
-                new Lot() {Certificaat = "3.2", Kwaliteit = "A",Product="PL20",  Breedte=2500, Lengte = 12000, Leverancier = "Groentewinkel" },
+                new Lot() {Certificaat = "3.2", Kwaliteit = "A",Product="PL20",  Breedte=2500, Lengte = 15000, Leverancier = "Groentewinkel" },
             };
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Filter.Filter_Berekenaar;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -103,8 +104,6 @@ namespace Filter.Filters
 
         private void AndereFilteren(List<IResult> resultaten)
         {
-
-
             foreach (var filterresultaat in resultaten)
             {
                 var type = filterresultaat.Filter.GetType().GetGenericArguments()[1];
@@ -113,11 +112,50 @@ namespace Filter.Filters
                 if (filterresultaat.Filter is ILogischeFilter)
                 {
                     var informatie = filterresultaat.Model.Onderdeel;
+                    LogischBerekenen logisch = new LogischBerekenen();
+                    logisch.BerekenLogica(informatie);
 
-                    if (filter is DoubleBerekening<T> dbi)
+                    if (logisch.IsSuccessVol)
                     {
-                        var result = AlleItems.Where(p => dbi.Property(p) == 5000).ToList();
-                        Add(result);
+                        if (filter is DoubleBerekening<T> dbi)
+                        {
+                            var result = new List<T>();
+                            bool eersteRun = true;
+                            LogischeOperator OfEnOperator = LogischeOperator.En;
+
+                            for (int i = 0; i < logisch.Logica.Count-1; i+=2)
+                            {
+                                var op = logisch.Logica[i].Operator;
+                                var waarde = logisch.Logica[i + 1].Waarde;
+
+
+                                if (eersteRun)
+                                {
+                                    result = logisch.Filter(AlleItems,dbi.Property, op, waarde);
+                                    eersteRun = false;
+                                }
+                                else if (OfEnOperator == LogischeOperator.En)
+                                {
+                                    result = logisch.Filter(result, dbi.Property, op, waarde);
+                                }
+                                else if (OfEnOperator == LogischeOperator.Of)
+                                {
+                                    var tussenresultaat = logisch.Filter(AlleItems, dbi.Property, op, waarde);
+
+                                    foreach (var item in tussenresultaat)
+                                        if (!result.Contains(item)) result.Add(item);
+                                }
+
+                                if (i < logisch.Logica.Count - 2)
+                                {
+                                    OfEnOperator = logisch.Logica[i+2].Operator;
+                                    i += 1;
+                                }
+                            }
+
+
+                            Add(result);
+                        }
                     }
 
                 }
