@@ -1,25 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace Filter.Filters
 {
-
     public class ActieFilter : BaseFilter, IFilter
     {
-        public Action Action { get; set; }
+        public IActieFilterInstellingen Instelling { get; }
 
-        public Task<List<IResult>> Filteren(string uitvoeren)
+        public ActieFilter(IActieFilterInstellingen Instelling)
         {
-            var result = Titel.IndexOf(VerwijderShortCut(uitvoeren), StringComparison.OrdinalIgnoreCase) != -1 && TestShortCut(uitvoeren);
-
-            if (result)
-                return Task.FromResult( new List<IResult>() { new Result(this, Titel, (IResult result) => { Action.Invoke(); },Icon) });
-            else
-                return Task.FromResult(new List<IResult>() );
+            this.Instelling = Instelling;
+            Titel = Instelling.Titel;
+            Icon = Instelling.Icon;
+            ShortCut = Instelling.Shortcut;
         }
 
+        public async Task<List<IResult>> Filteren(string uitvoeren)
+        {
+            if (!TestShortCut(uitvoeren))
+                return new List<IResult>();
+
+            var data = await Instelling.GetData();
+
+            var result = data.Where(p => TestShortCut(uitvoeren) && p.ActionName.IndexOf(VerwijderShortCut(uitvoeren), StringComparison.OrdinalIgnoreCase) != -1).ToList();
+            return result.Select(p => (IResult)new Result(this, p.ActionName, (IResult result) => { p.Action?.Invoke(); }, Icon)).ToList();
+        }
     }
 }

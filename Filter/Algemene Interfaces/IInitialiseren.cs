@@ -8,4 +8,5 @@ namespace Filter
 
         public Task Initialiseren();
     }
+
 }

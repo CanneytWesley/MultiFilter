@@ -4,13 +4,16 @@ using System.Threading.Tasks;
 
 namespace Filter.Filters
 {
-    public class LogischeFilter : BaseFilter, IFilter
+    public class LogischeFilter<T,F> : BaseFilter, ILogischeFilter
     {
+        public ILogischeFilterInstellingen<T,F> Data { get; set; }
 
-        public LogischeFilter(string titel, string shortcut)
+        public LogischeFilter(ILogischeFilterInstellingen<T,F> data)
         {
-            Titel = titel;
-            ShortCut = shortcut;
+            Titel = data.Titel;
+            ShortCut = data.Shortcut;
+            Icon = data.Icon;
+            Data = data;
         }
         public Task<List<IResult>> Filteren(string uitvoeren)
         {

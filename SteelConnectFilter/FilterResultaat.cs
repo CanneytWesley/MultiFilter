@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Filter.Filters;
+using System;
 using System.Collections.Generic;
 
-namespace Filter.Filters
+namespace SteelConnectFilter
 {
     public class FilterResultaat
     {

@@ -1,17 +1,33 @@
 ﻿using Filter;
+using Filter.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace GUITests.Data.Kwaliteiten
 {
 
-    public class KwaliteitsData : IData<DBKwaliteit>
+    public class KwaliteitFilterInstelling : IKeuzeFilterInstellingen<Lot, DBKwaliteit>
     {
-        public Func<DBKwaliteit, string> Property { get; set; }
-        = p => p.Naam;
+        public Func<DBKwaliteit, string> PropertyOmMeeTeFilteren { get; set; }
+        public Func<Lot, string> PropertyUitDataGrid { get; set; }
+        public string Titel { get; set; }
+        public string Shortcut { get; set; }
+        public FilterOptie FilterOpties { get; set; }
+        public Icon Icon { get; set; }
+
+        public KwaliteitFilterInstelling()
+        {
+            PropertyOmMeeTeFilteren = p => p.Naam;
+            PropertyUitDataGrid = p => p.Kwaliteit;
+            Titel = "Kwaliteiten";
+            Shortcut = "K";
+            FilterOpties = FilterOptie.IndexOf;
+            Icon = new Icon(Brushes.Purple.ToString(), Icons.Mislukt);
+        }
 
         public Task<List<DBKwaliteit>> GetData()
         {

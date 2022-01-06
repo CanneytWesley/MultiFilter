@@ -1,68 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Filter.Filters
 {
-    [Flags]
-    public enum FilterOptie
-    { 
-        /// <summary>
-        /// Als indexof voldoende is voor de filter dan deze flag meegeven
-        /// </summary>
-        IndexOf,
-        /// <summary>
-        /// Bij string zal het exacte woord moeten overeenkomen
-        /// </summary>
-        Exact,
-        /// <summary>
-        /// Standaard wordt geen rekening gehouden met hoofdletters of kleine letters, indien je dit toch wil moet je deze flag aanzetten
-        /// </summary>
-        OrdinalCase,
-    }
-
-    public interface IFilterInstellingen<T>
-    {
-
-        public FilterOptie FilterOptie { get; set; }
-
-        public Type FilterTrigger { get; set; }
-
-        public string FilterTitel { get; set; }
-
-    }
-
-    public class StringFilterInstelling<T> : IFilterInstellingen<T>
-    {
-        public Func<T, string> Property { get; set; }
-
-        public FilterOptie FilterOptie { get; set; }
-        public Type FilterTrigger { get; set; }
-        public string FilterTitel { get; set; }
-
-        public StringFilterInstelling(string filterTitel, Type filterTrigger, Func<T, string> property, FilterOptie filterOptie)
-        {
-            Property = property;
-            FilterOptie = filterOptie;
-            FilterTrigger = filterTrigger;
-            FilterTitel = filterTitel;
-        }
-    }
-    public class DoubleFilterInstelling<T> : IFilterInstellingen<T>
-    {
-        public Func<T, double> Property { get; set; }
-        public FilterOptie FilterOptie { get; set; }
-        public Type FilterTrigger { get; set; }
-        public string FilterTitel { get; set; }
-
-        public DoubleFilterInstelling(string filterTitel, Type filterTrigger, Func<T, double> property, FilterOptie filterOptie)
-        {
-            Property = property;
-            FilterOptie = filterOptie;
-            FilterTrigger = filterTrigger;
-            FilterTitel = filterTitel;
-        }
-    }
 
     public class FilterBerekenen<T>
     {
@@ -71,27 +13,26 @@ namespace Filter.Filters
 
         private int AantalKeerGefilterd;
 
-        public List<IFilterInstellingen<T>> FilterInstellingen { get; set; }
+        public List<IBerekening<T>> FilterBerekeningen { get; set; }
 
         public List<T> Resultaat { get {
             if (AantalKeerGefilterd == 0) return AlleItems;
             else return Items;
             } 
         }
-        public Soort Soort { get; }
+        public Soort Soort { get; private set; }
 
-        public FilterBerekenen(List<T> alleItems, Soort soort)
+        public FilterBerekenen(List<T> alleItems)
         {
             AlleItems = alleItems;
             Items = new List<T>();
-            FilterInstellingen = new List<IFilterInstellingen<T>>();
-            Soort = soort;
+            FilterBerekeningen = new List<IBerekening<T>>();
         }
 
         public void Instellen(string filterTitel, Type filterTrigger, Func<T, double> Property, FilterOptie val)
-            => FilterInstellingen.Add(new DoubleFilterInstelling<T>(filterTitel, filterTrigger, Property, val));
+            => FilterBerekeningen.Add(new DoubleBerekening<T>(filterTitel, filterTrigger, Property, val));
         public void Instellen(string filterTitel, Type filterTrigger, Func<T, string> Property, FilterOptie val)
-            => FilterInstellingen.Add(new StringFilterInstelling<T>(filterTitel, filterTrigger, Property, val));
+            => FilterBerekeningen.Add(new StringBerekening<T>(filterTitel, filterTrigger, Property, val));
         
 
 
@@ -124,17 +65,63 @@ namespace Filter.Filters
                
         }
 
-        public void Filteren(List<IResult> resultaten)
+        public void Filteren(Soort soort, List<IResult> resultaten)
         {
+            Soort = soort;
+
             var ModelFilters = resultaten.Where(p => p.Model.Model != null).ToList();
             var AndereFilters = resultaten.Where(p => p.Model.Model == null).ToList();
             ModelFilteren(ModelFilters);
             AndereFilteren(AndereFilters);
         }
 
+        public void Instellen(List<IFilter> filters)
+        {
+            foreach (var filter in filters)
+            {
+                var actualFilterType = filter.GetType();
+
+                if (filter.GetType().IsGenericType)
+                {
+                    var genericFilterType = filter.GetType().GetGenericTypeDefinition();
+
+
+                    if (genericFilterType == typeof(KeuzeFilter<,>) ||
+                        genericFilterType == typeof(LogischeFilter<,>))
+                    {
+                        dynamic castedFilter = Convert.ChangeType(filter, actualFilterType);
+                        Type actualDataType = castedFilter.Data.GetType();
+                        dynamic castedFilterInstelling = Convert.ChangeType(castedFilter.Data, actualDataType);
+
+                        Type type = actualFilterType.GetGenericArguments()[1];
+                        Instellen(castedFilterInstelling.Titel, type, castedFilterInstelling.PropertyUitDataGrid, castedFilterInstelling.FilterOpties);
+
+                    }
+                }
+            }
+        }
+
         private void AndereFilteren(List<IResult> resultaten)
-        { 
-        
+        {
+
+
+            foreach (var filterresultaat in resultaten)
+            {
+                var type = filterresultaat.Filter.GetType().GetGenericArguments()[1];
+                var filter = FilterBerekeningen.FirstOrDefault(p => p.FilterTrigger == type && p.FilterTitel == filterresultaat.Filter.Titel);
+                
+                if (filterresultaat.Filter is ILogischeFilter)
+                {
+                    var informatie = filterresultaat.Model.Onderdeel;
+
+                    if (filter is DoubleBerekening<T> dbi)
+                    {
+                        var result = AlleItems.Where(p => dbi.Property(p) == 5000).ToList();
+                        Add(result);
+                    }
+
+                }
+            }
         }
         private void ModelFilteren(List<IResult> resultaten)
         {
@@ -142,9 +129,9 @@ namespace Filter.Filters
             {
                 var type = filterresultaat?.Model?.Model.GetType();
 
-                var filter = FilterInstellingen.FirstOrDefault(p => p.FilterTrigger == type && p.FilterTitel == filterresultaat.Filter.Titel);
+                var filter = FilterBerekeningen.FirstOrDefault(p => p.FilterTrigger == type && p.FilterTitel == filterresultaat.Filter.Titel);
 
-                if (filter is StringFilterInstelling<T> sfi)
+                if (filter is StringBerekening<T> sfi)
                 {
                     StringComparison sc = StringComparison.OrdinalIgnoreCase;
                     if (sfi.FilterOptie.HasFlag(FilterOptie.OrdinalCase))
@@ -163,12 +150,14 @@ namespace Filter.Filters
                     }
 
                 }
-                else if (filter is DoubleFilterInstelling<T> dfi)
+                else if (filter is DoubleBerekening<T> dfi)
                 {
 
                 }
 
             }
         }
+
+        
     }
 }

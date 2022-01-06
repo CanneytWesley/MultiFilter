@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GUITests.Data.Kwaliteiten;
+using GUITests.Data;
 
 namespace Filter.Filters.Tests
 {
@@ -14,7 +16,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public async Task FilterenTest()
         {
-            KeuzeFilter<string> kf = new KeuzeFilter<string>(new Testdata(), "Producten", "P");
+            var kf = new KeuzeFilter<string,string>(new Testdata());
             await kf.Initialiseren();
 
             var result = await kf.Filteren("bl");
@@ -24,7 +26,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public async Task FilterenTest_2()
         {
-            KeuzeFilter<string> kf = new KeuzeFilter<string>(new Testdata(), "Producten", "P");
+            var kf = new KeuzeFilter<string,string>(new Testdata());
             await kf.Initialiseren();
 
             var result = await kf.Filteren("A bl");
@@ -34,29 +36,37 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public async Task FilterenTest_3()
         {
-            KeuzeFilter<string> kf = new KeuzeFilter<string>(new Testdata(), "Producten", "P");
+            var kf = new KeuzeFilter<string,string>(new Testdata());
             await kf.Initialiseren();
 
             var result = await kf.Filteren("P bl");
 
-            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(0, result.Count);
         }
         [TestMethod()]
         public async Task FilterenTest_4()
         {
-            KeuzeFilter<string> kf = new KeuzeFilter<string>(new Testdata(), "Producten", "P");
+            var kf = new KeuzeFilter<string,string>(new Testdata());
             await kf.Initialiseren();
 
             var result = await kf.Filteren("P a");
 
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(0, result.Count);
         }
     }
 
-    public class Testdata : IData<string>
+    public class Testdata : IKeuzeFilterInstellingen<string, string>
     {
         public Func<string, string> Property { get; set; }
+        public Func<string, string> PropertyOmMeeTeFilteren { get; set; }
         = p => p;
+        public Func<string, string> PropertyUitDataGrid { get; set; }
+        public string Titel { get; set; }
+        public string Shortcut { get; set; }
+        = "C";
+        public FilterOptie FilterOpties { get; set; }
+        = FilterOptie.IndexOf;
+        public Icon Icon { get; set; }
 
         public Task<List<string>> GetData()
         {

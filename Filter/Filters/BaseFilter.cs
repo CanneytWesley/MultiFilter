@@ -18,7 +18,7 @@ namespace Filter.Filters
         {
             if (HasShortCut(uitvoeren))
             {
-                if (ShortCut.ToUpper() == uitvoeren.Substring(0, 1).ToUpper())
+                if (ShortCut.ToUpper() == uitvoeren.Substring(0, 1).ToUpper() )
                     return true;
                 else
                     return false;
@@ -29,7 +29,7 @@ namespace Filter.Filters
         public string VerwijderShortCut(string uitvoeren)
         {
             if (HasShortCut(uitvoeren))
-                return uitvoeren.Substring(2);
+                return uitvoeren.Substring(1 + ShortCut.Length);
             else return uitvoeren;
         }
 

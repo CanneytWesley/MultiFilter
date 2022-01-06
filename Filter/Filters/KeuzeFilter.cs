@@ -14,10 +14,10 @@ namespace Filter.Filters
 
     public delegate void FilterEventHandler(IResult resultaat);
 
-    public class KeuzeFilter<T> : BaseFilter, IInitialiseren, IFilter, IFilterUitvoerenEvent
+    public class KeuzeFilter<T,F> : BaseFilter, IInitialiseren, IFilter, IFilterUitvoerenEvent
     {
-        public List<IModel<T>> AlleOnderdelen { get; private set; }
-        public IData<T> Data { get; }
+        public List<IModel<F>> AlleOnderdelen { get; private set; }
+        public IKeuzeFilterInstellingen<T,F> Data { get; }
 
         public bool IsGeinitialiseerd { get; private set; }
         public event FilterEventHandler FilterUitvoeren;
@@ -39,18 +39,19 @@ namespace Filter.Filters
         {
             if (IsGeinitialiseerd) return;
 
-            AlleOnderdelen = new List<IModel<T>>();
+            AlleOnderdelen = new List<IModel<F>>();
 
             var result = await Data.GetData();
 
-            result.ForEach(p => AlleOnderdelen.Add(new FilterModel<T>(p,Data.Property.Invoke(p))));
+            result.ForEach(p => AlleOnderdelen.Add(new FilterModel<F>(p,Data.PropertyOmMeeTeFilteren.Invoke(p))));
         }
 
-        public KeuzeFilter(IData<T> data, string titel, string shortcut)
+        public KeuzeFilter(IKeuzeFilterInstellingen<T,F> data)
         {
             Data = data;
-            Titel = titel;
-            ShortCut = shortcut;
+            Icon = data.Icon;
+            Titel = data.Titel;
+            ShortCut = data.Shortcut;
         }
 
 

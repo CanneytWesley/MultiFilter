@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Filter.Filters;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,12 +8,15 @@ using System.Threading.Tasks;
 namespace Filter.Filters.Tests
 {
     [TestClass()]
-    public class ActionFilterTests
+    public partial class ActionFilterTests
     {
+
         [TestMethod()]
         public async Task FilterenTest_ZonderShortcut()
         {
-            ActieFilter af = new ActieFilter();
+
+
+            ActieFilter af = new ActieFilter(new FilterInstellingTestClass());
             af.Titel = "Leverancier starten";
             af.ShortCut = "A";
 
@@ -25,7 +27,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public async Task FilterenTest_MetShortcut()
         {
-            ActieFilter af = new ActieFilter();
+            ActieFilter af = new ActieFilter(new FilterInstellingTestClass());
             af.Titel = "Leverancier starten";
             af.ShortCut = "A";
 
@@ -36,7 +38,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public async Task FilterenTest_NietToepasselijk()
         {
-            ActieFilter af = new ActieFilter();
+            ActieFilter af = new ActieFilter(new FilterInstellingTestClass());
             af.Titel = "Leverancier starten";
             af.ShortCut = "A";
 

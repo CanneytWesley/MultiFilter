@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Filter.Filters.Tests.ActionFilterTests;
 
 namespace Filter.Filters.Tests
 {
@@ -14,7 +15,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void VerwijderShortCutTest()
         {
-            ActieFilter actie = new ActieFilter();
+            ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
             actie.ShortCut = "B";
 
             var result = actie.VerwijderShortCut("B boe");
@@ -25,7 +26,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void VerwijderShortCutTest2()
         {
-            ActieFilter actie = new ActieFilter();
+            ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
             actie.ShortCut = "B";
 
             var result = actie.VerwijderShortCut("B");
@@ -36,7 +37,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void VerwijderShortCutTest3()
         {
-            ActieFilter actie = new ActieFilter();
+            ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
             actie.ShortCut = "B";
 
             var result = actie.VerwijderShortCut("Babd");
@@ -47,7 +48,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void TestShortCutTest_GeenShortCut()
         {
-            ActieFilter actie = new ActieFilter();
+            ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
             actie.ShortCut = "B";
 
             var result = actie.TestShortCut("Babd");
@@ -58,7 +59,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void TestShortCutTest_VerkeerdeShortCut()
         {
-            ActieFilter actie = new ActieFilter();
+            ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
             actie.ShortCut = "B";
 
             var result = actie.TestShortCut("A Babd");
@@ -69,7 +70,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void TestShortCutTest_JuisteShortCut()
         {
-            ActieFilter actie = new ActieFilter();
+            ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
             actie.ShortCut = "A";
 
             var result = actie.TestShortCut("A Babd");

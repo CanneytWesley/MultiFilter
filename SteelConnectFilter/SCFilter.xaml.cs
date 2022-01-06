@@ -263,7 +263,7 @@ namespace SteelConnectFilter
         {
             if (e.Key == Key.Enter)
             {
-                var shortcuts = FilterOnderdelen.Where(p => p is LogischeFilter).Select(p => p as LogischeFilter).ToList();
+                var shortcuts = FilterOnderdelen.Where(p => p is ILogischeFilter).Select(p => p as ILogischeFilter).ToList();
 
                 var filtergesplit = TxtFilter.Text.Split(' ').ToList() ;
 
