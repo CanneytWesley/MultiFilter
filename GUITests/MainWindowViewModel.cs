@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -20,24 +21,17 @@ namespace GUITests
 {
     public class MainWindowViewModel
     {
-        public ObservableCollection<Lot> AlleLoten { get; set; }
         public ObservableCollection<Lot> Loten { get; set; }
         public ObservableCollection<IFilter> Filters { get; set; }
-
         public ICommand FilterenCommand { get; set; }
-
         public FilterBerekenen<Lot> FilterUitvoerder { get; set; }
 
 
         public MainWindowViewModel()
         {
-            AlleLoten = new ObservableCollection<Lot>();
             Loten = new ObservableCollection<Lot>();
             Filters = new ObservableCollection<IFilter>();
             FilterenCommand = new RelayCommand<FilterResultaat>(Filteren);
-
-            SeedLoten.GetSeed().ForEach(p => AlleLoten.Add(p));
-
 
             //Filter instellen
             Filters.Add(new KeuzeFilter<Lot, DBLeverancier>(new LeveranciersFilterInstelling()));
@@ -48,12 +42,18 @@ namespace GUITests
             Filters.Add(new LogischeFilter<Lot, double>(new BreedteFilterInstelling()));
 
             //Filter uitvoerder initialiseren
-            FilterUitvoerder = new FilterBerekenen<Lot>(AlleLoten.ToList());
+            FilterUitvoerder = new FilterBerekenen<Lot>();
             FilterUitvoerder.Instellen(Filters.ToList());
+        }
+
+        internal async Task LoadData()
+        {
+            await Task.Run(() => {
+                FilterUitvoerder.SetData(SeedLoten.GetSeed());
+            });
 
             //Filteren zodat data getoond wordt.
             Filteren(null);
-
         }
 
         private void Filteren(FilterResultaat result)

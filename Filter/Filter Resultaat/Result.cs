@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Filter.Filters
 {
-    public class Result : IResult
+    public abstract class Result : IResult
     {
         public ICommand UitvoerenCommand { get; }
         public IFilter Filter { get; set; }
@@ -20,11 +20,7 @@ namespace Filter.Filters
             Actie = actie;
             Icon = icon;
         }
-        public Result(IFilter filter, string onderdeel, object model,  Action<IResult> actie, Icon icon) : this(filter,actie, icon)
-        => Model = new KeuzeModel(onderdeel, model);
 
-        public Result(IFilter filter, string onderdeel, Action<IResult> actie, Icon icon) : this(filter,actie, icon)
-        => Model = new KeuzeModel(filter.ShortCut + " " + onderdeel.Replace(" ",""));
 
         private void Uitvoeren()
         => Actie.Invoke(this);

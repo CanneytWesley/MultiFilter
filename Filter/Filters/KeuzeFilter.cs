@@ -31,7 +31,7 @@ namespace Filter.Filters
                     return new List<IResult>();
 
                 var result = AlleOnderdelen.Where(p => TestShortCut(uitvoeren) && p.Naam.IndexOf(VerwijderShortCut(uitvoeren), StringComparison.OrdinalIgnoreCase) != -1).ToList();
-                return result.Select(p => (IResult)new Result(this, p.Naam,p.Model, (IResult result) => { FilterUitvoeren?.Invoke(result); },Icon)).ToList();
+                return result.Select(p => (IResult)new KeuzeModelResult(this, p.Naam,p.Model, (IResult result) => { FilterUitvoeren?.Invoke(result); },Icon)).ToList();
             });
         }
 

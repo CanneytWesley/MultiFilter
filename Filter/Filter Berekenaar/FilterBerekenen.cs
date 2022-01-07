@@ -23,11 +23,16 @@ namespace Filter.Filters
         }
         public Soort Soort { get; private set; }
 
-        public FilterBerekenen(List<T> alleItems)
+        public FilterBerekenen()
         {
-            AlleItems = alleItems;
+            AlleItems = new List<T>();
             Items = new List<T>();
             FilterBerekeningen = new List<IBerekening<T>>();
+        }
+
+        public void SetData(List<T> Items)
+        {
+            AlleItems = Items;
         }
 
         private void Instellen(string filterTitel, Type filterTrigger, Func<T, double> Property, FilterOptie val)

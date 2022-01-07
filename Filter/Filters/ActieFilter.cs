@@ -25,7 +25,7 @@ namespace Filter.Filters
             var data = await Instelling.GetData();
 
             var result = data.Where(p => TestShortCut(uitvoeren) && p.ActionName.IndexOf(VerwijderShortCut(uitvoeren), StringComparison.OrdinalIgnoreCase) != -1).ToList();
-            return result.Select(p => (IResult)new Result(this, p.ActionName, (IResult result) => { p.Action?.Invoke(); }, Icon)).ToList();
+            return result.Select(p => (IResult)new ActionResult(this, p.ActionName, (IResult result) => { p.Action?.Invoke(); }, Icon)).ToList();
         }
     }
 }

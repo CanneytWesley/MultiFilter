@@ -20,11 +20,19 @@ namespace GUITests
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainWindowViewModel vm;
         public MainWindow()
         {
             InitializeComponent();
 
-            DataContext = new MainWindowViewModel();
+            vm = new MainWindowViewModel();
+            DataContext = vm;
+            Loaded += IsLoaded;
+        }
+
+        private async void IsLoaded(object sender, RoutedEventArgs e)
+        {
+            await vm.LoadData();
         }
     }
 }
