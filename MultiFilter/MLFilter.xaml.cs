@@ -129,29 +129,31 @@ namespace MultiFilter
             {
                 Soort = Soort.En; 
                 LblEnofOf.Content = "EN";
-                PathEnOf.Data = Geometry.Parse(new Icons().En);
-                GridEnOf.ToolTip = "Gegevens moeten voldoen aan alle voorwaarden (en)";
+                LblEnofOf.ToolTip = "Gegevens moeten voldoen aan alle voorwaarden.";
             }
             else if (soort == Soort.Of)
             {
                 Soort = Soort.Of;
                 LblEnofOf.Content = "OF";
-                PathEnOf.Data = Geometry.Parse(new Icons().Of);
-                GridEnOf.ToolTip = "Gegevens moeten voldoen aan één van de voorwaarden (of)";
+                LblEnofOf.ToolTip = "Gegevens moeten voldoen aan één van de voorwaarden.";
             }
         }
 
         private static void FilterOnderdelen_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var pz = (MLFilter)sender;
+            var shortcuts = pz.FilterOnderdelen.Select(p => ((BaseFilter)p).ShortCut).ToList();
             foreach (var item in pz.FilterOnderdelen)
             {
+                ((BaseFilter)item).SetShortcuts(shortcuts);
                 if (item is IFilterUitvoerenEvent fu)
                 {
                     fu.FilterUitvoeren -= pz.FilterUitvoeren;
                     fu.FilterUitvoeren += pz.FilterUitvoeren;
                 }
             }
+
+
         }
 
         public void FilterUitvoeren(IResult resultaat)
@@ -210,11 +212,9 @@ namespace MultiFilter
 
                 if (result.Count == 0) TxtGeenResultaten.Visibility = Visibility.Visible;
                 else TxtGeenResultaten.Visibility = Visibility.Collapsed;
+
+                SetPopupState(true);
             }
-
-
-
-            //SetPopupState(result.Count > 0 && TxtFilter.Text.Length > 0);
         }
 
         public void SetPopupState(bool state)

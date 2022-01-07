@@ -6,7 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             MinWidth="150" Background="Transparent" x:Name="UI">
+             MinWidth="150" Background="Transparent" x:Name="UI" >
     <UserControl.Resources>
             <local:Icons x:Key="IconPaths" />
         <Style TargetType="Grid" x:Key="ButtonStyle">
@@ -24,7 +24,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Label Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="SlateGray" Padding="3,6,0,0" >
+        <Label Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Foreground="SlateGray" Padding="3,6,0,0" >
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>
@@ -32,7 +32,7 @@
                             <Setter Property="Content" Value="Filteren..." />
                         </DataTrigger>
                     </Style.Triggers>
-                            <Setter Property="Content" Value="" />
+                    <Setter Property="Content" Value="" />
                 </Style>
             </Label.Style>
         </Label>
@@ -78,8 +78,29 @@
                             
 
                     </ScrollViewer>
-                    <Grid Grid.Row="1" Background="White" >
-                        <ItemsControl Margin="0,13,0,0" Background="WhiteSmoke" ItemsSource="{Binding FilterOnderdelen,ElementName=UI}">
+                    <Grid Background="WhiteSmoke" Grid.Row="1" Height="30">
+                        <Border BorderBrush="SlateGray" BorderThickness="0" Margin="0,13,0,0">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid  Style="{StaticResource ButtonStyle}" Background="WhiteSmoke" ToolTip="Aantal actieve filters" Height="20" HorizontalAlignment="Stretch" MouseUp="ButtonToonActieveFilters_MouseUp" Grid.Column="0">
+                                    <Label x:Name="LblActieveFilterCount" Content="0" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2" Background="Transparent">
+
+                                    </Label>
+                                </Grid>
+                                <Grid x:Name="GridTrash" Grid.Column="1" Style="{StaticResource ButtonStyle}" Height="20" HorizontalAlignment="Stretch" MouseUp="FilterReset_MouseUp" >
+                                    <Path Fill="Black" Margin="2" Stretch="Uniform" Data="{Binding Source={StaticResource IconPaths}, Path=Vuilbak}">
+
+                                    </Path>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <Grid Grid.Row="2" Background="White" >
+                        <ItemsControl Background="WhiteSmoke" ItemsSource="{Binding FilterOnderdelen,ElementName=UI}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel />
@@ -111,32 +132,7 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </Grid>
-                    <Grid Background="WhiteSmoke" Grid.Row="2" Height="30">
-                        <Border BorderBrush="SlateGray" BorderThickness="0" Margin="0">
-                            <Grid >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Grid  Style="{StaticResource ButtonStyle}" Background="WhiteSmoke" ToolTip="Aantal actieve filters" Height="20" HorizontalAlignment="Stretch" MouseUp="ButtonToonActieveFilters_MouseUp" Grid.Column="0">
-                                    <Label x:Name="LblActieveFilterCount" Content="0" HorizontalAlignment="Left" Padding="5,0,0,0" Margin="2" Background="Transparent">
-
-                                    </Label>
-                                </Grid>
-                                <Grid x:Name="GridTrash" Grid.Column="1" Style="{StaticResource ButtonStyle}" Height="20" HorizontalAlignment="Stretch" MouseUp="FilterReset_MouseUp" >
-                                    <Path Fill="Black" Margin="2" Stretch="Uniform" Data="{Binding Source={StaticResource IconPaths}, Path=Vuilbak}">
-                                        
-                                    </Path>
-                                </Grid>
-                                <Grid x:Name="GridEnOf" Grid.Column="2" Style="{StaticResource ButtonStyle}" Height="20" HorizontalAlignment="Stretch" MouseUp="ButtonEnOf_MouseUp" >
-                                    <Path Fill="Black" x:Name="PathEnOf" Margin="2" Stretch="Uniform">
-                                        
-                                    </Path>
-                                </Grid>
-                            </Grid>
-                        </Border>
-                    </Grid>
+                    
                 </Grid>
             </Border>
         </Popup>
@@ -156,7 +152,7 @@
                 </Label>
             </Grid>
         </Border>
-        <ItemsControl Grid.Column="2" x:Name="FilterOverzicht" Background="Transparent" HorizontalAlignment="Stretch">
+        <ItemsControl Grid.Column="2" x:Name="FilterOverzicht" Background="Transparent" HorizontalAlignment="Stretch" MinHeight="35">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />

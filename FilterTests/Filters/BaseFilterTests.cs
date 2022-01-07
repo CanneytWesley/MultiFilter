@@ -60,7 +60,9 @@ namespace Filter.Filters.Tests
         public void TestShortCutTest_VerkeerdeShortCut()
         {
             ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
+            actie.SetShortcuts(new List<string>() {"A","B" });
             actie.ShortCut = "B";
+
 
             var result = actie.TestShortCut("A Babd");
 

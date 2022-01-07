@@ -1,9 +1,13 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Filter.Filters
 {
     public abstract class BaseFilter
     {
+        private List<string> ShortCuts;
+
         public string Titel { get; set; }
         public string ShortCut { get; set; } = "A";
         public Icon Icon { get; set; }
@@ -18,14 +22,22 @@ namespace Filter.Filters
         {
             if (HasShortCut(uitvoeren))
             {
-                if (ShortCut.ToUpper() == uitvoeren.Substring(0, 1).ToUpper() )
+                if (ShortCut.ToUpper() == uitvoeren.Substring(0, ShortCut.Length).ToUpper() )
+                    //Shortcut komt overeen met de shortcut van deze filter
                     return true;
                 else
+                    //Er is een shortcut maar die komt NIET overeen met de huidige shortcut
                     return false;
             }
+            //Er is geen shortcut
             else return true;
         }
 
+        /// <summary>
+        /// Verwijder de shortcut van de tekst
+        /// </summary>
+        /// <param name="uitvoeren"></param>
+        /// <returns></returns>
         public string VerwijderShortCut(string uitvoeren)
         {
             if (HasShortCut(uitvoeren))
@@ -33,20 +45,25 @@ namespace Filter.Filters
             else return uitvoeren;
         }
 
+        /// <summary>
+        /// Heeft de tekst een bestaande shortcut?
+        /// </summary>
+        /// <param name="uitvoeren"></param>
+        /// <returns></returns>
         private bool HasShortCut(string uitvoeren)
         {
-            if (uitvoeren == null) return false;
-            if (uitvoeren.Length < 2) return false;
-
-            var gevonden = Regex.Matches(uitvoeren.Substring(0, 1), @"[a-zA-Z]").Count;
-            var spatie = uitvoeren.Substring(1, 1) == " ";
-
-            return gevonden == 1 && spatie;
+            if (ShortCuts == null) ShortCuts = new List<string>() { ShortCut };
+            return ShortCuts.Any(p => uitvoeren.ToUpper().StartsWith(p + " "));
         }
 
         public BaseFilter()
         {
             Icon = new Icon();
+        }
+
+        public void SetShortcuts(List<string> shortcuts)
+        {
+            ShortCuts = shortcuts;
         }
     }
 }

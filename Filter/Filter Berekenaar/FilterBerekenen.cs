@@ -30,9 +30,9 @@ namespace Filter.Filters
             FilterBerekeningen = new List<IBerekening<T>>();
         }
 
-        public void Instellen(string filterTitel, Type filterTrigger, Func<T, double> Property, FilterOptie val)
+        private void Instellen(string filterTitel, Type filterTrigger, Func<T, double> Property, FilterOptie val)
             => FilterBerekeningen.Add(new DoubleBerekening<T>(filterTitel, filterTrigger, Property, val));
-        public void Instellen(string filterTitel, Type filterTrigger, Func<T, string> Property, FilterOptie val)
+        private void Instellen(string filterTitel, Type filterTrigger, Func<T, string> Property, FilterOptie val)
             => FilterBerekeningen.Add(new StringBerekening<T>(filterTitel, filterTrigger, Property, val));
         
 
@@ -68,12 +68,20 @@ namespace Filter.Filters
 
         public void Filteren(Soort soort, List<IResult> resultaten)
         {
+            ResetFilter();
+
             Soort = soort;
 
             var ModelFilters = resultaten.Where(p => p.Model.Model != null).ToList();
             var AndereFilters = resultaten.Where(p => p.Model.Model == null).ToList();
             ModelFilteren(ModelFilters);
             AndereFilteren(AndereFilters);
+        }
+
+        private void ResetFilter()
+        {
+            AantalKeerGefilterd = 0;
+            Items.Clear();
         }
 
         public void Instellen(List<IFilter> filters)
