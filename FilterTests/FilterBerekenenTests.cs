@@ -130,6 +130,48 @@ namespace Filter.Filters.Tests
 
             Assert.AreEqual(8, f.Resultaat.Count);
         }
+
+        [TestMethod()]
+        public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0OfKleinerDan11000MetShortcut_2_Resultaat8()
+        {
+            var filter = new LogischeFilter<Lot,double>(new LogischeFilterInstelling());
+            var f = new FilterBerekenen<Lot>(SeedLoten.GetSeed());
+
+            f.Instellen(new List<IFilter>() { filter });
+
+
+            f.Filteren(Soort.En, new List<IResult>() { new Result(filter,"B >=0of<11000",null, (IResult result) => { },new Icon()) });
+
+            Assert.AreEqual(8, f.Resultaat.Count);
+        }
+
+        [TestMethod()]
+        public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0EnKleinerDan13000MetShortcut_2_Resultaat6()
+        {
+            var filter = new LogischeFilter<Lot,double>(new LogischeFilterInstelling());
+            var f = new FilterBerekenen<Lot>(SeedLoten.GetSeed());
+
+            f.Instellen(new List<IFilter>() { filter });
+
+
+            f.Filteren(Soort.En, new List<IResult>() { new Result(filter,"B >=0en<13000",null, (IResult result) => { },new Icon()) });
+
+            Assert.AreEqual(6, f.Resultaat.Count);
+        }
+
+        [TestMethod()]
+        public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0EnKleinerDan13000MetVerkeerdeShortcut_2_Resultaat6()
+        {
+            var filter = new LogischeFilter<Lot,double>(new LogischeFilterInstelling());
+            var f = new FilterBerekenen<Lot>(SeedLoten.GetSeed());
+
+            f.Instellen(new List<IFilter>() { filter });
+
+
+            f.Filteren(Soort.En, new List<IResult>() { new Result(filter,"C >=0en<13000",null, (IResult result) => { },new Icon()) });
+
+            Assert.AreEqual(8, f.Resultaat.Count);
+        }
     }
 
     public class LogischeFilterInstelling : ILogischeFilterInstellingen<Lot, double>

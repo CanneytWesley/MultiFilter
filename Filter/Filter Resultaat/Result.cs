@@ -24,7 +24,7 @@ namespace Filter.Filters
         => Model = new KeuzeModel(onderdeel, model);
 
         public Result(IFilter filter, string onderdeel, Action<IResult> actie, Icon icon) : this(filter,actie, icon)
-        => Model = new KeuzeModel(onderdeel);
+        => Model = new KeuzeModel(filter.ShortCut + " " + onderdeel.Replace(" ",""));
 
         private void Uitvoeren()
         => Actie.Invoke(this);

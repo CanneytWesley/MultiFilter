@@ -119,7 +119,10 @@ namespace Filter.Filters
                 
                 if (filterresultaat.Filter is ILogischeFilter)
                 {
-                    var informatie = filterresultaat.Model.Onderdeel;
+                    var informatie = filterresultaat.Model.Onderdeel.ToUpper();
+                    if (informatie.StartsWith(filterresultaat.Filter.ShortCut.ToUpper())) 
+                        informatie = informatie.Substring(filterresultaat.Filter.ShortCut.Length + 1);
+
                     LogischBerekenen logisch = new LogischBerekenen();
                     logisch.BerekenLogica(informatie);
 

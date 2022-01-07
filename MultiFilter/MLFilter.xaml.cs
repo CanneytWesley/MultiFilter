@@ -67,6 +67,7 @@ namespace MultiFilter
         public Soort Soort { get; set; }
 
         public ICommand FilterGekliktCommand { get; set; }
+        public ICommand MouseOverCommand { get; set; }
         public ICommand SetShortCutCommand { get; set; }
 
         public MLFilter()
@@ -76,6 +77,7 @@ namespace MultiFilter
             ActieveFilter = new ObservableCollection<IResult>();
             FilterOverzicht.ItemsSource = ActieveFilter;
             FilterGekliktCommand = new RelayCommand(() => { SetPopupState(false); });
+            MouseOverCommand = new RelayCommand<string>((string s) => { TBHuidigeFilter.Text = s;  });
             SetShortCutCommand = new RelayCommand<string>(SetShortCut);
             SetEnOfLabel();
 
@@ -119,7 +121,6 @@ namespace MultiFilter
         {
             ActieveFilter.Clear(); 
 
-            LblActieveFilterCount.Content = ActieveFilter.Count;
             Command.Execute(new FilterResultaat() { Resultaten = ActieveFilter.ToList(), Soort = Soort }); 
             SetEnOfLabel();
         }
@@ -163,8 +164,6 @@ namespace MultiFilter
             if (ActieveFilter != null && !ActieveFilter.Any(p => p.IsGelijkAan(resultaat) ) && resultaat != null)
             {
                 ActieveFilter.Add(resultaat);
-
-                LblActieveFilterCount.Content = ActieveFilter.Count;
 
                 Command.Execute(new FilterResultaat() { Resultaten = ActieveFilter.ToList(), Soort = Soort });
                 SetEnOfLabel();
@@ -251,7 +250,6 @@ namespace MultiFilter
 
             ActieveFilter.Remove(result);
 
-            LblActieveFilterCount.Content = ActieveFilter.Count;
             Command.Execute(new FilterResultaat() { Resultaten = ActieveFilter.ToList(), Soort = Soort }); 
             SetEnOfLabel();
 

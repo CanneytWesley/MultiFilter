@@ -20,7 +20,7 @@ namespace GUITests.Data.ActieFilters
 
         public MessagesFilterInstelling()
         {
-            Titel = "Acties met berichten";
+            Titel = "Acties met berichten, deze berichten worden dan getoond.";
             Shortcut = "A";
             FilterOpties = FilterOptie.Exact;
             Icon = new Icon(Brushes.Blue.ToString(), Icons.Alertbericht);
