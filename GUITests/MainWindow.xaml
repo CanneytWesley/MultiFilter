@@ -12,8 +12,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <local1:MLFilter FilterOnderdelen="{Binding Filters}" Command="{Binding FilterenCommand}" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" />
-        <DataGrid ItemsSource="{Binding Loten}" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False">
+        <local1:MLFilter FilterOnderdelen="{Binding Filters}" Command="{Binding FilterCommand}" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" />
+        <DataGrid ItemsSource="{Binding Friends}" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False">
             
         </DataGrid>
     </Grid>

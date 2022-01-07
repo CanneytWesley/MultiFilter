@@ -37,6 +37,8 @@ namespace Filter.Filters
 
         private void Instellen(string filterTitel, Type filterTrigger, Func<T, double> Property, FilterOptie val)
             => FilterBerekeningen.Add(new DoubleBerekening<T>(filterTitel, filterTrigger, Property, val));
+        private void Instellen(string filterTitel, Type filterTrigger, Func<T, int> Property, FilterOptie val)
+            => FilterBerekeningen.Add(new IntBerekening<T>(filterTitel, filterTrigger, Property, val));
         private void Instellen(string filterTitel, Type filterTrigger, Func<T, string> Property, FilterOptie val)
             => FilterBerekeningen.Add(new StringBerekening<T>(filterTitel, filterTrigger, Property, val));
         
@@ -139,7 +141,7 @@ namespace Filter.Filters
                             bool eersteRun = true;
                             LogischeOperator OfEnOperator = LogischeOperator.En;
 
-                            for (int i = 0; i < logisch.Logica.Count-1; i+=2)
+                            for (int i = 0; i < logisch.Logica.Count - 1; i += 2)
                             {
                                 var op = logisch.Logica[i].Operator;
                                 var waarde = logisch.Logica[i + 1].Waarde;
@@ -147,7 +149,7 @@ namespace Filter.Filters
 
                                 if (eersteRun)
                                 {
-                                    result = logisch.Filter(AlleItems,dbi.Property, op, waarde);
+                                    result = logisch.Filter(AlleItems, dbi.Property, op, waarde);
                                     eersteRun = false;
                                 }
                                 else if (OfEnOperator == LogischeOperator.En)
@@ -164,13 +166,17 @@ namespace Filter.Filters
 
                                 if (i < logisch.Logica.Count - 2)
                                 {
-                                    OfEnOperator = logisch.Logica[i+2].Operator;
+                                    OfEnOperator = logisch.Logica[i + 2].Operator;
                                     i += 1;
                                 }
                             }
 
 
                             Add(result);
+                        }
+                        else if (filter is IntBerekening<T> ibi)
+                        { 
+                            //doe iets
                         }
                     }
 

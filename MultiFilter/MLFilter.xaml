@@ -45,13 +45,12 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="White">
+                    <Grid Background="White">
                         <Grid>
-                            
-                            <ItemsControl x:Name="LstResultaten" Background="White">
-                                <ItemsControl.ItemTemplate>
+                            <ListBox BorderThickness="0" VirtualizingStackPanel.VirtualizationMode="Recycling" x:Name="LstResultaten" Background="White">
+                                <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Height="30" Style="{StaticResource ButtonStyle}">
+                                        <Grid Height="30" Style="{StaticResource ButtonStyle}" Background="Transparent" HorizontalAlignment="Stretch">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseUp">
                                                     <i:InvokeCommandAction Command="{Binding UitvoerenCommand}"/>
@@ -70,14 +69,14 @@
                                             <Label VerticalAlignment="Center" Grid.Column="2" Content="{Binding Model.Onderdeel }" />
                                         </Grid>
                                     </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                             <TextBlock Foreground="SlateGray" Text="Er zijn geen resultaten die voldoen aan uw criteria..." x:Name="TxtInformatieOverFilter" Width="200" TextWrapping="Wrap" Margin="5" >
                             </TextBlock>
                         </Grid>
                             
 
-                    </ScrollViewer>
+                    </Grid>
                     <Grid Background="WhiteSmoke" Grid.Row="1" MinHeight="30">
                         <Border BorderBrush="SlateGray" BorderThickness="0" Margin="0,0,0,0">
                             <Grid >

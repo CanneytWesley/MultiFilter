@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace GUITests.Data.Certificaat
 {
-    public class DBCertificaat
+    public class PostalCode
     {
-        public DBCertificaat(string naam)
+        public PostalCode(string code)
         {
-            this.Naam = naam;
+            this.Code = code;
         }
 
-        public string Naam { get; set; }
+        public string Code { get; set; }
     }
 }

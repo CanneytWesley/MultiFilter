@@ -4,7 +4,6 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GUITests.Data;
 using GUITests.Data.ActieFilters;
 using GUITests.Data.Certificaat;
-using GUITests.Data.Kwaliteiten;
 using GUITests.Data.LogischeFilters;
 using MultiFilter;
 using System;
@@ -21,35 +20,34 @@ namespace GUITests
 {
     public class MainWindowViewModel
     {
-        public ObservableCollection<Lot> Loten { get; set; }
+        public ObservableCollection<Friend> Friends { get; set; }
         public ObservableCollection<IFilter> Filters { get; set; }
-        public ICommand FilterenCommand { get; set; }
-        public FilterBerekenen<Lot> FilterUitvoerder { get; set; }
+        public ICommand FilterCommand { get; set; }
+        public FilterBerekenen<Friend> FilterUitvoerder { get; set; }
 
 
         public MainWindowViewModel()
         {
-            Loten = new ObservableCollection<Lot>();
+            Friends = new ObservableCollection<Friend>();
             Filters = new ObservableCollection<IFilter>();
-            FilterenCommand = new RelayCommand<FilterResultaat>(Filteren);
+            FilterCommand = new RelayCommand<FilterResultaat>(Filteren);
 
             //Filter instellen
-            Filters.Add(new KeuzeFilter<Lot, DBLeverancier>(new LeveranciersFilterInstelling()));
-            Filters.Add(new KeuzeFilter<Lot, DBProduct>(new ProductenFilterInstelling()));
-            Filters.Add(new KeuzeFilter<Lot, DBKwaliteit>(new KwaliteitFilterInstelling()));
-            Filters.Add(new KeuzeFilter<Lot, DBCertificaat>(new CertificaatFilterInstelling()));
-            Filters.Add(new ActieFilter( new MessagesFilterInstelling()));
-            Filters.Add(new LogischeFilter<Lot, double>(new BreedteFilterInstelling()));
+            Filters.Add(new KeuzeFilter<Friend, Company>(new CompanyFilterSetting()));
+            Filters.Add(new KeuzeFilter<Friend, PostalCode>(new PostalCodeFilterSetting()));
+            Filters.Add(new ActieFilter( new MessagesFilterSetting()));
+            Filters.Add(new LogischeFilter<Friend, double>(new WeightFilterSetting()));
+            Filters.Add(new LogischeFilter<Friend, int>(new AgeFilterSetting()));
 
             //Filter uitvoerder initialiseren
-            FilterUitvoerder = new FilterBerekenen<Lot>();
+            FilterUitvoerder = new FilterBerekenen<Friend>();
             FilterUitvoerder.Instellen(Filters.ToList());
         }
 
         internal async Task LoadData()
         {
             await Task.Run(() => {
-                FilterUitvoerder.SetData(SeedLoten.GetSeed());
+                FilterUitvoerder.SetData(SeedFriends.GetSeed());
             });
 
             //Filteren zodat data getoond wordt.
@@ -63,8 +61,8 @@ namespace GUITests
 
             FilterUitvoerder.Filteren(result.Soort, result.Resultaten); ;
 
-            Loten.Clear();
-            FilterUitvoerder.Resultaat.ForEach(p => Loten.Add(p));
+            Friends.Clear();
+            FilterUitvoerder.Resultaat.ForEach(p => Friends.Add(p));
         }
     }
 }

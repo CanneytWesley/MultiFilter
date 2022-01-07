@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GUITests.Data.Kwaliteiten;
 using GUITests.Data;
 
 namespace Filter.Filters.Tests

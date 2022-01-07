@@ -9,21 +9,22 @@ using System.Windows.Media;
 
 namespace GUITests.Data.LogischeFilters
 {
-    public class BreedteFilterInstelling : ILogischeFilterInstellingen<Lot, double>
+
+    public class WeightFilterSetting : ILogischeFilterInstellingen<Friend, double>
     {
-        public Func<Lot, double> PropertyUitDataGrid { get; set; }
+        public Func<Friend, double> PropertyUitDataGrid { get; set; }
         public string Titel { get; set; }
         public string Shortcut { get; set; }
         public FilterOptie FilterOpties { get; set; }
         public Icon Icon { get; set; }
 
-        public BreedteFilterInstelling()
+        public WeightFilterSetting()
         {
-            Titel = "Gereserveerde afmetingen";
-            Shortcut = "GA";
+            Titel = "Weight";
+            Shortcut = "W";
             Icon = new Icon(Brushes.Red.ToString(), Icons.Alertbericht);
             FilterOpties = FilterOptie.Exact;
-            PropertyUitDataGrid = p => p.Breedte;
+            PropertyUitDataGrid = p => p.Weight;
         }
     }
 }

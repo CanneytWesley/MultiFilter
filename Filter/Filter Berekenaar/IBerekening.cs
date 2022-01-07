@@ -12,4 +12,9 @@ namespace Filter.Filters
         public string FilterTitel { get; set; }
 
     }
+
+    public interface INumberBerekening<T> : IBerekening<T>
+    { 
+    
+    }
 }

@@ -11,14 +11,14 @@ using System.Windows.Media;
 
 namespace GUITests.Data.ActieFilters
 {
-    public class MessagesFilterInstelling : IActieFilterInstellingen
+    public class MessagesFilterSetting : IActieFilterInstellingen
     {
         public string Titel { get; set; }
         public string Shortcut { get; set; }
         public FilterOptie FilterOpties { get; set; }
         public Icon Icon { get; set; }
 
-        public MessagesFilterInstelling()
+        public MessagesFilterSetting()
         {
             Titel = "Acties met berichten, deze berichten worden dan getoond.";
             Shortcut = "A";

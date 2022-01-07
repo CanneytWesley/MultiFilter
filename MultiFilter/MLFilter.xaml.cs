@@ -157,8 +157,6 @@ namespace MultiFilter
                     fu.FilterUitvoeren += pz.FilterUitvoeren;
                 }
             }
-
-
         }
 
         public void FilterUitvoeren(IResult resultaat)
