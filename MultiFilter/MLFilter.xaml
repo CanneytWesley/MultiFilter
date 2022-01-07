@@ -72,7 +72,7 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                            <TextBlock Text="Er zijn geen resultaten die voldoen aan uw criteria..." x:Name="TxtGeenResultaten" Width="200" TextWrapping="Wrap" Margin="5" >
+                            <TextBlock Foreground="SlateGray" Text="Er zijn geen resultaten die voldoen aan uw criteria..." x:Name="TxtInformatieOverFilter" Width="200" TextWrapping="Wrap" Margin="5" >
                             </TextBlock>
                         </Grid>
                             
@@ -82,7 +82,10 @@
                         <Border BorderBrush="SlateGray" BorderThickness="0" Margin="0,0,0,0">
                             <Grid >
                                 <Grid Background="WhiteSmoke" ToolTip="Aantal actieve filters" VerticalAlignment="Center" HorizontalAlignment="Stretch" MouseUp="ButtonToonActieveFilters_MouseUp" Grid.Column="0">
-                                    <TextBlock MaxWidth="170" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" x:Name="TBHuidigeFilter" Padding="5,0,0,0" Margin="2" Background="Transparent">
+                                    <TextBlock MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBLogischeFilter" Padding="5,0,0,0" Margin="2" Background="WhiteSmoke">
+
+                                    </TextBlock>
+                                    <TextBlock MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBHuidigeFilter" Padding="5,0,0,0" Margin="2" Background="WhiteSmoke">
 
                                     </TextBlock>
                                 </Grid>

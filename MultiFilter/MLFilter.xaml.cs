@@ -77,7 +77,11 @@ namespace MultiFilter
             ActieveFilter = new ObservableCollection<IResult>();
             FilterOverzicht.ItemsSource = ActieveFilter;
             FilterGekliktCommand = new RelayCommand(() => { SetPopupState(false); });
-            MouseOverCommand = new RelayCommand<string>((string s) => { TBHuidigeFilter.Text = s;  });
+            MouseOverCommand = new RelayCommand<string>((string s) => { 
+                TBHuidigeFilter.Text = s;
+                if (s.Length > 0) TBHuidigeFilter.Visibility = Visibility.Visible;
+                else TBHuidigeFilter.Visibility = Visibility.Collapsed;
+            });
             SetShortCutCommand = new RelayCommand<string>(SetShortCut);
             SetEnOfLabel();
 
@@ -203,16 +207,47 @@ namespace MultiFilter
             var result = taken.SelectMany(p => p.Result).ToList();
 
             LstResultaten.Items.Clear();
-            TxtGeenResultaten.Visibility = Visibility.Visible;
+            TxtInformatieOverFilter.Visibility = Visibility.Visible;
 
             if (TxtFilter.Text.Length > 0)
             {
                 result.ForEach(p => LstResultaten.Items.Add(p));
 
-                if (result.Count == 0) TxtGeenResultaten.Visibility = Visibility.Visible;
-                else TxtGeenResultaten.Visibility = Visibility.Collapsed;
+                if (result.Count == 0) TxtInformatieOverFilter.Visibility = Visibility.Visible;
+                else TxtInformatieOverFilter.Visibility = Visibility.Collapsed;
 
                 SetPopupState(true);
+                ControleerShortCut();
+            }
+        }
+
+        private void ControleerShortCut()
+        {
+            var result = FilterOnderdelen.FirstOrDefault(p => ((BaseFilter)p).HasThisShortCut(TxtFilter.Text));
+
+            if (result != null)
+            {
+                TxtInformatieOverFilter.Text =
+                    "Met deze filter kun je logisch filteren." +
+                    Environment.NewLine +
+                    Environment.NewLine +
+                    "Verschillende logische operatoren kunnen gebruikt worden:" +
+                    Environment.NewLine +
+                    "en & of | < <= > >= = !=" +
+                    Environment.NewLine +
+                    Environment.NewLine +
+                    "Enkele voorbeelden: "+
+                    Environment.NewLine +
+                    "<15000" + 
+                    Environment.NewLine +
+                    "<3en>1";
+
+                TBLogischeFilter.Text = result.Titel;
+            }
+            else
+            {
+                TBLogischeFilter.Text = "";
+                TxtInformatieOverFilter.Text = "Er zijn geen resultaten die voldoen aan uw criteria...";
             }
         }
 

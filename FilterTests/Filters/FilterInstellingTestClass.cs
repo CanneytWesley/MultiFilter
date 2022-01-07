@@ -8,7 +8,7 @@ namespace Filter.Filters.Tests
         public class FilterInstellingTestClass : IActieFilterInstellingen
         {
             public string Titel { get; set; }
-            public string Shortcut { get; set; }
+            public string Shortcut { get; set; } = "C";
             public FilterOptie FilterOpties { get; set; }
             public Icon Icon { get; set; }
 

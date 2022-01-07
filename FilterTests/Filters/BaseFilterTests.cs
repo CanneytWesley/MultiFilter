@@ -60,7 +60,7 @@ namespace Filter.Filters.Tests
         public void TestShortCutTest_VerkeerdeShortCut()
         {
             ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
-            actie.SetShortcuts(new List<string>() {"A","B" });
+            actie.SetShortcuts(new List<string>() { "A", "B" });
             actie.ShortCut = "B";
 
 
@@ -78,6 +78,26 @@ namespace Filter.Filters.Tests
             var result = actie.TestShortCut("A Babd");
 
             Assert.IsTrue(result);
+        }
+
+        [TestMethod()]
+        public void HasThisShortCutTest_false()
+        {
+            ActieFilter af = new ActieFilter(new FilterInstellingTestClass());
+
+            var resultaat = af.HasThisShortCut("");
+
+            Assert.AreEqual(false, resultaat);
+        }
+
+        [TestMethod()]
+        public void HasThisShortCutTest_true()
+        {
+            ActieFilter af = new ActieFilter(new FilterInstellingTestClass());
+
+            var resultaat = af.HasThisShortCut("c bla");
+
+            Assert.AreEqual(true, resultaat);
         }
     }
 }

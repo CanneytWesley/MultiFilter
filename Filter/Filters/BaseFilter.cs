@@ -22,7 +22,7 @@ namespace Filter.Filters
         {
             if (HasShortCut(uitvoeren))
             {
-                if (ShortCut.ToUpper() == uitvoeren.Substring(0, ShortCut.Length).ToUpper() )
+                if (HasThisShortCut(uitvoeren) )
                     //Shortcut komt overeen met de shortcut van deze filter
                     return true;
                 else
@@ -31,6 +31,13 @@ namespace Filter.Filters
             }
             //Er is geen shortcut
             else return true;
+        }
+
+        public bool HasThisShortCut(string uitvoeren)
+        {
+            if (uitvoeren.Length < ShortCut.Length) return false;
+
+            return ShortCut.ToUpper() == uitvoeren.Substring(0, ShortCut.Length).ToUpper();
         }
 
         /// <summary>
