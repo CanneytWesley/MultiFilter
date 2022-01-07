@@ -35,9 +35,9 @@ namespace Filter.Filters
 
         public bool HasThisShortCut(string uitvoeren)
         {
-            if (uitvoeren.Length < ShortCut.Length) return false;
+            if (uitvoeren.Length < ShortCut.Length +1) return false;
 
-            return ShortCut.ToUpper() == uitvoeren.Substring(0, ShortCut.Length).ToUpper();
+            return ShortCut.ToUpper() == uitvoeren.Substring(0, ShortCut.Length).ToUpper() && uitvoeren.Substring(ShortCut.Length,1) == " ";
         }
 
         /// <summary>

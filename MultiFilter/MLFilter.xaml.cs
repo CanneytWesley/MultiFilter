@@ -223,9 +223,22 @@ namespace MultiFilter
 
         private void ControleerShortCut()
         {
+            
             var result = FilterOnderdelen.FirstOrDefault(p => ((BaseFilter)p).HasThisShortCut(TxtFilter.Text));
+            bool result2 = false;
 
             if (result != null)
+            {
+                var type = result.GetType();
+                result2 = type.GetInterfaces().Any(p => p == typeof(ILogischeFilter));
+                TBLogischeFilter.Text = result.Titel;
+            }
+            else
+            {
+                TBLogischeFilter.Text = "";
+            }
+
+            if (result != null && result2)
             {
                 TxtInformatieOverFilter.Text =
                     "Met deze filter kun je logisch filteren." +
@@ -242,11 +255,9 @@ namespace MultiFilter
                     Environment.NewLine +
                     "<3en>1";
 
-                TBLogischeFilter.Text = result.Titel;
             }
             else
             {
-                TBLogischeFilter.Text = "";
                 TxtInformatieOverFilter.Text = "Er zijn geen resultaten die voldoen aan uw criteria...";
             }
         }

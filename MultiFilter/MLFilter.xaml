@@ -85,7 +85,7 @@
                                     <TextBlock MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBLogischeFilter" Padding="5,0,0,0" Margin="2" Background="WhiteSmoke">
 
                                     </TextBlock>
-                                    <TextBlock MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBHuidigeFilter" Padding="5,0,0,0" Margin="2" Background="WhiteSmoke">
+                                    <TextBlock Visibility="Collapsed" MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBHuidigeFilter" Padding="5,0,0,0" Margin="2" Background="WhiteSmoke">
 
                                     </TextBlock>
                                 </Grid>
