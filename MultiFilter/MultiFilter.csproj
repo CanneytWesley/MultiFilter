@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="_NCrunch_SteelConnectFilter\**" />
-    <EmbeddedResource Remove="_NCrunch_SteelConnectFilter\**" />
-    <None Remove="_NCrunch_SteelConnectFilter\**" />
-    <Page Remove="_NCrunch_SteelConnectFilter\**" />
+    <Compile Remove="_NCrunch_MultiFilter\**" />
+    <EmbeddedResource Remove="_NCrunch_MultiFilter\**" />
+    <None Remove="_NCrunch_MultiFilter\**" />
+    <Page Remove="_NCrunch_MultiFilter\**" />
   </ItemGroup>
 
   <ItemGroup>

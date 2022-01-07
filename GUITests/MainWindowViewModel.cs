@@ -6,7 +6,7 @@ using GUITests.Data.ActieFilters;
 using GUITests.Data.Certificaat;
 using GUITests.Data.Kwaliteiten;
 using GUITests.Data.LogischeFilters;
-using SteelConnectFilter;
+using MultiFilter;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SteelConnectFilter
+namespace MultiFilter
 {
     public static class MouseHook
     {
@@ -38,7 +38,7 @@ namespace SteelConnectFilter
         private const int WH_MOUSE_LL = 14;
         private static readonly LowLevelMouseProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
-        private static SCFilter instance = null;
+        private static MLFilter instance = null;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode,
@@ -72,7 +72,7 @@ namespace SteelConnectFilter
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
-        public static IntPtr SetHook(SCFilter pz)
+        public static IntPtr SetHook(MLFilter pz)
         {
             //Console.WriteLine("SetHook");
             instance = pz;

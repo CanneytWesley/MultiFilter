@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SteelConnectFilter
+namespace MultiFilter
 {
     public class FilterResultaat
     {

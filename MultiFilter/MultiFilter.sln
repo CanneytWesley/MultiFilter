@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilterTests", "..\FilterTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GUITests", "..\GUITests\GUITests.csproj", "{98D02506-A8F7-4A7C-AC2E-5A486AB5C379}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SteelConnectFilter", "SteelConnectFilter.csproj", "{E40F9F2D-3D4D-450C-A443-973E619A74F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiFilter", "MultiFilter.csproj", "{E40F9F2D-3D4D-450C-A443-973E619A74F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

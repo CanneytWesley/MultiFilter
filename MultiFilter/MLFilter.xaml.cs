@@ -18,12 +18,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SteelConnectFilter
+namespace MultiFilter
 {
     /// <summary>
-    /// Interaction logic for SCFilter.xaml
+    /// Interaction logic for MultiFilter.xaml
     /// </summary>
-    public partial class SCFilter : UserControl
+    public partial class MLFilter : UserControl
     {
         public ObservableCollection<IFilter> FilterOnderdelen
         {
@@ -33,7 +33,7 @@ namespace SteelConnectFilter
 
         // Using a DependencyProperty as the backing store for FilterOnderdelen.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FilterOnderdelenProperty =
-            DependencyProperty.Register("FilterOnderdelen", typeof(ObservableCollection<IFilter>), typeof(SCFilter), new PropertyMetadata(null, CollectionChangedCallBack));
+            DependencyProperty.Register("FilterOnderdelen", typeof(ObservableCollection<IFilter>), typeof(MLFilter), new PropertyMetadata(null, CollectionChangedCallBack));
 
 
 
@@ -45,7 +45,7 @@ namespace SteelConnectFilter
 
         // Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(ICommand), typeof(SCFilter), new PropertyMetadata(null));
+            DependencyProperty.Register("Command", typeof(ICommand), typeof(MLFilter), new PropertyMetadata(null));
 
 
 
@@ -57,7 +57,7 @@ namespace SteelConnectFilter
 
         // Using a DependencyProperty as the backing store for TextBoxWidth.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TextBoxWidthProperty =
-            DependencyProperty.Register("TextBoxWidth", typeof(int), typeof(SCFilter), new PropertyMetadata(150, TekstBoxWidthChanged));
+            DependencyProperty.Register("TextBoxWidth", typeof(int), typeof(MLFilter), new PropertyMetadata(150, TekstBoxWidthChanged));
 
 
 
@@ -69,7 +69,7 @@ namespace SteelConnectFilter
         public ICommand FilterGekliktCommand { get; set; }
         public ICommand SetShortCutCommand { get; set; }
 
-        public SCFilter()
+        public MLFilter()
         {
             InitializeComponent();
             SetEnOfInformatie(Soort.En);
@@ -83,7 +83,7 @@ namespace SteelConnectFilter
 
         private static void CollectionChangedCallBack(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var pz = (SCFilter)d;
+            var pz = (MLFilter)d;
             if (pz.FilterOnderdelen != null && e.NewValue != e.OldValue)
             {
                 pz.FilterOnderdelen.CollectionChanged += FilterOnderdelen_CollectionChanged;
@@ -92,7 +92,7 @@ namespace SteelConnectFilter
         }
         private static void TekstBoxWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var pz = (SCFilter)d;
+            var pz = (MLFilter)d;
             pz.TxtFilter.Width = pz.TextBoxWidth;
         }
 
@@ -143,7 +143,7 @@ namespace SteelConnectFilter
 
         private static void FilterOnderdelen_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            var pz = (SCFilter)sender;
+            var pz = (MLFilter)sender;
             foreach (var item in pz.FilterOnderdelen)
             {
                 if (item is IFilterUitvoerenEvent fu)

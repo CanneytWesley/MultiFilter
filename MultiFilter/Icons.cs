@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SteelConnectFilter
+namespace MultiFilter
 {
     public class Icons
     {

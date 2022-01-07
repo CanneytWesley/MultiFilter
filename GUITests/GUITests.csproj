@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Filter\Filter.csproj" />
-    <ProjectReference Include="..\SteelConnectFilter\SteelConnectFilter.csproj" />
+    <ProjectReference Include="..\MultiFilter\MultiFilter.csproj" />
   </ItemGroup>
 
 </Project>
