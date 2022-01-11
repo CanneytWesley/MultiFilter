@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Filter.Filters
 {
@@ -16,6 +18,27 @@ namespace Filter.Filters
             FilterOptie = filterOptie;
             FilterTrigger = filterTrigger;
             FilterTitel = filterTitel;
+        }
+
+        public List<T> FilterResult(List<T> alleItems, IResult filterresultaat)
+        {
+            StringComparison sc = StringComparison.OrdinalIgnoreCase;
+            if (FilterOptie.HasFlag(FilterOptie.OrdinalCase))
+                sc = StringComparison.Ordinal;
+
+            if (FilterOptie.HasFlag(FilterOptie.IndexOf))
+            {
+                var result = alleItems.Where(p => Property(p).IndexOf(filterresultaat.Model.Onderdeel, sc) != -1).ToList();
+                return result;
+            }
+            else if (FilterOptie.HasFlag(FilterOptie.Exact))
+            {
+                var result = alleItems.Where(p => Property(p) == filterresultaat.Model.Onderdeel).ToList();
+                return result;
+
+            }
+
+            return new List<T>();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Filter.Filter_Berekenaar;
+using System;
+using System.Collections.Generic;
 
 namespace Filter.Filters
 {
@@ -11,6 +13,7 @@ namespace Filter.Filters
 
         public string FilterTitel { get; set; }
 
+        List<T> FilterResult(List<T> alleItems, IResult filterresultaat);
     }
 
     public interface INumberBerekening<T> : IBerekening<T>

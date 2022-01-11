@@ -63,7 +63,7 @@ namespace Filter.Filter_Berekenaar
                 {
                     if (i != 0)
                     {
-                        bool DubbelOK = double.TryParse(tekst.Substring(0, i), out double resultDubbel);
+                        bool DubbelOK = decimal.TryParse(tekst.Substring(0, i), out decimal resultDubbel);
                         if (tekst.Length != 0) Logica.Add(new LogischeWaarde(resultDubbel));
 
                         if (!DubbelOK) IsSuccessVol = false;
@@ -78,7 +78,7 @@ namespace Filter.Filter_Berekenaar
                 {
                     if (i != 0)
                     {
-                        bool EnkelOK = double.TryParse(tekst.Substring(0, i), out double resultEnkel);
+                        bool EnkelOK = decimal.TryParse(tekst.Substring(0, i), out decimal resultEnkel);
                         if (tekst.Length != 0) Logica.Add(new LogischeWaarde(resultEnkel));
 
                         if (!EnkelOK) IsSuccessVol = false;
@@ -91,7 +91,7 @@ namespace Filter.Filter_Berekenaar
                 }
             }
 
-            bool overigeOK = double.TryParse(tekst, out double result);
+            bool overigeOK = decimal.TryParse(tekst, out decimal result);
             if (tekst.Length != 0) Logica.Add(new LogischeWaarde(result));
             if (!overigeOK) IsSuccessVol = false;
 
@@ -114,7 +114,7 @@ namespace Filter.Filter_Berekenaar
                     Logica[i].Operator == LogischeOperator.Of)) IsSuccessVol = false;
                 else if (stand == 1 && Logica[i].Operator != LogischeOperator.Waarde)
                     IsSuccessVol = false;
-                else if (stand == 2 && (Logica[i].Operator != LogischeOperator.En && Logica[i].Operator != LogischeOperator.Of))
+                else if (stand == 2 && Logica[i].Operator != LogischeOperator.En && Logica[i].Operator != LogischeOperator.Of)
                     IsSuccessVol = false;
 
                 stand++;
@@ -122,38 +122,16 @@ namespace Filter.Filter_Berekenaar
             }
         }
 
-        internal List<T> Filter<T>(List<T> alleItems, Func<T,double> property, LogischeOperator op, double waarde)
-        {
-            switch (op)
-            {
-                case LogischeOperator.KleinerDan:
-                    return alleItems.Where(p => property(p) < waarde).ToList();
-                case LogischeOperator.GroterDan:
-                    return alleItems.Where(p => property(p) > waarde).ToList();
-                case LogischeOperator.KleinerOfGelijkAan:
-                    return alleItems.Where(p => property(p) <= waarde).ToList();
-                case LogischeOperator.GroterOfGelijkAan:
-                    return alleItems.Where(p => property(p) >= waarde).ToList();
-                case LogischeOperator.GelijkAan:
-                    return alleItems.Where(p => property(p) == waarde).ToList();
-                case LogischeOperator.NietGelijkAan:
-                    return alleItems.Where(p => property(p) != waarde).ToList();
-                default:
-                    break;
-            }
-
-            return new List<T>();
-
-        }
+        
     }
 
     public class LogischeWaarde
     {
         public LogischeOperator Operator { get; set; }
 
-        public double Waarde { get; set; }
+        public decimal Waarde { get; set; }
 
-        public LogischeWaarde(double waarde)
+        public LogischeWaarde(decimal waarde)
         {
             Waarde = waarde;
             Operator = LogischeOperator.Waarde;
