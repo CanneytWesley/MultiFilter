@@ -22,7 +22,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(LogischeOperator.GroterDan, model.Logica[0].Operator);
             Assert.AreEqual(0, model.Logica[0].Waarde);
             Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000d, model.Logica[1].Waarde);
+            Assert.AreEqual(15000, model.Logica[1].Waarde);
             Assert.AreEqual(true, model.IsSuccessVol);
         }
         [TestMethod()]
@@ -36,7 +36,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(LogischeOperator.GroterDan, model.Logica[0].Operator);
             Assert.AreEqual(0, model.Logica[0].Waarde);
             Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000d, model.Logica[1].Waarde);
+            Assert.AreEqual(15000, model.Logica[1].Waarde);
         }
         [TestMethod()]
         public void BerekenLogicaTest_GroterDan15000_3()
@@ -49,7 +49,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(LogischeOperator.GroterDan, model.Logica[0].Operator);
             Assert.AreEqual(0, model.Logica[0].Waarde);
             Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000d, model.Logica[1].Waarde);
+            Assert.AreEqual(15000, model.Logica[1].Waarde);
             Assert.AreEqual(true, model.IsSuccessVol);
         }
         [TestMethod()]
@@ -63,7 +63,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(LogischeOperator.KleinerDan, model.Logica[0].Operator);
             Assert.AreEqual(0, model.Logica[0].Waarde);
             Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000d, model.Logica[1].Waarde);
+            Assert.AreEqual(15000, model.Logica[1].Waarde);
             Assert.AreEqual(true, model.IsSuccessVol);
         }
         [TestMethod()]
@@ -77,7 +77,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(LogischeOperator.GroterOfGelijkAan, model.Logica[0].Operator);
             Assert.AreEqual(0, model.Logica[0].Waarde);
             Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000d, model.Logica[1].Waarde);
+            Assert.AreEqual(15000, model.Logica[1].Waarde);
             Assert.AreEqual(true, model.IsSuccessVol);
         }
         [TestMethod()]
@@ -105,7 +105,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(LogischeOperator.GelijkAan, model.Logica[0].Operator);
             Assert.AreEqual(0, model.Logica[0].Waarde);
             Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000d, model.Logica[1].Waarde);
+            Assert.AreEqual(15000, model.Logica[1].Waarde);
             Assert.AreEqual(true, model.IsSuccessVol);
         }
         [TestMethod()]
@@ -119,7 +119,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(LogischeOperator.NietGelijkAan, model.Logica[0].Operator);
             Assert.AreEqual(0, model.Logica[0].Waarde);
             Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000d, model.Logica[1].Waarde);
+            Assert.AreEqual(15000, model.Logica[1].Waarde);
             Assert.AreEqual(true, model.IsSuccessVol);
         }
         [TestMethod()]
@@ -133,7 +133,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(LogischeOperator.NietGelijkAan, model.Logica[0].Operator);
             Assert.AreEqual(0, model.Logica[0].Waarde);
             Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000d, model.Logica[1].Waarde);
+            Assert.AreEqual(15000, model.Logica[1].Waarde);
             Assert.AreEqual(true, model.IsSuccessVol);
         }
         [TestMethod()]
@@ -144,10 +144,10 @@ namespace Filter.Filter_Berekenaar.Tests
             model.BerekenLogica(">1500&<3000");
 
             Assert.AreEqual(LogischeOperator.GroterDan, model.Logica[0].Operator);
-            Assert.AreEqual(1500d, model.Logica[1].Waarde);
+            Assert.AreEqual(1500, model.Logica[1].Waarde);
             Assert.AreEqual(LogischeOperator.En, model.Logica[2].Operator);
             Assert.AreEqual(LogischeOperator.KleinerDan, model.Logica[3].Operator);
-            Assert.AreEqual(3000d, model.Logica[4].Waarde);
+            Assert.AreEqual(3000, model.Logica[4].Waarde);
             Assert.AreEqual(5, model.Logica.Count);
             Assert.AreEqual(true, model.IsSuccessVol);
         }
