@@ -5,6 +5,8 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <Description>Filter for WPF applications</Description>
+    <Company>PCW-Solutions</Company>
+    <Authors>CanneytWesley</Authors>
   </PropertyGroup>
 
   <ItemGroup>
