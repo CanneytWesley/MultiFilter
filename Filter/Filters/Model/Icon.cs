@@ -5,15 +5,15 @@ namespace Filter.Filters
     public class Icon
     {
 
-        public Icon(string iconKleur, string iconPad)
+        public Icon(string iconColor, string iconPath)
         {
-            IconPad = iconPad;
-            IconKleur = iconKleur;
+            IconPath = iconPath;
+            IconColor = iconColor;
         }
 
-        public string IconPad { get; set; }
+        public string IconPath { get; set; }
 
-        public string IconKleur { get; set; }
+        public string IconColor { get; set; }
 
         public Icon()
         {

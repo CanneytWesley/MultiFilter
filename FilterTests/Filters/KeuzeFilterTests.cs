@@ -15,56 +15,56 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public async Task FilterenTest()
         {
-            var kf = new KeuzeFilter<string,string>(new Testdata());
-            await kf.Initialiseren();
+            var kf = new MultipleChoiceFilter<string,string>(new Testdata());
+            await kf.Initialise();
 
-            var result = await kf.Filteren("bl");
+            var result = await kf.Filter("bl");
 
             Assert.AreEqual(1, result.Count);
         }
         [TestMethod()]
         public async Task FilterenTest_2()
         {
-            var kf = new KeuzeFilter<string,string>(new Testdata());
-            await kf.Initialiseren();
+            var kf = new MultipleChoiceFilter<string,string>(new Testdata());
+            await kf.Initialise();
 
-            var result = await kf.Filteren("A bl");
+            var result = await kf.Filter("A bl");
 
             Assert.AreEqual(0, result.Count);
         }
         [TestMethod()]
         public async Task FilterenTest_3()
         {
-            var kf = new KeuzeFilter<string,string>(new Testdata());
-            await kf.Initialiseren();
+            var kf = new MultipleChoiceFilter<string,string>(new Testdata());
+            await kf.Initialise();
 
-            var result = await kf.Filteren("P bl");
+            var result = await kf.Filter("P bl");
 
             Assert.AreEqual(0, result.Count);
         }
         [TestMethod()]
         public async Task FilterenTest_4()
         {
-            var kf = new KeuzeFilter<string,string>(new Testdata());
-            await kf.Initialiseren();
+            var kf = new MultipleChoiceFilter<string,string>(new Testdata());
+            await kf.Initialise();
 
-            var result = await kf.Filteren("P a");
+            var result = await kf.Filter("P a");
 
             Assert.AreEqual(0, result.Count);
         }
     }
 
-    public class Testdata : IKeuzeFilterInstellingen<string, string>
+    public class Testdata : IMultipleChoiceSettings<string, string>
     {
         public Func<string, string> Property { get; set; }
-        public Func<string, string> PropertyOmMeeTeFilteren { get; set; }
+        public Func<string, string> PropertyToFilterWith { get; set; }
         = p => p;
-        public Func<string, string> PropertyUitDataGrid { get; set; }
-        public string Titel { get; set; }
+        public Func<string, string> PropertyFromDataset { get; set; }
+        public string Title { get; set; }
         public string Shortcut { get; set; }
         = "C";
-        public FilterOptie FilterOpties { get; set; }
-        = FilterOptie.IndexOf;
+        public FilterOption FilterOptions { get; set; }
+        = FilterOption.IndexOf;
         public Icon Icon { get; set; }
 
         public Task<List<string>> GetData()

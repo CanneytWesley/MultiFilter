@@ -151,10 +151,10 @@ namespace MultiFilter
             foreach (var item in pz.FilterOnderdelen)
             {
                 ((BaseFilter)item).SetShortcuts(shortcuts);
-                if (item is IFilterUitvoerenEvent fu)
+                if (item is IFilterExecuteEvent fu)
                 {
-                    fu.FilterUitvoeren -= pz.FilterUitvoeren;
-                    fu.FilterUitvoeren += pz.FilterUitvoeren;
+                    fu.ExecuteFilter -= pz.FilterUitvoeren;
+                    fu.ExecuteFilter += pz.FilterUitvoeren;
                 }
             }
         }
@@ -197,7 +197,7 @@ namespace MultiFilter
             var taken = new List<Task<List<IResult>>>();
             foreach (var filter in FilterOnderdelen)
             {
-                taken.Add(filter.Filteren(TxtFilter.Text));
+                taken.Add(filter.Filter(TxtFilter.Text));
             }
 
             await Task.WhenAll(taken);
@@ -228,8 +228,8 @@ namespace MultiFilter
             if (result != null)
             {
                 var type = result.GetType();
-                result2 = type.GetInterfaces().Any(p => p == typeof(ILogischeFilter));
-                TBLogischeFilter.Text = result.Titel;
+                result2 = type.GetInterfaces().Any(p => p == typeof(ILogicalFilter));
+                TBLogischeFilter.Text = result.Title;
             }
             else
             {
@@ -272,9 +272,9 @@ namespace MultiFilter
         {
             foreach (var filter in FilterOnderdelen)
             {
-                if (filter is IInitialiseren ini && !ini.IsGeinitialiseerd)
+                if (filter is IInitialise ini && !ini.IsInitialised)
                 {
-                    await ini.Initialiseren();
+                    await ini.Initialise();
                 }
             }
         }
@@ -305,7 +305,7 @@ namespace MultiFilter
         {
             if (e.Key == Key.Enter)
             {
-                var shortcuts = FilterOnderdelen.Where(p => p is ILogischeFilter).Select(p => p as ILogischeFilter).ToList();
+                var shortcuts = FilterOnderdelen.Where(p => p is ILogicalFilter).Select(p => p as ILogicalFilter).ToList();
 
                 var filtergesplit = TxtFilter.Text.Split(' ').ToList() ;
 
@@ -317,7 +317,7 @@ namespace MultiFilter
 
                     if (shortcut != null)
                     {
-                        var getfilter = await shortcut.LogischFilteren(TxtFilter.Text);
+                        var getfilter = await shortcut.FilterLogical(TxtFilter.Text);
                         foreach (var ft in getfilter) FilterUitvoeren(ft);
 
                     }

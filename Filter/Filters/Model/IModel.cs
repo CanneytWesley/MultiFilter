@@ -6,6 +6,6 @@ namespace Filter
     { 
         public T Model { get; }
 
-        public string Naam { get; set; }
+        public string Name { get; set; }
     }
 }

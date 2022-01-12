@@ -15,7 +15,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void VerwijderShortCutTest()
         {
-            ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
+            ActionFilter actie = new ActionFilter(new FilterInstellingTestClass());
             actie.ShortCut = "B";
 
             var result = actie.VerwijderShortCut("B boe");
@@ -26,7 +26,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void VerwijderShortCutTest2()
         {
-            ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
+            ActionFilter actie = new ActionFilter(new FilterInstellingTestClass());
             actie.ShortCut = "B";
 
             var result = actie.VerwijderShortCut("B");
@@ -37,7 +37,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void VerwijderShortCutTest3()
         {
-            ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
+            ActionFilter actie = new ActionFilter(new FilterInstellingTestClass());
             actie.ShortCut = "B";
 
             var result = actie.VerwijderShortCut("Babd");
@@ -48,7 +48,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void TestShortCutTest_GeenShortCut()
         {
-            ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
+            ActionFilter actie = new ActionFilter(new FilterInstellingTestClass());
             actie.ShortCut = "B";
 
             var result = actie.TestShortCut("Babd");
@@ -59,7 +59,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void TestShortCutTest_VerkeerdeShortCut()
         {
-            ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
+            ActionFilter actie = new ActionFilter(new FilterInstellingTestClass());
             actie.SetShortcuts(new List<string>() { "A", "B" });
             actie.ShortCut = "B";
 
@@ -72,7 +72,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void TestShortCutTest_JuisteShortCut()
         {
-            ActieFilter actie = new ActieFilter(new FilterInstellingTestClass());
+            ActionFilter actie = new ActionFilter(new FilterInstellingTestClass());
             actie.ShortCut = "A";
 
             var result = actie.TestShortCut("A Babd");
@@ -83,7 +83,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void HasThisShortCutTest_false()
         {
-            ActieFilter af = new ActieFilter(new FilterInstellingTestClass());
+            ActionFilter af = new ActionFilter(new FilterInstellingTestClass());
 
             var resultaat = af.HasThisShortCut("");
 
@@ -93,7 +93,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void HasThisShortCutTest_true()
         {
-            ActieFilter af = new ActieFilter(new FilterInstellingTestClass());
+            ActionFilter af = new ActionFilter(new FilterInstellingTestClass());
 
             var resultaat = af.HasThisShortCut("c bla");
 

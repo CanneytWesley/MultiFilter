@@ -17,7 +17,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void FilterenTest_GewoneFilter()
         {
-            var filter = new KeuzeFilter<Friend,Company>(new Testdatacompany() { Titel = "Company", Shortcut="C" });
+            var filter = new MultipleChoiceFilter<Friend,Company>(new Testdatacompany() { Title = "Company", Shortcut="C" });
             var f = new FilterBerekenen<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
@@ -31,7 +31,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterDan15000_Resultaat0()
         {
-            var filter = new LogischeFilter<Friend,double>(new WeightFilterInstelling());
+            var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterBerekenen<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
@@ -45,7 +45,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterDan14000_Resultaat1()
         {
-            var filter = new LogischeFilter<Friend,double>(new WeightFilterInstelling());
+            var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterBerekenen<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
@@ -59,7 +59,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan15000_Resultaat1()
         {
-            var filter = new LogischeFilter<Friend,double>(new WeightFilterInstelling());
+            var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterBerekenen<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
@@ -73,7 +73,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0_Resultaat8()
         {
-            var filter = new LogischeFilter<Friend,double>(new WeightFilterInstelling());
+            var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterBerekenen<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
@@ -87,7 +87,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0EnKleinerDan11000_1_Resultaat1()
         {
-            var filter = new LogischeFilter<Friend,double>(new WeightFilterInstelling());
+            var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterBerekenen<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
@@ -101,7 +101,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0EnKleinerDan11000_2_Resultaat1()
         {
-            var filter = new LogischeFilter<Friend,double>(new WeightFilterInstelling());
+            var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterBerekenen<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
@@ -115,7 +115,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0OfKleinerDan11000_1_Resultaat8()
         {
-            var filter = new LogischeFilter<Friend,double>(new WeightFilterInstelling());
+            var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterBerekenen<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
@@ -129,7 +129,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0OfKleinerDan11000_2_Resultaat8()
         {
-            var filter = new LogischeFilter<Friend,double>(new WeightFilterInstelling());
+            var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterBerekenen<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
@@ -144,7 +144,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0OfKleinerDan11000MetShortcut_2_Resultaat8()
         {
-            var filter = new LogischeFilter<Friend,double>(new WeightFilterInstelling());
+            var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterBerekenen<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
@@ -159,7 +159,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0EnKleinerDan13000MetShortcut_2_Resultaat6()
         {
-            var filter = new LogischeFilter<Friend,double>(new WeightFilterInstelling());
+            var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterBerekenen<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
@@ -172,27 +172,27 @@ namespace Filter.Filters.Tests
         }
     }
 
-    public class WeightFilterInstelling : ILogischeFilterInstellingen<Friend, double>
+    public class WeightFilterInstelling : ILogicalFilterSettings<Friend, double>
     {
-        public Func<Friend, double> PropertyUitDataGrid { get; set; }
+        public Func<Friend, double> PropertyFromDataset { get; set; }
         = p => p.Weight;
-        public string Titel { get; set; }
+        public string Title { get; set; }
         = "Lengte filter";
         public string Shortcut { get; set; }
         = "B";
-        public FilterOptie FilterOpties { get; set; }
-        = FilterOptie.Exact;
+        public FilterOption FilterOptions { get; set; }
+        = FilterOption.Exact;
         public Icon Icon { get; set; }
         = new Icon();
     }
 
-    public class Testdatacompany : IKeuzeFilterInstellingen<Friend, Company>
+    public class Testdatacompany : IMultipleChoiceSettings<Friend, Company>
     {
-        public Func<Company, string> PropertyOmMeeTeFilteren { get; set; } = p => p.Name;
-        public Func<Friend, string> PropertyUitDataGrid { get; set; } = p => p.Company;
-        public string Titel { get; set; } = "Company";
+        public Func<Company, string> PropertyToFilterWith { get; set; } = p => p.Name;
+        public Func<Friend, string> PropertyFromDataset { get; set; } = p => p.Company;
+        public string Title { get; set; } = "Company";
         public string Shortcut { get; set; } = "C";
-        public FilterOptie FilterOpties { get; set; }
+        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
 
         public Task<List<Company>> GetData()

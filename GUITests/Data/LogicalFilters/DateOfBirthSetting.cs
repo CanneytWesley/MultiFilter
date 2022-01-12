@@ -6,16 +6,16 @@ using System.Windows.Media;
 
 namespace GUITests
 {
-    public class DateOfBirthSetting : ILogischeFilterInstellingen<Friend, DateTime>
+    public class DateOfBirthSetting : ILogicalFilterSettings<Friend, DateTime>
     {
-        public Func<Friend, DateTime> PropertyUitDataGrid { get; set; }
+        public Func<Friend, DateTime> PropertyFromDataset { get; set; }
         = p => p.DateOfBirth;
-        public string Titel { get; set; }
+        public string Title { get; set; }
         = "Date Of Birth";
         public string Shortcut { get; set; }
         = "D";
-        public FilterOptie FilterOpties { get; set; }
-        = FilterOptie.Exact;
+        public FilterOption FilterOptions { get; set; }
+        = FilterOption.Exact;
         public Icon Icon { get; set; }
         = new Icon(Brushes.BlueViolet.ToString(), Icons.Freeze);
 

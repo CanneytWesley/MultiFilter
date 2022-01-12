@@ -10,15 +10,15 @@ using System.Windows.Media;
 
 namespace GUITests.Data.Gender_filter
 {
-    public class GenderFilterSettings : IKeuzeFilterInstellingen<Friend, Gender>
+    public class GenderFilterSettings : IMultipleChoiceSettings<Friend, Gender>
     {
-        public Func<Gender, string> PropertyOmMeeTeFilteren { get; set; } = p => p.ToString();
-        public Func<Friend, string> PropertyUitDataGrid { get; set; } = p => p.Sex.ToString();
-        public string Titel { get; set; }
+        public Func<Gender, string> PropertyToFilterWith { get; set; } = p => p.ToString();
+        public Func<Friend, string> PropertyFromDataset { get; set; } = p => p.Sex.ToString();
+        public string Title { get; set; }
         = "Gender";
         public string Shortcut { get; set; }
         = "G";
-        public FilterOptie FilterOpties { get; set; }
+        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
         = new Icon(Brushes.AntiqueWhite.ToString(), Icons.Bericht);
 

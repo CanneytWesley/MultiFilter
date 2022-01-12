@@ -8,7 +8,7 @@ namespace Filter.Filters
     {
         private List<string> ShortCuts;
 
-        public string Titel { get; set; }
+        public string Title { get; set; }
         public string ShortCut { get; set; } = "A";
         public Icon Icon { get; set; }
 

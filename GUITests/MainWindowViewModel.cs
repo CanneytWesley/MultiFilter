@@ -34,13 +34,13 @@ namespace GUITests
             FilterCommand = new RelayCommand<FilterResult>(Filter);
 
             //Filter instellen
-            Filters.Add(new KeuzeFilter<Friend, Company>(new CompanyFilterSetting()));
-            Filters.Add(new KeuzeFilter<Friend, PostalCode>(new PostalCodeFilterSetting()));
-            Filters.Add(new KeuzeFilter<Friend, Gender>(new GenderFilterSettings()));
-            Filters.Add(new ActieFilter( new MessagesFilterSetting()));
-            Filters.Add(new LogischeFilter<Friend, double>(new WeightFilterSetting()));
-            Filters.Add(new LogischeFilter<Friend, int>(new AgeFilterSetting()));
-            Filters.Add(new LogischeFilter<Friend, DateTime>(new DateOfBirthSetting()));
+            Filters.Add(new MultipleChoiceFilter<Friend, Company>(new CompanyFilterSetting()));
+            Filters.Add(new MultipleChoiceFilter<Friend, PostalCode>(new PostalCodeFilterSetting()));
+            Filters.Add(new MultipleChoiceFilter<Friend, Gender>(new GenderFilterSettings()));
+            Filters.Add(new ActionFilter( new MessagesFilterSetting()));
+            Filters.Add(new LogicalFilter<Friend, double>(new WeightFilterSetting()));
+            Filters.Add(new LogicalFilter<Friend, int>(new AgeFilterSetting()));
+            Filters.Add(new LogicalFilter<Friend, DateTime>(new DateOfBirthSetting()));
 
             //Filter uitvoerder initialiseren
             FilterUitvoerder = new FilterBerekenen<Friend>();

@@ -7,16 +7,16 @@ using System.Drawing;
 namespace Filter
 {
     /// <summary>
-    /// Er zijn verschillende soorten implementaties:
-    /// KeuzeFilter => Een lijst van gegevens waar je een keuze uitmaakt om dan te filteren
-    /// ActieFilter => Als je één van de toegevoegde acties uitvoert wordt de gekoppelde actie (methode) uitgevoerd.
-    /// LogischeFilter => Hier worden logische operators gebruikt. Bijvoorbeeld bij afmetingen of nummers >1000 & <5000
+    /// There are multiple possibilities of implementations:
+    /// MultipleChoiceFilter => You will get a list of data in the filter. You can pick one to filter.
+    /// ActionFilter => You can add values to filter and bind an action to it. Example: for reporting, or opening a window
+    /// LogicalFilter => With this filter you can add logic to it. Example: All ages above 60
     /// </summary>
     public interface IFilter
     {
-        public Task<List<IResult>> Filteren(string uitvoeren);
+        public Task<List<IResult>> Filter(string text);
 
-        public string Titel { get; }
+        public string Title { get; }
         string ShortCut { get; set; }
 
         Icon Icon { get; set; }

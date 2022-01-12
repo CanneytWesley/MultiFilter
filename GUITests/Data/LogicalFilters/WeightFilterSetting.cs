@@ -10,21 +10,21 @@ using System.Windows.Media;
 namespace GUITests.Data.LogischeFilters
 {
 
-    public class WeightFilterSetting : ILogischeFilterInstellingen<Friend, double>
+    public class WeightFilterSetting : ILogicalFilterSettings<Friend, double>
     {
-        public Func<Friend, double> PropertyUitDataGrid { get; set; }
-        public string Titel { get; set; }
+        public Func<Friend, double> PropertyFromDataset { get; set; }
+        public string Title { get; set; }
         public string Shortcut { get; set; }
-        public FilterOptie FilterOpties { get; set; }
+        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
 
         public WeightFilterSetting()
         {
-            Titel = "Weight";
+            Title = "Weight";
             Shortcut = "W";
             Icon = new Icon(Brushes.Red.ToString(), Icons.Alertbericht);
-            FilterOpties = FilterOptie.Exact;
-            PropertyUitDataGrid = p => p.Weight;
+            FilterOptions = FilterOption.Exact;
+            PropertyFromDataset = p => p.Weight;
         }
     }
 }

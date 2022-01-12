@@ -11,7 +11,7 @@ namespace Filter.Filters
 
         private int AantalKeerGefilterd;
 
-        public List<IBerekening<T>> FilterBerekeningen { get; set; }
+        public List<ICalculation<T>> FilterBerekeningen { get; set; }
 
         public List<T> Resultaat
         {
@@ -28,20 +28,20 @@ namespace Filter.Filters
         {
             AlleItems = new List<T>();
             Items = new List<T>();
-            FilterBerekeningen = new List<IBerekening<T>>();
+            FilterBerekeningen = new List<ICalculation<T>>();
         }
 
-        private void Instellen(string filterTitel, Type filterTrigger, Func<T, double> Property, FilterOptie val)
+        private void Instellen(string filterTitel, Type filterTrigger, Func<T, double> Property, FilterOption val)
             => FilterBerekeningen.Add(new DoubleBerekening<T>(filterTitel, filterTrigger, Property, val));
         
-        private void Instellen(string filterTitel, Type filterTrigger, Func<T, int> Property, FilterOptie val)
+        private void Instellen(string filterTitel, Type filterTrigger, Func<T, int> Property, FilterOption val)
             => FilterBerekeningen.Add(new IntBerekening<T>(filterTitel, filterTrigger, Property, val));
         
-        private void Instellen(string filterTitel, Type filterTrigger, Func<T, string> Property, FilterOptie val)
+        private void Instellen(string filterTitel, Type filterTrigger, Func<T, string> Property, FilterOption val)
             => FilterBerekeningen.Add(new StringBerekening<T>(filterTitel, filterTrigger, Property, val));
         
-        private void Instellen(string filterTitel, Type filterTrigger, Func<T, DateTime> Property, FilterOptie val)
-            => FilterBerekeningen.Add(new DateTimeBerekening<T>(filterTitel, filterTrigger, Property, val));
+        private void Instellen(string filterTitel, Type filterTrigger, Func<T, DateTime> Property, FilterOption val)
+            => FilterBerekeningen.Add(new DateTimeCalculation<T>(filterTitel, filterTrigger, Property, val));
 
         private void Add(IEnumerable<T> items)
         {
@@ -96,7 +96,7 @@ namespace Filter.Filters
                 else
                     type = filterresultaat.Filter.GetType().GetGenericArguments()[1];
 
-                var filter = FilterBerekeningen.FirstOrDefault(p => p.FilterTrigger == type && p.FilterTitel == filterresultaat.Filter.Titel);
+                var filter = FilterBerekeningen.FirstOrDefault(p => p.FilterTrigger == type && p.FilterTitle == filterresultaat.Filter.Title);
                 
                 var result = filter.FilterResult(AlleItems, filterresultaat);
 
@@ -115,8 +115,8 @@ namespace Filter.Filters
                 {
                     var genericFilterType = filter.GetType().GetGenericTypeDefinition();
 
-                    if (genericFilterType == typeof(KeuzeFilter<,>) ||
-                        genericFilterType == typeof(LogischeFilter<,>))
+                    if (genericFilterType == typeof(MultipleChoiceFilter<,>) ||
+                        genericFilterType == typeof(LogicalFilter<,>))
                     {
                         dynamic castedFilter = Convert.ChangeType(filter, actualFilterType);
                         Type actualDataType = castedFilter.Data.GetType();
@@ -127,11 +127,11 @@ namespace Filter.Filters
                         if (actualDataType.IsNotPublic)
                             throw new Exception($"{actualDataType} must be public to use in the filter");
 
-                        if (genericFilterType == typeof(LogischeFilter<,>) && 
+                        if (genericFilterType == typeof(LogicalFilter<,>) && 
                             type != typeof(double) && type != typeof(int) && type != typeof(string) && type != typeof(DateTime))
                             throw new Exception($"Your logical filter has a non existing type '{type}' that you can use in this filter");
 
-                        Instellen(castedFilterInstelling.Titel, type, castedFilterInstelling.PropertyUitDataGrid, castedFilterInstelling.FilterOpties);
+                        Instellen(castedFilterInstelling.Title, type, castedFilterInstelling.PropertyFromDataset, castedFilterInstelling.FilterOptions);
                     }
                 }
             }

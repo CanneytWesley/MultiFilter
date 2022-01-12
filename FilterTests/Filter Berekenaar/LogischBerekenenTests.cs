@@ -14,171 +14,171 @@ namespace Filter.Filter_Berekenaar.Tests
         [TestMethod()]
         public void BerekenLogicaTest_GroterDan15000()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica(">15000");
+            model.Calculate(">15000");
 
-            Assert.AreEqual(2, model.Logica.Count);
-            Assert.AreEqual(LogischeOperator.GroterDan, model.Logica[0].Operator);
-            Assert.AreEqual(0, model.Logica[0].Waarde);
-            Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000, model.Logica[1].Waarde);
-            Assert.AreEqual(true, model.IsSuccessVol);
+            Assert.AreEqual(2, model.Logic.Count);
+            Assert.AreEqual(LogicalOperator.GreaterThan, model.Logic[0].Operator);
+            Assert.AreEqual(0, model.Logic[0].value);
+            Assert.AreEqual(LogicalOperator.Value, model.Logic[1].Operator);
+            Assert.AreEqual(15000, model.Logic[1].value);
+            Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
         public void BerekenLogicaTest_GroterDan15000_2()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica("> 15000 ");
+            model.Calculate("> 15000 ");
 
-            Assert.AreEqual(2, model.Logica.Count);
-            Assert.AreEqual(LogischeOperator.GroterDan, model.Logica[0].Operator);
-            Assert.AreEqual(0, model.Logica[0].Waarde);
-            Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000, model.Logica[1].Waarde);
+            Assert.AreEqual(2, model.Logic.Count);
+            Assert.AreEqual(LogicalOperator.GreaterThan, model.Logic[0].Operator);
+            Assert.AreEqual(0, model.Logic[0].value);
+            Assert.AreEqual(LogicalOperator.Value, model.Logic[1].Operator);
+            Assert.AreEqual(15000, model.Logic[1].value);
         }
         [TestMethod()]
         public void BerekenLogicaTest_GroterDan15000_3()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica(">      15000 ");
+            model.Calculate(">      15000 ");
 
-            Assert.AreEqual(2, model.Logica.Count);
-            Assert.AreEqual(LogischeOperator.GroterDan, model.Logica[0].Operator);
-            Assert.AreEqual(0, model.Logica[0].Waarde);
-            Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000, model.Logica[1].Waarde);
-            Assert.AreEqual(true, model.IsSuccessVol);
+            Assert.AreEqual(2, model.Logic.Count);
+            Assert.AreEqual(LogicalOperator.GreaterThan, model.Logic[0].Operator);
+            Assert.AreEqual(0, model.Logic[0].value);
+            Assert.AreEqual(LogicalOperator.Value, model.Logic[1].Operator);
+            Assert.AreEqual(15000, model.Logic[1].value);
+            Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
         public void BerekenLogicaTest_KleinerDan15000()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica("<15000");
+            model.Calculate("<15000");
 
-            Assert.AreEqual(2, model.Logica.Count);
-            Assert.AreEqual(LogischeOperator.KleinerDan, model.Logica[0].Operator);
-            Assert.AreEqual(0, model.Logica[0].Waarde);
-            Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000, model.Logica[1].Waarde);
-            Assert.AreEqual(true, model.IsSuccessVol);
+            Assert.AreEqual(2, model.Logic.Count);
+            Assert.AreEqual(LogicalOperator.SmallerThan, model.Logic[0].Operator);
+            Assert.AreEqual(0, model.Logic[0].value);
+            Assert.AreEqual(LogicalOperator.Value, model.Logic[1].Operator);
+            Assert.AreEqual(15000, model.Logic[1].value);
+            Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
         public void BerekenLogicaTest_GroterDanOfGelijkAan15000()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica(">=15000");
+            model.Calculate(">=15000");
 
-            Assert.AreEqual(2, model.Logica.Count);
-            Assert.AreEqual(LogischeOperator.GroterOfGelijkAan, model.Logica[0].Operator);
-            Assert.AreEqual(0, model.Logica[0].Waarde);
-            Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000, model.Logica[1].Waarde);
-            Assert.AreEqual(true, model.IsSuccessVol);
+            Assert.AreEqual(2, model.Logic.Count);
+            Assert.AreEqual(LogicalOperator.GreaterOrEqualThan, model.Logic[0].Operator);
+            Assert.AreEqual(0, model.Logic[0].value);
+            Assert.AreEqual(LogicalOperator.Value, model.Logic[1].Operator);
+            Assert.AreEqual(15000, model.Logic[1].value);
+            Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
         public void BerekenLogicaTest_KleinerDanOfGelijkAan15000()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica("<=15000");
+            model.Calculate("<=15000");
 
-            Assert.AreEqual(2, model.Logica.Count);
-            Assert.AreEqual(LogischeOperator.KleinerOfGelijkAan, model.Logica[0].Operator);
-            Assert.AreEqual(0, model.Logica[0].Waarde);
-            Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000, model.Logica[1].Waarde);
-            Assert.AreEqual(true, model.IsSuccessVol);
+            Assert.AreEqual(2, model.Logic.Count);
+            Assert.AreEqual(LogicalOperator.SmallerOrEqualThan, model.Logic[0].Operator);
+            Assert.AreEqual(0, model.Logic[0].value);
+            Assert.AreEqual(LogicalOperator.Value, model.Logic[1].Operator);
+            Assert.AreEqual(15000, model.Logic[1].value);
+            Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
         public void BerekenLogicaTest_GelijkAan15000()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica("=15000");
+            model.Calculate("=15000");
 
-            Assert.AreEqual(2, model.Logica.Count);
-            Assert.AreEqual(LogischeOperator.GelijkAan, model.Logica[0].Operator);
-            Assert.AreEqual(0, model.Logica[0].Waarde);
-            Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000, model.Logica[1].Waarde);
-            Assert.AreEqual(true, model.IsSuccessVol);
+            Assert.AreEqual(2, model.Logic.Count);
+            Assert.AreEqual(LogicalOperator.Equal, model.Logic[0].Operator);
+            Assert.AreEqual(0, model.Logic[0].value);
+            Assert.AreEqual(LogicalOperator.Value, model.Logic[1].Operator);
+            Assert.AreEqual(15000, model.Logic[1].value);
+            Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
         public void BerekenLogicaTest_NietGelijkAan15000()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica("!=15000");
+            model.Calculate("!=15000");
 
-            Assert.AreEqual(2, model.Logica.Count);
-            Assert.AreEqual(LogischeOperator.NietGelijkAan, model.Logica[0].Operator);
-            Assert.AreEqual(0, model.Logica[0].Waarde);
-            Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000, model.Logica[1].Waarde);
-            Assert.AreEqual(true, model.IsSuccessVol);
+            Assert.AreEqual(2, model.Logic.Count);
+            Assert.AreEqual(LogicalOperator.NotEqual, model.Logic[0].Operator);
+            Assert.AreEqual(0, model.Logic[0].value);
+            Assert.AreEqual(LogicalOperator.Value, model.Logic[1].Operator);
+            Assert.AreEqual(15000, model.Logic[1].value);
+            Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
         public void BerekenLogicaTest_NietGelijkAan15000_2()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica("<>15000");
+            model.Calculate("<>15000");
 
-            Assert.AreEqual(2, model.Logica.Count);
-            Assert.AreEqual(LogischeOperator.NietGelijkAan, model.Logica[0].Operator);
-            Assert.AreEqual(0, model.Logica[0].Waarde);
-            Assert.AreEqual(LogischeOperator.Waarde, model.Logica[1].Operator);
-            Assert.AreEqual(15000, model.Logica[1].Waarde);
-            Assert.AreEqual(true, model.IsSuccessVol);
+            Assert.AreEqual(2, model.Logic.Count);
+            Assert.AreEqual(LogicalOperator.NotEqual, model.Logic[0].Operator);
+            Assert.AreEqual(0, model.Logic[0].value);
+            Assert.AreEqual(LogicalOperator.Value, model.Logic[1].Operator);
+            Assert.AreEqual(15000, model.Logic[1].value);
+            Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
         public void BerekenLogicaTest_HeleLijn()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica(">1500&<3000");
+            model.Calculate(">1500&<3000");
 
-            Assert.AreEqual(LogischeOperator.GroterDan, model.Logica[0].Operator);
-            Assert.AreEqual(1500, model.Logica[1].Waarde);
-            Assert.AreEqual(LogischeOperator.En, model.Logica[2].Operator);
-            Assert.AreEqual(LogischeOperator.KleinerDan, model.Logica[3].Operator);
-            Assert.AreEqual(3000, model.Logica[4].Waarde);
-            Assert.AreEqual(5, model.Logica.Count);
-            Assert.AreEqual(true, model.IsSuccessVol);
+            Assert.AreEqual(LogicalOperator.GreaterThan, model.Logic[0].Operator);
+            Assert.AreEqual(1500, model.Logic[1].value);
+            Assert.AreEqual(LogicalOperator.And, model.Logic[2].Operator);
+            Assert.AreEqual(LogicalOperator.SmallerThan, model.Logic[3].Operator);
+            Assert.AreEqual(3000, model.Logic[4].value);
+            Assert.AreEqual(5, model.Logic.Count);
+            Assert.AreEqual(true, model.IsSuccess);
         }
 
         [TestMethod()]
         public void TestLogischeOpbouwing_StartenMetEn_UnSuccessfull()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica("En>1500&<3000");
+            model.Calculate("En>1500&<3000");
 
-            Assert.AreEqual(false, model.IsSuccessVol);
+            Assert.AreEqual(false, model.IsSuccess);
         }
 
         [TestMethod()]
         public void TestLogischeOpbouwing_EindigenMetEn_UnSuccessfull()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica(">1500&<3000En");
+            model.Calculate(">1500&<3000En");
 
-            Assert.AreEqual(false, model.IsSuccessVol);
+            Assert.AreEqual(false, model.IsSuccess);
         }
         [TestMethod()]
         public void TestLogischeOpbouwing_2operators_UnSuccessfull()
         {
-            LogischBerekenen model = new LogischBerekenen();
+            LogicalCalculator model = new LogicalCalculator();
 
-            model.BerekenLogica(">>1500&<3000En");
+            model.Calculate(">>1500&<3000En");
 
-            Assert.AreEqual(false, model.IsSuccessVol);
+            Assert.AreEqual(false, model.IsSuccess);
         }
     }
 }

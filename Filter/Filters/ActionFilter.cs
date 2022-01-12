@@ -5,24 +5,24 @@ using System.Threading.Tasks;
 
 namespace Filter.Filters
 {
-    public class ActieFilter : BaseFilter, IFilter
+    public class ActionFilter : BaseFilter, IFilter
     {
-        public IActieFilterInstellingen Instelling { get; }
+        public IActionFilterSettings Setting { get; }
 
-        public ActieFilter(IActieFilterInstellingen Instelling)
+        public ActionFilter(IActionFilterSettings setting)
         {
-            this.Instelling = Instelling;
-            Titel = Instelling.Titel;
-            Icon = Instelling.Icon;
-            ShortCut = Instelling.Shortcut;
+            this.Setting = setting;
+            Title = setting.Title;
+            Icon = setting.Icon;
+            ShortCut = setting.Shortcut;
         }
 
-        public async Task<List<IResult>> Filteren(string uitvoeren)
+        public async Task<List<IResult>> Filter(string uitvoeren)
         {
             if (!TestShortCut(uitvoeren))
                 return new List<IResult>();
 
-            var data = await Instelling.GetData();
+            var data = await Setting.GetData();
 
             var result = data.Where(p => TestShortCut(uitvoeren) && p.ActionName.IndexOf(VerwijderShortCut(uitvoeren), StringComparison.OrdinalIgnoreCase) != -1).ToList();
             return result.Select(p => (IResult)new ActionResult(this, p.ActionName, (IResult result) => { p.Action?.Invoke(); }, Icon)).ToList();

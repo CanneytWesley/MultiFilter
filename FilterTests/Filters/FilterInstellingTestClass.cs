@@ -5,11 +5,11 @@ namespace Filter.Filters.Tests
 {
     public partial class ActionFilterTests
     {
-        public class FilterInstellingTestClass : IActieFilterInstellingen
+        public class FilterInstellingTestClass : IActionFilterSettings
         {
-            public string Titel { get; set; }
+            public string Title { get; set; }
             public string Shortcut { get; set; } = "C";
-            public FilterOptie FilterOpties { get; set; }
+            public FilterOption FilterOptions { get; set; }
             public Icon Icon { get; set; }
 
             public Task<List<FilterAction>> GetData()

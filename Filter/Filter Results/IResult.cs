@@ -19,7 +19,7 @@ namespace Filter.Filters
         public bool IsGelijkAan(IResult resultaat)
         {
             return Model?.Onderdeel == resultaat.Model?.Onderdeel && Filter?.ShortCut == resultaat.Filter?.ShortCut && 
-                Filter?.Titel == resultaat.Filter?.Titel && Filter?.Icon?.IconKleur == Filter?.Icon?.IconKleur;
+                Filter?.Title == resultaat.Filter?.Title && Filter?.Icon?.IconColor == Filter?.Icon?.IconColor;
         }
     }
 }

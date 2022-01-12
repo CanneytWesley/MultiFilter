@@ -5,20 +5,20 @@ using System.Windows.Media;
 
 namespace GUITests.Data.LogischeFilters
 {
-    public class AgeFilterSetting : ILogischeFilterInstellingen<Friend, int>
+    public class AgeFilterSetting : ILogicalFilterSettings<Friend, int>
     {
-        public Func<Friend, int> PropertyUitDataGrid { get; set; }
-        public string Titel { get; set; }
+        public Func<Friend, int> PropertyFromDataset { get; set; }
+        public string Title { get; set; }
         public string Shortcut { get; set; }
-        public FilterOptie FilterOpties { get; set; }
+        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
 
         public AgeFilterSetting()
         {
-            Titel = "Age";
+            Title = "Age";
             Shortcut = "AG";
             Icon = new Icon(Brushes.Green.ToString(), Icons.Alertbericht);
-            PropertyUitDataGrid = p => p.Age;
+            PropertyFromDataset = p => p.Age;
         }
     }
 }

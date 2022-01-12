@@ -4,23 +4,23 @@ using System.Threading.Tasks;
 
 namespace Filter.Filters
 {
-    public class LogischeFilter<T,F> : BaseFilter, ILogischeFilter
+    public class LogicalFilter<T,F> : BaseFilter, ILogicalFilter
     {
-        public ILogischeFilterInstellingen<T,F> Data { get; set; }
+        public ILogicalFilterSettings<T,F> Data { get; set; }
 
-        public LogischeFilter(ILogischeFilterInstellingen<T,F> data)
+        public LogicalFilter(ILogicalFilterSettings<T,F> data)
         {
-            Titel = data.Titel;
+            Title = data.Title;
             ShortCut = data.Shortcut;
             Icon = data.Icon;
             Data = data;
         }
-        public Task<List<IResult>> Filteren(string uitvoeren)
+        public Task<List<IResult>> Filter(string uitvoeren)
         {
             return Task.FromResult(new List<IResult>() { });
         }
 
-        public Task<List<IResult>> LogischFilteren(string uitvoeren)
+        public Task<List<IResult>> FilterLogical(string uitvoeren)
         {
             return Task.FromResult(new List<IResult>() { new LogischResult(this, VerwijderShortCut(uitvoeren),  Icon) });
         }

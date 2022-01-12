@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace Filter
 {
-    public interface ILogischeFilter : IFilter
+    public interface ILogicalFilter : IFilter
     {
-        public Task<List<IResult>> LogischFilteren(string uitvoeren);
+        public Task<List<IResult>> FilterLogical(string text);
     }
 }

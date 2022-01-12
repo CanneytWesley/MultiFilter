@@ -5,19 +5,19 @@ using System.Linq;
 
 namespace Filter.Filters
 {
-    public class IntBerekening<T> : IBerekening<T>
+    public class IntBerekening<T> : ICalculation<T>
     {
         public Func<T, int> Property { get; set; }
-        public FilterOptie FilterOptie { get; set; }
+        public FilterOption FilterOption { get; set; }
         public Type FilterTrigger { get; set; }
-        public string FilterTitel { get; set; }
+        public string FilterTitle { get; set; }
 
-        public IntBerekening(string filterTitel, Type filterTrigger, Func<T, int> property, FilterOptie filterOptie)
+        public IntBerekening(string filterTitel, Type filterTrigger, Func<T, int> property, FilterOption filterOptie)
         {
             Property = property;
-            FilterOptie = filterOptie;
+            FilterOption = filterOptie;
             FilterTrigger = filterTrigger;
-            FilterTitel = filterTitel;
+            FilterTitle = filterTitel;
         }
 
         public List<T> FilterResult(List<T> alleItems, IResult filterresultaat)
@@ -26,17 +26,17 @@ namespace Filter.Filters
             if (informatie.StartsWith(filterresultaat.Filter.ShortCut.ToUpper()))
                 informatie = informatie.Substring(filterresultaat.Filter.ShortCut.Length + 1);
 
-            LogischBerekenen logisch = new LogischBerekenen();
-            logisch.BerekenLogica(informatie);
+            LogicalCalculator logisch = new LogicalCalculator();
+            logisch.Calculate(informatie);
 
             bool eersteRun = true;
-            LogischeOperator OfEnOperator = LogischeOperator.En;
+            LogicalOperator OfEnOperator = LogicalOperator.And;
             List<T> result = new List<T>();
 
-            for (int i = 0; i < logisch.Logica.Count - 1; i += 2)
+            for (int i = 0; i < logisch.Logic.Count - 1; i += 2)
             {
-                var op = logisch.Logica[i].Operator;
-                var waarde = Convert.ToInt32( logisch.Logica[i + 1].Waarde);
+                var op = logisch.Logic[i].Operator;
+                var waarde = Convert.ToInt32( logisch.Logic[i + 1].value);
 
 
                 if (eersteRun)
@@ -44,11 +44,11 @@ namespace Filter.Filters
                     result = Filter(alleItems, Property, op, waarde);
                     eersteRun = false;
                 }
-                else if (OfEnOperator == LogischeOperator.En)
+                else if (OfEnOperator == LogicalOperator.And)
                 {
                     result = Filter(result, Property, op, waarde);
                 }
-                else if (OfEnOperator == LogischeOperator.Of)
+                else if (OfEnOperator == LogicalOperator.Or)
                 {
                     var tussenresultaat = Filter(alleItems, Property, op, waarde);
 
@@ -56,9 +56,9 @@ namespace Filter.Filters
                         if (!result.Contains(item)) result.Add(item);
                 }
 
-                if (i < logisch.Logica.Count - 2)
+                if (i < logisch.Logic.Count - 2)
                 {
-                    OfEnOperator = logisch.Logica[i + 2].Operator;
+                    OfEnOperator = logisch.Logic[i + 2].Operator;
                     i += 1;
                 }
             }
@@ -66,21 +66,21 @@ namespace Filter.Filters
             return result;
         }
 
-        private List<T> Filter(List<T> alleItems, Func<T, int> property, LogischeOperator op, int waarde)
+        private List<T> Filter(List<T> alleItems, Func<T, int> property, LogicalOperator op, int waarde)
         {
             switch (op)
             {
-                case LogischeOperator.KleinerDan:
+                case LogicalOperator.SmallerThan:
                     return alleItems.Where(p => property(p) < waarde).ToList();
-                case LogischeOperator.GroterDan:
+                case LogicalOperator.GreaterThan:
                     return alleItems.Where(p => property(p) > waarde).ToList();
-                case LogischeOperator.KleinerOfGelijkAan:
+                case LogicalOperator.SmallerOrEqualThan:
                     return alleItems.Where(p => property(p) <= waarde).ToList();
-                case LogischeOperator.GroterOfGelijkAan:
+                case LogicalOperator.GreaterOrEqualThan:
                     return alleItems.Where(p => property(p) >= waarde).ToList();
-                case LogischeOperator.GelijkAan:
+                case LogicalOperator.Equal:
                     return alleItems.Where(p => property(p) == waarde).ToList();
-                case LogischeOperator.NietGelijkAan:
+                case LogicalOperator.NotEqual:
                     return alleItems.Where(p => property(p) != waarde).ToList();
                 default:
                     break;

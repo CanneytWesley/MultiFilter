@@ -11,18 +11,18 @@ using System.Windows.Media;
 
 namespace GUITests.Data.ActieFilters
 {
-    public class MessagesFilterSetting : IActieFilterInstellingen
+    public class MessagesFilterSetting : IActionFilterSettings
     {
-        public string Titel { get; set; }
+        public string Title { get; set; }
         public string Shortcut { get; set; }
-        public FilterOptie FilterOpties { get; set; }
+        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
 
         public MessagesFilterSetting()
         {
-            Titel = "Acties met berichten, deze berichten worden dan getoond.";
+            Title = "Acties met berichten, deze berichten worden dan getoond.";
             Shortcut = "A";
-            FilterOpties = FilterOptie.Exact;
+            FilterOptions = FilterOption.Exact;
             Icon = new Icon(Brushes.Blue.ToString(), Icons.Alertbericht);
     }
 

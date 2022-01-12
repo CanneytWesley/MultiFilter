@@ -4,19 +4,19 @@ using System.Collections.Generic;
 
 namespace Filter.Filters
 {
-    public interface IBerekening<T>
+    public interface ICalculation<T>
     {
 
-        public FilterOptie FilterOptie { get; set; }
+        public FilterOption FilterOption { get; set; }
 
         public Type FilterTrigger { get; set; }
 
-        public string FilterTitel { get; set; }
+        public string FilterTitle { get; set; }
 
         List<T> FilterResult(List<T> alleItems, IResult filterresultaat);
     }
 
-    public interface INumberBerekening<T> : IBerekening<T>
+    public interface INumberBerekening<T> : ICalculation<T>
     { 
     
     }

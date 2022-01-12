@@ -3,7 +3,7 @@
 namespace Filter.Filters
 {
     [Flags]
-    public enum FilterOptie
+    public enum FilterOption
     { 
         /// <summary>
         /// Als indexof voldoende is voor de filter dan deze flag meegeven

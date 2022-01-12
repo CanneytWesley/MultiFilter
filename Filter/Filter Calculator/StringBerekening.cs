@@ -4,34 +4,34 @@ using System.Linq;
 
 namespace Filter.Filters
 {
-    public class StringBerekening<T> : IBerekening<T>
+    public class StringBerekening<T> : ICalculation<T>
     {
         public Func<T, string> Property { get; set; }
 
-        public FilterOptie FilterOptie { get; set; }
+        public FilterOption FilterOption { get; set; }
         public Type FilterTrigger { get; set; }
-        public string FilterTitel { get; set; }
+        public string FilterTitle { get; set; }
 
-        public StringBerekening(string filterTitel, Type filterTrigger, Func<T, string> property, FilterOptie filterOptie)
+        public StringBerekening(string filterTitel, Type filterTrigger, Func<T, string> property, FilterOption filterOptie)
         {
             Property = property;
-            FilterOptie = filterOptie;
+            FilterOption = filterOptie;
             FilterTrigger = filterTrigger;
-            FilterTitel = filterTitel;
+            FilterTitle = filterTitel;
         }
 
         public List<T> FilterResult(List<T> alleItems, IResult filterresultaat)
         {
             StringComparison sc = StringComparison.OrdinalIgnoreCase;
-            if (FilterOptie.HasFlag(FilterOptie.OrdinalCase))
+            if (FilterOption.HasFlag(FilterOption.OrdinalCase))
                 sc = StringComparison.Ordinal;
 
-            if (FilterOptie.HasFlag(FilterOptie.IndexOf))
+            if (FilterOption.HasFlag(FilterOption.IndexOf))
             {
                 var result = alleItems.Where(p => Property(p).IndexOf(filterresultaat.Model.Onderdeel, sc) != -1).ToList();
                 return result;
             }
-            else if (FilterOptie.HasFlag(FilterOptie.Exact))
+            else if (FilterOption.HasFlag(FilterOption.Exact))
             {
                 var result = alleItems.Where(p => Property(p) == filterresultaat.Model.Onderdeel).ToList();
                 return result;

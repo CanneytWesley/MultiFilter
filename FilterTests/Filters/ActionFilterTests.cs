@@ -16,33 +16,33 @@ namespace Filter.Filters.Tests
         {
 
 
-            ActieFilter af = new ActieFilter(new FilterInstellingTestClass());
-            af.Titel = "Leverancier starten";
+            ActionFilter af = new ActionFilter(new FilterInstellingTestClass());
+            af.Title = "Leverancier starten";
             af.ShortCut = "A";
 
-            var result = await af.Filteren("l");
+            var result = await af.Filter("l");
 
             Assert.AreEqual(1, result.Count);
         }
         [TestMethod()]
         public async Task FilterenTest_MetShortcut()
         {
-            ActieFilter af = new ActieFilter(new FilterInstellingTestClass());
-            af.Titel = "Leverancier starten";
+            ActionFilter af = new ActionFilter(new FilterInstellingTestClass());
+            af.Title = "Leverancier starten";
             af.ShortCut = "A";
 
-            var result = await af.Filteren("A l");
+            var result = await af.Filter("A l");
 
             Assert.AreEqual(1, result.Count);
         }
         [TestMethod()]
         public async Task FilterenTest_NietToepasselijk()
         {
-            ActieFilter af = new ActieFilter(new FilterInstellingTestClass());
-            af.Titel = "Leverancier starten";
+            ActionFilter af = new ActionFilter(new FilterInstellingTestClass());
+            af.Title = "Leverancier starten";
             af.ShortCut = "A";
 
-            var result = await af.Filteren("qsfd");
+            var result = await af.Filter("qsfd");
 
             Assert.AreEqual(0, result.Count);
         }

@@ -8,22 +8,22 @@ using System.Windows.Media;
 
 namespace GUITests
 {
-    public class CompanyFilterSetting : IKeuzeFilterInstellingen<Friend, Company>
+    public class CompanyFilterSetting : IMultipleChoiceSettings<Friend, Company>
     {
-        public Func<Company, string> PropertyOmMeeTeFilteren { get; set; }
-        public Func<Friend, string> PropertyUitDataGrid { get; set; }
-        public string Titel { get; set; }
+        public Func<Company, string> PropertyToFilterWith { get; set; }
+        public Func<Friend, string> PropertyFromDataset { get; set; }
+        public string Title { get; set; }
         public string Shortcut { get; set; }
-        public FilterOptie FilterOpties { get; set; }
+        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
 
         public CompanyFilterSetting()
         {
-            PropertyOmMeeTeFilteren =  p => p.Name;
-            PropertyUitDataGrid = p => p.Company;
-            Titel = "Companies";
+            PropertyToFilterWith =  p => p.Name;
+            PropertyFromDataset = p => p.Company;
+            Title = "Companies";
             Shortcut = "C";
-            FilterOpties = FilterOptie.IndexOf;
+            FilterOptions = FilterOption.IndexOf;
             Icon = new Icon(Brushes.Green.ToString(), Icons.Gelukt);
         }
 

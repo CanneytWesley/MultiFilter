@@ -7,22 +7,22 @@ using System.Windows.Media;
 
 namespace GUITests.Data.Certificaat
 {
-    public class PostalCodeFilterSetting : IKeuzeFilterInstellingen<Friend, PostalCode>
+    public class PostalCodeFilterSetting : IMultipleChoiceSettings<Friend, PostalCode>
     {
-        public string Titel { get; set; }
+        public string Title { get; set; }
         public string Shortcut { get; set; }
-        public FilterOptie FilterOpties { get; set; }
-        public Func<PostalCode, string> PropertyOmMeeTeFilteren { get; set; }
-        public Func<Friend, string> PropertyUitDataGrid { get; set; }
+        public FilterOption FilterOptions { get; set; }
+        public Func<PostalCode, string> PropertyToFilterWith { get; set; }
+        public Func<Friend, string> PropertyFromDataset { get; set; }
         public Icon Icon { get; set; }
 
         public PostalCodeFilterSetting()
         {
-            Titel = "Postal codes";
+            Title = "Postal codes";
             Shortcut = "P";
-            FilterOpties = FilterOptie.Exact;
-            PropertyOmMeeTeFilteren = p => p.Code;
-            PropertyUitDataGrid = p => p.PostalCode;
+            FilterOptions = FilterOption.Exact;
+            PropertyToFilterWith = p => p.Code;
+            PropertyFromDataset = p => p.PostalCode;
             Icon = new Icon(Brushes.Pink.ToString(), Icons.Bericht);
         }
 
