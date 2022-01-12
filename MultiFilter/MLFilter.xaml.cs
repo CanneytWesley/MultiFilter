@@ -116,7 +116,7 @@ namespace MultiFilter
             else if (Soort == Soort.Of)
                 SetEnOfInformatie(Soort.En);
 
-            Command.Execute(new FilterResultaat() { Resultaten = ActieveFilter.ToList(), Soort = Soort }); 
+            Command.Execute(new FilterResult() { Resultaten = ActieveFilter.ToList(), Soort = Soort }); 
             SetEnOfLabel();
         }
 
@@ -125,7 +125,7 @@ namespace MultiFilter
         {
             ActieveFilter.Clear(); 
 
-            Command.Execute(new FilterResultaat() { Resultaten = ActieveFilter.ToList(), Soort = Soort }); 
+            Command.Execute(new FilterResult() { Resultaten = ActieveFilter.ToList(), Soort = Soort }); 
             SetEnOfLabel();
         }
         private void SetEnOfInformatie(Soort soort)
@@ -167,7 +167,7 @@ namespace MultiFilter
             {
                 ActieveFilter.Add(resultaat);
 
-                Command.Execute(new FilterResultaat() { Resultaten = ActieveFilter.ToList(), Soort = Soort });
+                Command.Execute(new FilterResult() { Resultaten = ActieveFilter.ToList(), Soort = Soort });
                 SetEnOfLabel();
             }
         }
@@ -294,7 +294,7 @@ namespace MultiFilter
 
             ActieveFilter.Remove(result);
 
-            Command.Execute(new FilterResultaat() { Resultaten = ActieveFilter.ToList(), Soort = Soort }); 
+            Command.Execute(new FilterResult() { Resultaten = ActieveFilter.ToList(), Soort = Soort }); 
             SetEnOfLabel();
 
 

@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GUITests.Data;
 using GUITests.Data.ActieFilters;
 using GUITests.Data.Certificaat;
+using GUITests.Data.Gender_filter;
 using GUITests.Data.LogischeFilters;
 using MultiFilter;
 using System;
@@ -30,11 +31,12 @@ namespace GUITests
         {
             Friends = new ObservableCollection<Friend>();
             Filters = new ObservableCollection<IFilter>();
-            FilterCommand = new RelayCommand<FilterResultaat>(Filteren);
+            FilterCommand = new RelayCommand<FilterResult>(Filter);
 
             //Filter instellen
             Filters.Add(new KeuzeFilter<Friend, Company>(new CompanyFilterSetting()));
             Filters.Add(new KeuzeFilter<Friend, PostalCode>(new PostalCodeFilterSetting()));
+            Filters.Add(new KeuzeFilter<Friend, Gender>(new GenderFilterSettings()));
             Filters.Add(new ActieFilter( new MessagesFilterSetting()));
             Filters.Add(new LogischeFilter<Friend, double>(new WeightFilterSetting()));
             Filters.Add(new LogischeFilter<Friend, int>(new AgeFilterSetting()));
@@ -52,10 +54,10 @@ namespace GUITests
             });
 
             //Filteren zodat data getoond wordt.
-            Filteren(null);
+            Filter(null);
         }
 
-        private void Filteren(FilterResultaat result)
+        private void Filter(FilterResult result)
         {
             if (result == null)
                 result = new();

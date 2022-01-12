@@ -1,6 +1,6 @@
 ﻿namespace GUITests.Data
 {
-    public enum Sex
+    public enum Gender
     { 
         Men,
         Female,

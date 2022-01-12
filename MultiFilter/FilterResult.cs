@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MultiFilter
 {
-    public class FilterResultaat
+    public class FilterResult
     {
         private List<IResult> resultaten;
 
@@ -23,7 +23,7 @@ namespace MultiFilter
 
         public Soort Soort { get; set; }
 
-        public FilterResultaat()
+        public FilterResult()
         {
             Resultaten = new List<IResult>();
         }

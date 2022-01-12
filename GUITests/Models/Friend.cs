@@ -10,7 +10,7 @@ namespace GUITests.Data
 
         public DateTime DateOfBirth { get; set; }
 
-        public Sex Sex { get; set; }
+        public Gender Sex { get; set; }
 
         public string Company { get; set; }
 
