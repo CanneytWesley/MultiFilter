@@ -1,9 +1,13 @@
 ﻿using Filter;
+using Filter.Filter_Calculator;
+using Filter.Filter_Settings;
 using Filter.Filters;
+using Filter.Filters.Model;
+using GUITests.Models;
 using System;
 using System.Windows.Media;
 
-namespace GUITests.Data.LogischeFilters
+namespace GUITests.Data.LogicalFilters
 {
     public class AgeFilterSetting : ILogicalFilterSettings<Friend, int>
     {

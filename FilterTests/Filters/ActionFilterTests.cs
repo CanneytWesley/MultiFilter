@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Filter.Filters.Tests
+namespace FilterTests.Filters
 {
     [TestClass()]
     public partial class ActionFilterTests
@@ -16,7 +16,7 @@ namespace Filter.Filters.Tests
         {
 
 
-            ActionFilter af = new ActionFilter(new FilterInstellingTestClass());
+            ActionFilter af = new ActionFilter(new FilterSettingsTestClass());
             af.Title = "Leverancier starten";
             af.ShortCut = "A";
 
@@ -27,7 +27,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public async Task FilterTest_WithShortcut()
         {
-            ActionFilter af = new ActionFilter(new FilterInstellingTestClass());
+            ActionFilter af = new ActionFilter(new FilterSettingsTestClass());
             af.Title = "Leverancier starten";
             af.ShortCut = "A";
 
@@ -38,7 +38,7 @@ namespace Filter.Filters.Tests
         [TestMethod()]
         public async Task FilterTest_NonExistingFilter()
         {
-            ActionFilter af = new ActionFilter(new FilterInstellingTestClass());
+            ActionFilter af = new ActionFilter(new FilterSettingsTestClass());
             af.Title = "Leverancier starten";
             af.ShortCut = "A";
 

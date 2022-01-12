@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Filter.Filter_Berekenaar
+namespace Filter.Filter_Calculator
 {
     public enum LogicalOperator
     {

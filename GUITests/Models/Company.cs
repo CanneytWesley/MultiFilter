@@ -1,4 +1,4 @@
-﻿namespace GUITests
+﻿namespace GUITests.Models
 {
     public class Company
     {

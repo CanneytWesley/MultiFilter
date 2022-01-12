@@ -1,10 +1,12 @@
-﻿using Filter.Filters;
+﻿using Filter.Filter_Calculator;
+using Filter.Filters;
+using Filter.Filters.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Filter
+namespace Filter.Filter_Settings
 {
     /// <summary>
     /// Een filter instelling dient om een filter volledig te kunnen instellen

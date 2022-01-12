@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Filter.Filter_Berekenaar;
+using Filter.Filter_Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Filter.Filter_Calculator;
 
-namespace Filter.Filter_Berekenaar.Tests
+namespace FilterTests.Filter_Calculator
 {
     [TestClass()]
     public class LogicalCalculationTests

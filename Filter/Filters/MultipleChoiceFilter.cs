@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Filter.Filter_Results;
+using Filter.Filter_Settings;
+using Filter.Filters.Model;
+using Filter.General_Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -30,7 +34,7 @@ namespace Filter.Filters
                 if (!TestShortCut(uitvoeren))
                     return new List<IResult>();
 
-                var result = AllItems.Where(p => TestShortCut(uitvoeren) && p.Name.IndexOf(VerwijderShortCut(uitvoeren), StringComparison.OrdinalIgnoreCase) != -1).ToList();
+                var result = AllItems.Where(p => TestShortCut(uitvoeren) && p.Name.IndexOf(RemoveShortCut(uitvoeren), StringComparison.OrdinalIgnoreCase) != -1).ToList();
                 return result.Select(p => (IResult)new MultipleChoiceModelResult(this, p.Name,p.Model, (IResult result) => { ExecuteFilter?.Invoke(result); },Icon)).ToList();
             });
         }

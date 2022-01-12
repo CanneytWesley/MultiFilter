@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Filter.Filters.Model;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -45,7 +46,7 @@ namespace Filter.Filters
         /// </summary>
         /// <param name="uitvoeren"></param>
         /// <returns></returns>
-        public string VerwijderShortCut(string uitvoeren)
+        public string RemoveShortCut(string uitvoeren)
         {
             if (HasShortCut(uitvoeren))
                 return uitvoeren.Substring(1 + ShortCut.Length);

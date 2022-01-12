@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Filter.Filters
+namespace Filter.Filter_Results
 {
     public class MultipleChoiceModel
     {

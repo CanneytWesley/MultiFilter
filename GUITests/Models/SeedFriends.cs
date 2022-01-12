@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GUITests.Data
+namespace GUITests.Models
 {
 
     public static class SeedFriends

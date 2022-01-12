@@ -1,9 +1,9 @@
-﻿using Filter.Filter_Berekenaar;
+﻿using Filter.Filter_Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Filter.Filters
+namespace Filter.Filter_Calculator
 {
     public class DoubleCalculation<T> : ICalculation<T>
     {

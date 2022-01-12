@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Filter.Filters.Model;
+using System;
 
-namespace Filter.Filters
+namespace Filter.Filter_Results
 {
     public class LogischResult : Result 
     {

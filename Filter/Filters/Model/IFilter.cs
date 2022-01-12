@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Drawing;
+using Filter.Filter_Results;
 
-namespace Filter
+namespace Filter.Filters.Model
 {
     /// <summary>
     /// There are multiple possibilities of implementations:

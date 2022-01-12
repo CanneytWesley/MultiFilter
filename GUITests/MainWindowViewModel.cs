@@ -1,21 +1,19 @@
-﻿using Filter;
+﻿using Filter.Filter_Calculator;
 using Filter.Filters;
+using Filter.Filters.Model;
 using GalaSoft.MvvmLight.CommandWpf;
-using GUITests.Data;
-using GUITests.Data.ActieFilters;
-using GUITests.Data.Certificaat;
+using GUITests.Data.ActionFilters;
+using GUITests.Data.Companies;
 using GUITests.Data.Gender_filter;
-using GUITests.Data.LogischeFilters;
+using GUITests.Data.LogicalFilters;
+using GUITests.Data.Postal_codes;
+using GUITests.Models;
 using MultiFilter;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace GUITests
 {
@@ -24,7 +22,7 @@ namespace GUITests
         public ObservableCollection<Friend> Friends { get; set; }
         public ObservableCollection<IFilter> Filters { get; set; }
         public ICommand FilterCommand { get; set; }
-        public FilterExecutor<Friend> FilterUitvoerder { get; set; }
+        public FilterExecutor<Friend> FilterExecutor { get; set; }
 
 
         public MainWindowViewModel()
@@ -33,7 +31,7 @@ namespace GUITests
             Filters = new ObservableCollection<IFilter>();
             FilterCommand = new RelayCommand<FilterResult>(Filter);
 
-            //Filter instellen
+            //Filter setup
             Filters.Add(new MultipleChoiceFilter<Friend, Company>(new CompanyFilterSetting()));
             Filters.Add(new MultipleChoiceFilter<Friend, PostalCode>(new PostalCodeFilterSetting()));
             Filters.Add(new MultipleChoiceFilter<Friend, Gender>(new GenderFilterSettings()));
@@ -43,14 +41,14 @@ namespace GUITests
             Filters.Add(new LogicalFilter<Friend, DateTime>(new DateOfBirthSetting()));
 
             //Filter uitvoerder initialiseren
-            FilterUitvoerder = new FilterExecutor<Friend>();
-            FilterUitvoerder.Instellen(Filters.ToList());
+            FilterExecutor = new FilterExecutor<Friend>();
+            FilterExecutor.Setup(Filters.ToList());
         }
 
         internal async Task LoadData()
         {
             await Task.Run(() => {
-                FilterUitvoerder.SetData(SeedFriends.GetSeed());
+                FilterExecutor.SetData(SeedFriends.GetSeed());
             });
 
             //Filteren zodat data getoond wordt.
@@ -62,10 +60,10 @@ namespace GUITests
             if (result == null)
                 result = new();
 
-            FilterUitvoerder.Filter(result.Edit, result.Results); ;
+            FilterExecutor.Filter(result.Edit, result.Results); ;
 
             Friends.Clear();
-            FilterUitvoerder.Result.ForEach(p => Friends.Add(p));
+            FilterExecutor.Result.ForEach(p => Friends.Add(p));
         }
     }
 }

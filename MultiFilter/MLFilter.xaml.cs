@@ -1,5 +1,9 @@
 ﻿using Filter;
+using Filter.Filter_Calculator;
+using Filter.Filter_Results;
 using Filter.Filters;
+using Filter.Filters.Model;
+using Filter.General_Interfaces;
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;

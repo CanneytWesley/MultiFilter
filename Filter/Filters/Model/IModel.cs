@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Filter
+namespace Filter.Filters.Model
 {
     public interface IModel<T>
     { 

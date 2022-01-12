@@ -1,4 +1,4 @@
-﻿namespace GUITests.Data
+﻿namespace GUITests.Models
 {
     public enum Gender
     { 

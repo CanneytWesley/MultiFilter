@@ -1,6 +1,6 @@
 ﻿
 
-namespace Filter.Filters
+namespace Filter.Filters.Model
 {
     public class Icon
     {

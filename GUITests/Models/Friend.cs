@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GUITests.Data
+namespace GUITests.Models
 {
     public class Friend
     {

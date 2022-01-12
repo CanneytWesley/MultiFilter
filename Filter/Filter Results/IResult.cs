@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Filter.Filters.Model;
+using System;
 using System.Windows.Input;
 
-namespace Filter.Filters
+namespace Filter.Filter_Results
 {
 
     public interface IResult

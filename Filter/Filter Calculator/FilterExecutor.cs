@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Filter.Filter_Results;
+using Filter.Filters;
+using Filter.Filters.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Filter.Filters
+namespace Filter.Filter_Calculator
 {
     public class FilterExecutor<T>
     {
@@ -103,7 +106,7 @@ namespace Filter.Filters
             }
         }
 
-        public void Instellen(List<IFilter> filters)
+        public void Setup(List<IFilter> filters)
         {
             foreach (var filter in filters)
             {

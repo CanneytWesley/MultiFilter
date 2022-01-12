@@ -1,9 +1,10 @@
 ﻿
+using Filter.Filters.Model;
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Windows.Input;
 
-namespace Filter.Filters
+namespace Filter.Filter_Results
 {
     public abstract class Result : IResult
     {

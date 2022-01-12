@@ -1,5 +1,9 @@
 ﻿using Filter;
+using Filter.Filter_Calculator;
+using Filter.Filter_Settings;
 using Filter.Filters;
+using Filter.Filters.Model;
+using GUITests.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace GUITests.Data.LogischeFilters
+namespace GUITests.Data.LogicalFilters
 {
 
     public class WeightFilterSetting : ILogicalFilterSettings<Friend, double>

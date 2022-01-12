@@ -3,13 +3,14 @@ using Filter.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using GUITests.Data;
-using GUITests.Data.Certificaat;
-using GUITests;
+using GUITests.Models;
+using Filter.Filter_Calculator;
+using Filter.Filters.Model;
+using Filter.Filter_Results;
+using Filter.Filter_Settings;
 
-namespace Filter.Filters.Tests
+namespace FilterTests
 {
     [TestClass()]
     public class FilterBerekenenTests
@@ -21,7 +22,7 @@ namespace Filter.Filters.Tests
             var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
-            f.Instellen(new List<IFilter>() { filter });
+            f.Setup(new List<IFilter>() { filter });
 
 
             f.Filter(Edit.And, new List<IResult>() { new MultipleChoiceModelResult(filter, "Luminus", new Company("Luminus"),null,new Icon()) });
@@ -35,7 +36,7 @@ namespace Filter.Filters.Tests
             var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
-            f.Instellen(new List<IFilter>() { filter });
+            f.Setup(new List<IFilter>() { filter });
 
 
             f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">15000", new Icon()) });
@@ -49,7 +50,7 @@ namespace Filter.Filters.Tests
             var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
-            f.Instellen(new List<IFilter>() { filter });
+            f.Setup(new List<IFilter>() { filter });
 
 
             f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">100", new Icon()) });
@@ -63,7 +64,7 @@ namespace Filter.Filters.Tests
             var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
-            f.Instellen(new List<IFilter>() { filter });
+            f.Setup(new List<IFilter>() { filter });
 
 
             f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=145",new Icon()) });
@@ -77,7 +78,7 @@ namespace Filter.Filters.Tests
             var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
-            f.Instellen(new List<IFilter>() { filter });
+            f.Setup(new List<IFilter>() { filter });
 
 
             f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0", new Icon()) });
@@ -91,7 +92,7 @@ namespace Filter.Filters.Tests
             var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
-            f.Instellen(new List<IFilter>() { filter });
+            f.Setup(new List<IFilter>() { filter });
 
 
             f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0&<100", new Icon()) });
@@ -105,7 +106,7 @@ namespace Filter.Filters.Tests
             var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
-            f.Instellen(new List<IFilter>() { filter });
+            f.Setup(new List<IFilter>() { filter });
 
 
             f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0en<100", new Icon()) });
@@ -119,7 +120,7 @@ namespace Filter.Filters.Tests
             var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
-            f.Instellen(new List<IFilter>() { filter });
+            f.Setup(new List<IFilter>() { filter });
 
 
             f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0|<11000", new Icon()) });
@@ -133,7 +134,7 @@ namespace Filter.Filters.Tests
             var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
-            f.Instellen(new List<IFilter>() { filter });
+            f.Setup(new List<IFilter>() { filter });
 
 
             f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0of<11000", new Icon()) });
@@ -148,7 +149,7 @@ namespace Filter.Filters.Tests
             var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
-            f.Instellen(new List<IFilter>() { filter });
+            f.Setup(new List<IFilter>() { filter });
 
 
             f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0of<11000",new Icon()) });
@@ -163,7 +164,7 @@ namespace Filter.Filters.Tests
             var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
-            f.Instellen(new List<IFilter>() { filter });
+            f.Setup(new List<IFilter>() { filter });
 
 
             f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0en<150",new Icon()) });

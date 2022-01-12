@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Filter.Filter_Calculator;
+using Filter.Filter_Settings;
+using Filter.Filters.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Filter.Filters.Tests
+namespace FilterTests.Filters
 {
-    public partial class ActionFilterTests
-    {
-        public class FilterInstellingTestClass : IActionFilterSettings
+        public class FilterSettingsTestClass : IActionFilterSettings
         {
             public string Title { get; set; }
             public string Shortcut { get; set; } = "C";
@@ -17,10 +18,10 @@ namespace Filter.Filters.Tests
                 return Task.FromResult(
                     new List<FilterAction>()
                     {
-                        new FilterAction("Leverancier starten", () => { })
+                        new FilterAction("Leverancier start", () => { })
                     });
                 
             }
         }
-    }
+    
 }

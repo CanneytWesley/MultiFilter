@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Filter.Filter_Results;
+using Filter.Filter_Settings;
+using Filter.Filters.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +27,7 @@ namespace Filter.Filters
 
             var data = await Setting.GetData();
 
-            var result = data.Where(p => TestShortCut(uitvoeren) && p.ActionName.IndexOf(VerwijderShortCut(uitvoeren), StringComparison.OrdinalIgnoreCase) != -1).ToList();
+            var result = data.Where(p => TestShortCut(uitvoeren) && p.ActionName.IndexOf(RemoveShortCut(uitvoeren), StringComparison.OrdinalIgnoreCase) != -1).ToList();
             return result.Select(p => (IResult)new ActionResult(this, p.ActionName, (IResult result) => { p.Action?.Invoke(); }, Icon)).ToList();
         }
     }

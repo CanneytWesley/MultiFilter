@@ -1,4 +1,4 @@
-﻿namespace Filter.Filters
+﻿namespace Filter.Filter_Calculator
 {
     public enum Edit
     { 

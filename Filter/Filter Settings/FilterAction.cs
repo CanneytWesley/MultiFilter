@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Filter
+namespace Filter.Filter_Settings
 {
     public class FilterAction
     {

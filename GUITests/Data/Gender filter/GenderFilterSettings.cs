@@ -1,10 +1,9 @@
-﻿using Filter;
-using Filter.Filters;
-using GUITests.Data.Certificaat;
+﻿using Filter.Filter_Calculator;
+using Filter.Filter_Settings;
+using Filter.Filters.Model;
+using GUITests.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 

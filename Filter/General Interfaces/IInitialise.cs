@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Filter
+namespace Filter.General_Interfaces
 {
     public interface IInitialise
     {

@@ -6,8 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GUITests.Data;
+using Filter.Filter_Settings;
+using Filter.Filter_Calculator;
+using Filter.Filters.Model;
 
-namespace Filter.Filters.Tests
+namespace FilterTests.Filters
 {
     [TestClass()]
     public class KeuzeFilterTests

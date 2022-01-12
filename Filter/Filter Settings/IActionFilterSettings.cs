@@ -1,8 +1,10 @@
-﻿using Filter.Filters;
+﻿using Filter.Filter_Calculator;
+using Filter.Filters;
+using Filter.Filters.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Filter
+namespace Filter.Filter_Settings
 {
     public interface IActionFilterSettings
     {

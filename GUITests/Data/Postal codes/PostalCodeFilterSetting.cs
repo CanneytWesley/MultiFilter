@@ -1,11 +1,15 @@
 ﻿using Filter;
+using Filter.Filter_Calculator;
+using Filter.Filter_Settings;
 using Filter.Filters;
+using Filter.Filters.Model;
+using GUITests.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace GUITests.Data.Certificaat
+namespace GUITests.Data.Postal_codes
 {
     public class PostalCodeFilterSetting : IMultipleChoiceSettings<Friend, PostalCode>
     {

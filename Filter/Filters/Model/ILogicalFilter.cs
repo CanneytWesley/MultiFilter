@@ -1,8 +1,9 @@
-﻿using Filter.Filters;
+﻿using Filter.Filter_Results;
+using Filter.Filters;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Filter
+namespace Filter.Filters.Model
 {
     public interface ILogicalFilter : IFilter
     {

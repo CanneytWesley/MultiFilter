@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Filter.Filter_Results;
+using Filter.Filter_Settings;
+using Filter.Filters.Model;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -22,7 +25,7 @@ namespace Filter.Filters
 
         public Task<List<IResult>> FilterLogical(string uitvoeren)
         {
-            return Task.FromResult(new List<IResult>() { new LogischResult(this, VerwijderShortCut(uitvoeren),  Icon) });
+            return Task.FromResult(new List<IResult>() { new LogischResult(this, RemoveShortCut(uitvoeren),  Icon) });
         }
 
 
