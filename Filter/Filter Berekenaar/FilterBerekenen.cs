@@ -33,12 +33,15 @@ namespace Filter.Filters
 
         private void Instellen(string filterTitel, Type filterTrigger, Func<T, double> Property, FilterOptie val)
             => FilterBerekeningen.Add(new DoubleBerekening<T>(filterTitel, filterTrigger, Property, val));
-
+        
         private void Instellen(string filterTitel, Type filterTrigger, Func<T, int> Property, FilterOptie val)
             => FilterBerekeningen.Add(new IntBerekening<T>(filterTitel, filterTrigger, Property, val));
-
+        
         private void Instellen(string filterTitel, Type filterTrigger, Func<T, string> Property, FilterOptie val)
             => FilterBerekeningen.Add(new StringBerekening<T>(filterTitel, filterTrigger, Property, val));
+        
+        private void Instellen(string filterTitel, Type filterTrigger, Func<T, DateTime> Property, FilterOptie val)
+            => FilterBerekeningen.Add(new DateTimeBerekening<T>(filterTitel, filterTrigger, Property, val));
 
         private void Add(IEnumerable<T> items)
         {
@@ -73,47 +76,6 @@ namespace Filter.Filters
             Items.Clear();
         }
 
-        private void AndereFilteren(List<IResult> resultaten)
-        {
-            foreach (var filterresultaat in resultaten)
-            {
-                var type = filterresultaat.Filter.GetType().GetGenericArguments()[1];
-                var filter = FilterBerekeningen.FirstOrDefault(p => p.FilterTrigger == type && p.FilterTitel == filterresultaat.Filter.Titel);
-
-                if (filterresultaat.Filter is ILogischeFilter)
-                {
-                    if (filter is DoubleBerekening<T> dbi)
-                    {
-                        var result = dbi.FilterResult(AlleItems, filterresultaat);
-
-                        Add(result);
-                    }
-                    else if (filter is IntBerekening<T> ibi)
-                    {
-                        var result = ibi.FilterResult(AlleItems, filterresultaat);
-
-                        Add(result);
-                    }
-                }
-            }
-        }
-
-        private void ModelFilteren(List<IResult> resultaten)
-        {
-            foreach (var filterresultaat in resultaten)
-            {
-                var type = filterresultaat?.Model?.Model.GetType();
-
-                var filter = FilterBerekeningen.FirstOrDefault(p => p.FilterTrigger == type && p.FilterTitel == filterresultaat.Filter.Titel);
-
-                if (filter is StringBerekening<T> sfi)
-                {
-                    List<T> result = sfi.FilterResult(AlleItems, filterresultaat);
-
-                    Add(result);
-                }
-            }
-        }
 
         public void SetData(List<T> Items)
         {
@@ -126,10 +88,21 @@ namespace Filter.Filters
 
             Soort = soort;
 
-            var ModelFilters = resultaten.Where(p => p.Model.Model != null).ToList();
-            var AndereFilters = resultaten.Where(p => p.Model.Model == null).ToList();
-            ModelFilteren(ModelFilters);
-            AndereFilteren(AndereFilters);
+            foreach (var filterresultaat in resultaten)
+            {
+                var type = typeof(object);
+                if (filterresultaat.Model.Model != null)
+                    type = filterresultaat?.Model?.Model.GetType();
+                else
+                    type = filterresultaat.Filter.GetType().GetGenericArguments()[1];
+
+                var filter = FilterBerekeningen.FirstOrDefault(p => p.FilterTrigger == type && p.FilterTitel == filterresultaat.Filter.Titel);
+                
+                var result = filter.FilterResult(AlleItems, filterresultaat);
+
+                Add(result);
+                
+            }
         }
 
         public void Instellen(List<IFilter> filters)
@@ -150,6 +123,14 @@ namespace Filter.Filters
                         dynamic castedFilterInstelling = Convert.ChangeType(castedFilter.Data, actualDataType);
 
                         Type type = actualFilterType.GetGenericArguments()[1];
+
+                        if (actualDataType.IsNotPublic)
+                            throw new Exception($"{actualDataType} must be public to use in the filter");
+
+                        if (genericFilterType == typeof(LogischeFilter<,>) && 
+                            type != typeof(double) && type != typeof(int) && type != typeof(string) && type != typeof(DateTime))
+                            throw new Exception($"Your logical filter has a non existing type '{type}' that you can use in this filter");
+
                         Instellen(castedFilterInstelling.Titel, type, castedFilterInstelling.PropertyUitDataGrid, castedFilterInstelling.FilterOpties);
                     }
                 }

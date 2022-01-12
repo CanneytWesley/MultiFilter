@@ -38,6 +38,7 @@ namespace GUITests
             Filters.Add(new ActieFilter( new MessagesFilterSetting()));
             Filters.Add(new LogischeFilter<Friend, double>(new WeightFilterSetting()));
             Filters.Add(new LogischeFilter<Friend, int>(new AgeFilterSetting()));
+            Filters.Add(new LogischeFilter<Friend, DateTime>(new DateOfBirthSetting()));
 
             //Filter uitvoerder initialiseren
             FilterUitvoerder = new FilterBerekenen<Friend>();

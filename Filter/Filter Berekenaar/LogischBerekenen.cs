@@ -63,7 +63,7 @@ namespace Filter.Filter_Berekenaar
                 {
                     if (i != 0)
                     {
-                        bool DubbelOK = decimal.TryParse(tekst.Substring(0, i), out decimal resultDubbel);
+                        bool DubbelOK = TryParse(tekst.Substring(0, i), out decimal resultDubbel);
                         if (tekst.Length != 0) Logica.Add(new LogischeWaarde(resultDubbel));
 
                         if (!DubbelOK) IsSuccessVol = false;
@@ -78,7 +78,7 @@ namespace Filter.Filter_Berekenaar
                 {
                     if (i != 0)
                     {
-                        bool EnkelOK = decimal.TryParse(tekst.Substring(0, i), out decimal resultEnkel);
+                        bool EnkelOK = TryParse(tekst.Substring(0, i), out decimal resultEnkel);
                         if (tekst.Length != 0) Logica.Add(new LogischeWaarde(resultEnkel));
 
                         if (!EnkelOK) IsSuccessVol = false;
@@ -91,11 +91,34 @@ namespace Filter.Filter_Berekenaar
                 }
             }
 
-            bool overigeOK = decimal.TryParse(tekst, out decimal result);
+            bool overigeOK = TryParse(tekst, out decimal result);
             if (tekst.Length != 0) Logica.Add(new LogischeWaarde(result));
             if (!overigeOK) IsSuccessVol = false;
 
             TestLogischeOpbouwing();
+        }
+
+        private bool TryParse(string tekst, out decimal result)
+        {
+            result = 0;
+            var ok = decimal.TryParse(tekst, out decimal waarde);
+
+            if (ok)
+            {
+                result = waarde;
+                return true;
+            }
+
+            var date = new DateTime();
+            if (!ok) ok = DateTime.TryParse(tekst, out date);
+
+            if (ok)
+            {
+                result = Convert.ToDecimal(date.Ticks);
+                return true;
+            }
+
+            return false;
         }
 
         private void TestLogischeOpbouwing()
