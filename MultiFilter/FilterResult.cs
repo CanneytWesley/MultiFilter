@@ -6,26 +6,26 @@ namespace MultiFilter
 {
     public class FilterResult
     {
-        private List<IResult> resultaten;
+        private List<IResult> results;
 
-        public List<IResult> Resultaten
+        public List<IResult> Results
         {
             get
             {
-                return resultaten;
+                return results;
             }
             set
             {
                 if (value != null)
-                    resultaten = value;
+                    results = value;
             }
         }
 
-        public Soort Soort { get; set; }
+        public Edit Edit { get; set; }
 
         public FilterResult()
         {
-            Resultaten = new List<IResult>();
+            Results = new List<IResult>();
         }
 
 

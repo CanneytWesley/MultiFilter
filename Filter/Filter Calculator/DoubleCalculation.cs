@@ -5,38 +5,38 @@ using System.Linq;
 
 namespace Filter.Filters
 {
-    public class DateTimeCalculation<T> : ICalculation<T>
+    public class DoubleCalculation<T> : ICalculation<T>
     {
-        public Func<T, DateTime> Property { get; set; }
+        public Func<T, double> Property { get; set; }
         public FilterOption FilterOption { get; set; }
         public Type FilterTrigger { get; set; }
         public string FilterTitle { get; set; }
 
-        public DateTimeCalculation(string filterTitle, Type filterTrigger, Func<T, DateTime> property, FilterOption filterOption)
+        public DoubleCalculation(string filterTitel, Type filterTrigger, Func<T, double> property, FilterOption filterOptie)
         {
             Property = property;
-            FilterOption = filterOption;
+            FilterOption = filterOptie;
             FilterTrigger = filterTrigger;
-            FilterTitle = filterTitle;
+            FilterTitle = filterTitel;
         }
 
         public List<T> FilterResult(List<T> allItems, IResult filterResult)
         {
-            var informatie = filterResult.Model.Item.ToUpper();
-            if (informatie.StartsWith(filterResult.Filter.ShortCut.ToUpper()))
-                informatie = informatie.Substring(filterResult.Filter.ShortCut.Length + 1);
+            var information = filterResult.Model.Item.ToUpper();
+            if (information.StartsWith(filterResult.Filter.ShortCut.ToUpper()))
+                information = information.Substring(filterResult.Filter.ShortCut.Length + 1);
 
-            var logicalCalc = new LogicalCalculator();
-            logicalCalc.Calculate(informatie);
+            LogicalCalculator logic = new LogicalCalculator();
+            logic.Calculate(information);
 
             bool firstRun = true;
-            LogicalOperator OrAndOperator = LogicalOperator.And;
+            LogicalOperator AndOrOperator = LogicalOperator.And;
             List<T> result = new List<T>();
 
-            for (int i = 0; i < logicalCalc.Logic.Count - 1; i += 2)
+            for (int i = 0; i < logic.Logic.Count - 1; i += 2)
             {
-                var op = logicalCalc.Logic[i].Operator;
-                var value = new DateTime(Convert.ToInt64(logicalCalc.Logic[i + 1].value));
+                var op = logic.Logic[i].Operator;
+                var value = Convert.ToDouble( logic.Logic[i + 1].value);
 
 
                 if (firstRun)
@@ -44,21 +44,21 @@ namespace Filter.Filters
                     result = Filter(allItems, Property, op, value);
                     firstRun = false;
                 }
-                else if (OrAndOperator == LogicalOperator.And)
+                else if (AndOrOperator == LogicalOperator.And)
                 {
                     result = Filter(result, Property, op, value);
                 }
-                else if (OrAndOperator == LogicalOperator.Or)
+                else if (AndOrOperator == LogicalOperator.Or)
                 {
-                    var tempresult = Filter(allItems, Property, op, value);
+                    var tempResult = Filter(allItems, Property, op, value);
 
-                    foreach (var item in tempresult)
+                    foreach (var item in tempResult)
                         if (!result.Contains(item)) result.Add(item);
                 }
 
-                if (i < logicalCalc.Logic.Count - 2)
+                if (i < logic.Logic.Count - 2)
                 {
-                    OrAndOperator = logicalCalc.Logic[i + 2].Operator;
+                    AndOrOperator = logic.Logic[i + 2].Operator;
                     i += 1;
                 }
             }
@@ -66,7 +66,7 @@ namespace Filter.Filters
             return result;
         }
 
-        private List<T> Filter(List<T> allItems, Func<T, DateTime> property, LogicalOperator op, DateTime value)
+        private List<T> Filter(List<T> allItems, Func<T, double> property, LogicalOperator op, double value)
         {
             switch (op)
             {

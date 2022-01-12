@@ -36,7 +36,7 @@
                 </Style>
             </Label.Style>
         </Label>
-        <TextBox Background="Transparent" Width="150" Height="28" VerticalAlignment="Top" VerticalContentAlignment="Center" x:Name="TxtFilter" Text="" TextChanged="FilterTekst_TextChanged" PreviewMouseLeftButtonUp="TxtFilter_MouseDown" KeyUp="TxtFilter_KeyUp" />
+        <TextBox Background="Transparent" Width="150" Height="28" VerticalAlignment="Top" VerticalContentAlignment="Center" x:Name="TxtFilter" Text="" TextChanged="FilterText_TextChanged" PreviewMouseLeftButtonUp="TxtFilter_MouseDown" KeyUp="TxtFilter_KeyUp" />
         <Popup x:Name="Popup" MinWidth="200" Height="300" PopupAnimation="Slide" Placement="Bottom" PlacementTarget="{Binding ElementName=TxtFilter}">
             <Border BorderBrush="SlateGray" BorderThickness="1">
                 <Grid>
@@ -47,14 +47,14 @@
                     </Grid.RowDefinitions>
                     <Grid Background="White">
                         <Grid>
-                            <ListBox BorderThickness="0" VirtualizingStackPanel.VirtualizationMode="Recycling" x:Name="LstResultaten" Background="White">
+                            <ListBox BorderThickness="0" VirtualizingStackPanel.VirtualizationMode="Recycling" x:Name="LstResults" Background="White">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Height="30" Style="{StaticResource ButtonStyle}" Background="Transparent" HorizontalAlignment="Stretch">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseUp">
-                                                    <i:InvokeCommandAction Command="{Binding UitvoerenCommand}"/>
-                                                    <i:InvokeCommandAction Command="{Binding FilterGekliktCommand,ElementName=UI}"/>
+                                                    <i:InvokeCommandAction Command="{Binding ExecuteCommand}"/>
+                                                    <i:InvokeCommandAction Command="{Binding FilterClickCommand,ElementName=UI}"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
@@ -62,16 +62,16 @@
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
-                                            <Path Data="{Binding Icon.IconPad}" Fill="{Binding Icon.IconKleur}" Height="15" Width="15" Stretch="Uniform" Margin="5,0,5,0">
+                                            <Path Data="{Binding Icon.IconPath}" Fill="{Binding Icon.IconColor}" Height="15" Width="15" Stretch="Uniform" Margin="5,0,5,0">
 
                                             </Path>
                                             <Label VerticalAlignment="Center" Grid.Column="1" Content="{Binding Filter.ShortCut}" Foreground="SlateGray" Margin="5,0,5,0" />
-                                            <Label VerticalAlignment="Center" Grid.Column="2" Content="{Binding Model.Onderdeel }" />
+                                            <Label VerticalAlignment="Center" Grid.Column="2" Content="{Binding Model.Item }" />
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                            <TextBlock Foreground="SlateGray" Text="Er zijn geen resultaten die voldoen aan uw criteria..." x:Name="TxtInformatieOverFilter" Width="200" TextWrapping="Wrap" Margin="5" >
+                            <TextBlock Foreground="SlateGray" Text="Er zijn geen resultaten die voldoen aan uw criteria..." x:Name="TxtInformationAboutFilter" Width="200" TextWrapping="Wrap" Margin="5" >
                             </TextBlock>
                         </Grid>
                             
@@ -81,7 +81,7 @@
                         <Border BorderBrush="SlateGray" BorderThickness="0" Margin="0,0,0,0">
                             <Grid >
                                 <Grid Background="WhiteSmoke" ToolTip="Aantal actieve filters" VerticalAlignment="Center" HorizontalAlignment="Stretch" MouseUp="ButtonToonActieveFilters_MouseUp" Grid.Column="0">
-                                    <TextBlock MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBLogischeFilter" Padding="5,0,0,0" Margin="2" Background="WhiteSmoke">
+                                    <TextBlock MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBLogicalFilter" Padding="5,0,0,0" Margin="2" Background="WhiteSmoke">
 
                                     </TextBlock>
                                     <TextBlock Visibility="Collapsed" MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBHuidigeFilter" Padding="5,0,0,0" Margin="2" Background="WhiteSmoke">
@@ -93,7 +93,7 @@
                     </Grid>
                     <Grid Grid.Row="2" Background="White" >
                         <WrapPanel Background="WhiteSmoke">
-                            <ItemsControl Background="WhiteSmoke" ItemsSource="{Binding FilterOnderdelen,ElementName=UI}">
+                            <ItemsControl Background="WhiteSmoke" ItemsSource="{Binding Filters,ElementName=UI}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel />
@@ -107,7 +107,7 @@
                                                 <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=SetShortCutCommand}" CommandParameter="{Binding ShortCut}"/>
                                             </i:EventTrigger>
                                             <i:EventTrigger EventName="MouseEnter">
-                                                <i:InvokeCommandAction Command="{Binding MouseOverCommand,ElementName=UI}" CommandParameter="{Binding Titel}"/>
+                                                <i:InvokeCommandAction Command="{Binding MouseOverCommand,ElementName=UI}" CommandParameter="{Binding Title}"/>
                                             </i:EventTrigger>
                                             <i:EventTrigger EventName="MouseLeave">
                                                 <i:InvokeCommandAction Command="{Binding MouseOverCommand,ElementName=UI}" CommandParameter=""/>
@@ -124,7 +124,7 @@
                                                 <Setter Property="Background" Value="Transparent" />
                                             </Style>
                                         </Border.Style>
-                                        <Path Data="{Binding Icon.IconPad}" Fill="{Binding Icon.IconKleur}" Height="15" Width="15" Margin="2" Stretch="Uniform">
+                                        <Path Data="{Binding Icon.IconPath}" Fill="{Binding Icon.IconColor}" Height="15" Width="15" Margin="2" Stretch="Uniform">
 
                                         </Path>
                                     </Border>
@@ -146,14 +146,14 @@
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Background" Value="LightBlue" />
                                             </Trigger>
-                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=ActieveFilter.Count}" Value="0">
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=ActiveFilter.Count}" Value="0">
                                                 <Setter Property="Visibility" Value="Collapsed" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                         <Setter Property="Background" Value="Transparent" />
                                     </Style>
                                 </Border.Style>
-                                <Path Fill="Black" Height="15" Width="15" Margin="2" Stretch="Uniform" Data="{Binding Source={StaticResource IconPaths}, Path=Vuilbak}">
+                                <Path Fill="Black" Height="15" Width="15" Margin="2" Stretch="Uniform" Data="{Binding Source={StaticResource IconPaths}, Path=Trashcan}">
 
                                 </Path>
                             </Border>
@@ -188,15 +188,15 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="1" BorderBrush="CornflowerBlue" Margin="5,0,0,5" CornerRadius="3">
-                        <Grid Background="CornflowerBlue" ToolTip="{Binding Filter.Titel}">
+                        <Grid Background="CornflowerBlue" ToolTip="{Binding Filter.Title}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Path Data="{Binding Icon.IconPad}" Fill="WhiteSmoke" Height="15" Width="15" Margin="5,0,0,0" Stretch="Uniform"/>
-                            <Label Grid.Column="1" Content="{Binding Model.Onderdeel}" Foreground="WhiteSmoke" />
-                            <Label Grid.Column="2" Content="x" Padding="0" MouseUp="ResultVerwijderen_Click" Tag="{Binding }" Margin="7,0,5,3" VerticalContentAlignment="Center" VerticalAlignment="Top" Foreground="White" >
+                            <Path Data="{Binding Icon.IconPath}" Fill="WhiteSmoke" Height="15" Width="15" Margin="5,0,0,0" Stretch="Uniform"/>
+                            <Label Grid.Column="1" Content="{Binding Model.Item}" Foreground="WhiteSmoke" />
+                            <Label Grid.Column="2" Content="x" Padding="0" MouseUp="DeleteResult_Click" Tag="{Binding }" Margin="7,0,5,3" VerticalContentAlignment="Center" VerticalAlignment="Top" Foreground="White" >
                                 <Label.Style>
                                     <Style TargetType="Label">
                                         <Style.Triggers>

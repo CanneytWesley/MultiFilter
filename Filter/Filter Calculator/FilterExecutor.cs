@@ -4,48 +4,48 @@ using System.Linq;
 
 namespace Filter.Filters
 {
-    public class FilterBerekenen<T>
+    public class FilterExecutor<T>
     {
-        private List<T> AlleItems;
+        private List<T> AllItems;
         private List<T> Items;
 
-        private int AantalKeerGefilterd;
+        private int HowManyTimesFiltered;
 
-        public List<ICalculation<T>> FilterBerekeningen { get; set; }
+        public List<ICalculation<T>> FilterCalculations { get; set; }
 
-        public List<T> Resultaat
+        public List<T> Result
         {
             get
             {
-                if (AantalKeerGefilterd == 0) return AlleItems;
+                if (HowManyTimesFiltered == 0) return AllItems;
                 else return Items;
             }
         }
 
-        public Soort Soort { get; private set; }
+        public Edit Edit { get; private set; }
 
-        public FilterBerekenen()
+        public FilterExecutor()
         {
-            AlleItems = new List<T>();
+            AllItems = new List<T>();
             Items = new List<T>();
-            FilterBerekeningen = new List<ICalculation<T>>();
+            FilterCalculations = new List<ICalculation<T>>();
         }
 
-        private void Instellen(string filterTitel, Type filterTrigger, Func<T, double> Property, FilterOption val)
-            => FilterBerekeningen.Add(new DoubleBerekening<T>(filterTitel, filterTrigger, Property, val));
+        private void Setup(string filterTitle, Type filterTrigger, Func<T, double> Property, FilterOption val)
+            => FilterCalculations.Add(new DoubleCalculation<T>(filterTitle, filterTrigger, Property, val));
         
-        private void Instellen(string filterTitel, Type filterTrigger, Func<T, int> Property, FilterOption val)
-            => FilterBerekeningen.Add(new IntBerekening<T>(filterTitel, filterTrigger, Property, val));
+        private void Setup(string filterTitle, Type filterTrigger, Func<T, int> Property, FilterOption val)
+            => FilterCalculations.Add(new IntCalculation<T>(filterTitle, filterTrigger, Property, val));
         
-        private void Instellen(string filterTitel, Type filterTrigger, Func<T, string> Property, FilterOption val)
-            => FilterBerekeningen.Add(new StringBerekening<T>(filterTitel, filterTrigger, Property, val));
+        private void Setup(string filterTitle, Type filterTrigger, Func<T, string> Property, FilterOption val)
+            => FilterCalculations.Add(new StringCalculation<T>(filterTitle, filterTrigger, Property, val));
         
-        private void Instellen(string filterTitel, Type filterTrigger, Func<T, DateTime> Property, FilterOption val)
-            => FilterBerekeningen.Add(new DateTimeCalculation<T>(filterTitel, filterTrigger, Property, val));
+        private void Setup(string filterTitle, Type filterTrigger, Func<T, DateTime> Property, FilterOption val)
+            => FilterCalculations.Add(new DateTimeCalculation<T>(filterTitle, filterTrigger, Property, val));
 
         private void Add(IEnumerable<T> items)
         {
-            if (Soort == Soort.Of)
+            if (Edit == Edit.Or)
             {
                 foreach (var item in items)
                 {
@@ -53,11 +53,9 @@ namespace Filter.Filters
                         Items.Add(item);
                 }
             }
-            else if (Soort == Soort.En)
+            else if (Edit == Edit.And)
             {
-                IEnumerable<T> lijst = new List<T>();
-
-                if (AantalKeerGefilterd == 0)
+                if (HowManyTimesFiltered == 0)
                     items.ToList().ForEach(p => Items.Add(p));
                 else
                 {
@@ -67,38 +65,38 @@ namespace Filter.Filters
                 }
             }
 
-            AantalKeerGefilterd++;
+            HowManyTimesFiltered++;
         }
 
         private void ResetFilter()
         {
-            AantalKeerGefilterd = 0;
+            HowManyTimesFiltered = 0;
             Items.Clear();
         }
 
 
         public void SetData(List<T> Items)
         {
-            AlleItems = Items;
+            AllItems = Items;
         }
 
-        public void Filteren(Soort soort, List<IResult> resultaten)
+        public void Filter(Edit edit, List<IResult> results)
         {
             ResetFilter();
 
-            Soort = soort;
+            Edit = edit;
 
-            foreach (var filterresultaat in resultaten)
+            foreach (var filterResult in results)
             {
                 var type = typeof(object);
-                if (filterresultaat.Model.Model != null)
-                    type = filterresultaat?.Model?.Model.GetType();
+                if (filterResult.Model.Model != null)
+                    type = filterResult?.Model?.Model.GetType();
                 else
-                    type = filterresultaat.Filter.GetType().GetGenericArguments()[1];
+                    type = filterResult.Filter.GetType().GetGenericArguments()[1];
 
-                var filter = FilterBerekeningen.FirstOrDefault(p => p.FilterTrigger == type && p.FilterTitle == filterresultaat.Filter.Title);
+                var filter = FilterCalculations.FirstOrDefault(p => p.FilterTrigger == type && p.FilterTitle == filterResult.Filter.Title);
                 
-                var result = filter.FilterResult(AlleItems, filterresultaat);
+                var result = filter.FilterResult(AllItems, filterResult);
 
                 Add(result);
                 
@@ -131,7 +129,7 @@ namespace Filter.Filters
                             type != typeof(double) && type != typeof(int) && type != typeof(string) && type != typeof(DateTime))
                             throw new Exception($"Your logical filter has a non existing type '{type}' that you can use in this filter");
 
-                        Instellen(castedFilterInstelling.Title, type, castedFilterInstelling.PropertyFromDataset, castedFilterInstelling.FilterOptions);
+                        Setup(castedFilterInstelling.Title, type, castedFilterInstelling.PropertyFromDataset, castedFilterInstelling.FilterOptions);
                     }
                 }
             }

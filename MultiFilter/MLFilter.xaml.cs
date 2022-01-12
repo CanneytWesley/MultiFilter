@@ -25,7 +25,7 @@ namespace MultiFilter
     /// </summary>
     public partial class MLFilter : UserControl
     {
-        public ObservableCollection<IFilter> FilterOnderdelen
+        public ObservableCollection<IFilter> Filters
         {
             get { return (ObservableCollection<IFilter>)GetValue(FilterOnderdelenProperty); }
             set { SetValue(FilterOnderdelenProperty, value); }
@@ -33,7 +33,7 @@ namespace MultiFilter
 
         // Using a DependencyProperty as the backing store for FilterOnderdelen.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FilterOnderdelenProperty =
-            DependencyProperty.Register("FilterOnderdelen", typeof(ObservableCollection<IFilter>), typeof(MLFilter), new PropertyMetadata(null, CollectionChangedCallBack));
+            DependencyProperty.Register("Filters", typeof(ObservableCollection<IFilter>), typeof(MLFilter), new PropertyMetadata(null, CollectionChangedCallBack));
 
 
 
@@ -62,38 +62,38 @@ namespace MultiFilter
 
 
 
-        public ObservableCollection<IResult> ActieveFilter { get; set; }
+        public ObservableCollection<IResult> ActiveFilter { get; set; }
 
-        public Soort Soort { get; set; }
+        public Edit Edit { get; set; }
 
-        public ICommand FilterGekliktCommand { get; set; }
+        public ICommand FilterClickCommand { get; set; }
         public ICommand MouseOverCommand { get; set; }
         public ICommand SetShortCutCommand { get; set; }
 
         public MLFilter()
         {
             InitializeComponent();
-            SetEnOfInformatie(Soort.En);
-            ActieveFilter = new ObservableCollection<IResult>();
-            FilterOverzicht.ItemsSource = ActieveFilter;
-            FilterGekliktCommand = new RelayCommand(() => { SetPopupState(false); });
+            SetEnOfInformation(Edit.And);
+            ActiveFilter = new ObservableCollection<IResult>();
+            FilterOverzicht.ItemsSource = ActiveFilter;
+            FilterClickCommand = new RelayCommand(() => { SetPopupState(false); });
             MouseOverCommand = new RelayCommand<string>((string s) => { 
                 TBHuidigeFilter.Text = s;
                 if (s.Length > 0) TBHuidigeFilter.Visibility = Visibility.Visible;
                 else TBHuidigeFilter.Visibility = Visibility.Collapsed;
             });
             SetShortCutCommand = new RelayCommand<string>(SetShortCut);
-            SetEnOfLabel();
+            SetAndOrLabel();
 
         }
 
         private static void CollectionChangedCallBack(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var pz = (MLFilter)d;
-            if (pz.FilterOnderdelen != null && e.NewValue != e.OldValue)
+            if (pz.Filters != null && e.NewValue != e.OldValue)
             {
-                pz.FilterOnderdelen.CollectionChanged += FilterOnderdelen_CollectionChanged;
-                FilterOnderdelen_CollectionChanged(pz, null);
+                pz.Filters.CollectionChanged += Filters_CollectionChanged;
+                Filters_CollectionChanged(pz, null);
             }
         }
         private static void TekstBoxWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -105,82 +105,82 @@ namespace MultiFilter
 
         private void ButtonToonActieveFilters_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            LstResultaten.Items.Clear();
-            ActieveFilter.ToList().ForEach(p => LstResultaten.Items.Add(p));
+            LstResults.Items.Clear();
+            ActiveFilter.ToList().ForEach(p => LstResults.Items.Add(p));
         }
 
         private void ButtonEnOf_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (Soort == Soort.En)
-                SetEnOfInformatie(Soort.Of);
-            else if (Soort == Soort.Of)
-                SetEnOfInformatie(Soort.En);
+            if (Edit == Edit.And)
+                SetEnOfInformation(Edit.Or);
+            else if (Edit == Edit.Or)
+                SetEnOfInformation(Edit.And);
 
-            Command.Execute(new FilterResult() { Resultaten = ActieveFilter.ToList(), Soort = Soort }); 
-            SetEnOfLabel();
+            Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit }); 
+            SetAndOrLabel();
         }
 
 
         private void FilterReset_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            ActieveFilter.Clear(); 
+            ActiveFilter.Clear(); 
 
-            Command.Execute(new FilterResult() { Resultaten = ActieveFilter.ToList(), Soort = Soort }); 
-            SetEnOfLabel();
+            Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit }); 
+            SetAndOrLabel();
         }
-        private void SetEnOfInformatie(Soort soort)
+        private void SetEnOfInformation(Edit soort)
         {
-            if (soort == Soort.En)
+            if (soort == Edit.And)
             {
-                Soort = Soort.En; 
+                Edit = Edit.And; 
                 LblEnofOf.Content = "EN";
                 LblEnofOf.ToolTip = "Gegevens moeten voldoen aan alle voorwaarden.";
             }
-            else if (soort == Soort.Of)
+            else if (soort == Edit.Or)
             {
-                Soort = Soort.Of;
+                Edit = Edit.Or;
                 LblEnofOf.Content = "OF";
                 LblEnofOf.ToolTip = "Gegevens moeten voldoen aan één van de voorwaarden.";
             }
         }
 
-        private static void FilterOnderdelen_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private static void Filters_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var pz = (MLFilter)sender;
-            var shortcuts = pz.FilterOnderdelen.Select(p => ((BaseFilter)p).ShortCut).ToList();
-            foreach (var item in pz.FilterOnderdelen)
+            var shortcuts = pz.Filters.Select(p => ((BaseFilter)p).ShortCut).ToList();
+            foreach (var item in pz.Filters)
             {
                 ((BaseFilter)item).SetShortcuts(shortcuts);
                 if (item is IFilterExecuteEvent fu)
                 {
-                    fu.ExecuteFilter -= pz.FilterUitvoeren;
-                    fu.ExecuteFilter += pz.FilterUitvoeren;
+                    fu.ExecuteFilter -= pz.ExecuteFilter;
+                    fu.ExecuteFilter += pz.ExecuteFilter;
                 }
             }
         }
 
-        public void FilterUitvoeren(IResult resultaat)
+        public void ExecuteFilter(IResult result)
         {
-            if (ActieveFilter == null) return;
+            if (ActiveFilter == null) return;
 
-            if (ActieveFilter != null && !ActieveFilter.Any(p => p.IsGelijkAan(resultaat) ) && resultaat != null)
+            if (ActiveFilter != null && !ActiveFilter.Any(p => p.IsEqualTo(result) ) && result != null)
             {
-                ActieveFilter.Add(resultaat);
+                ActiveFilter.Add(result);
 
-                Command.Execute(new FilterResult() { Resultaten = ActieveFilter.ToList(), Soort = Soort });
-                SetEnOfLabel();
+                Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit });
+                SetAndOrLabel();
             }
         }
 
-        private void SetEnOfLabel()
+        private void SetAndOrLabel()
         {
-            if (ActieveFilter == null)
+            if (ActiveFilter == null)
             {
                 BorderLblEnOf.Visibility = Visibility.Collapsed;
                 return;
             }
 
-            if (ActieveFilter.Count >= 2) BorderLblEnOf.Visibility = Visibility.Visible;
+            if (ActiveFilter.Count >= 2) BorderLblEnOf.Visibility = Visibility.Visible;
             else BorderLblEnOf.Visibility = Visibility.Collapsed;
         }
 
@@ -190,55 +190,55 @@ namespace MultiFilter
             TxtFilter.CaretIndex = TxtFilter.Text.Length;
         }
 
-        private async void FilterTekst_TextChanged(object sender, TextChangedEventArgs e)
+        private async void FilterText_TextChanged(object sender, TextChangedEventArgs e)
         {
-            await OnderdelenInitialiseren();
+            await Initialise();
 
-            var taken = new List<Task<List<IResult>>>();
-            foreach (var filter in FilterOnderdelen)
+            var tasks = new List<Task<List<IResult>>>();
+            foreach (var filter in Filters)
             {
-                taken.Add(filter.Filter(TxtFilter.Text));
+                tasks.Add(filter.Filter(TxtFilter.Text));
             }
 
-            await Task.WhenAll(taken);
+            await Task.WhenAll(tasks);
 
-            var result = taken.SelectMany(p => p.Result).ToList();
+            var result = tasks.SelectMany(p => p.Result).ToList();
 
-            LstResultaten.Items.Clear();
-            TxtInformatieOverFilter.Visibility = Visibility.Visible;
+            LstResults.Items.Clear();
+            TxtInformationAboutFilter.Visibility = Visibility.Visible;
 
             if (TxtFilter.Text.Length > 0)
             {
-                result.ForEach(p => LstResultaten.Items.Add(p));
+                result.ForEach(p => LstResults.Items.Add(p));
 
-                if (result.Count == 0) TxtInformatieOverFilter.Visibility = Visibility.Visible;
-                else TxtInformatieOverFilter.Visibility = Visibility.Collapsed;
+                if (result.Count == 0) TxtInformationAboutFilter.Visibility = Visibility.Visible;
+                else TxtInformationAboutFilter.Visibility = Visibility.Collapsed;
 
                 SetPopupState(true);
-                ControleerShortCut();
+                CheckShortcut();
             }
         }
 
-        private void ControleerShortCut()
+        private void CheckShortcut()
         {
             
-            var result = FilterOnderdelen.FirstOrDefault(p => ((BaseFilter)p).HasThisShortCut(TxtFilter.Text));
+            var result = Filters.FirstOrDefault(p => ((BaseFilter)p).HasThisShortCut(TxtFilter.Text));
             bool result2 = false;
 
             if (result != null)
             {
                 var type = result.GetType();
                 result2 = type.GetInterfaces().Any(p => p == typeof(ILogicalFilter));
-                TBLogischeFilter.Text = result.Title;
+                TBLogicalFilter.Text = result.Title;
             }
             else
             {
-                TBLogischeFilter.Text = "";
+                TBLogicalFilter.Text = "";
             }
 
             if (result != null && result2)
             {
-                TxtInformatieOverFilter.Text =
+                TxtInformationAboutFilter.Text =
                     "Met deze filter kun je logisch filteren." +
                     Environment.NewLine +
                     Environment.NewLine +
@@ -256,7 +256,7 @@ namespace MultiFilter
             }
             else
             {
-                TxtInformatieOverFilter.Text = "Er zijn geen resultaten die voldoen aan uw criteria...";
+                TxtInformationAboutFilter.Text = "Er zijn geen resultaten die voldoen aan uw criteria...";
             }
         }
 
@@ -268,9 +268,9 @@ namespace MultiFilter
             else MouseHook.SetHook(this);
         }
 
-        private async Task OnderdelenInitialiseren()
+        private async Task Initialise()
         {
-            foreach (var filter in FilterOnderdelen)
+            foreach (var filter in Filters)
             {
                 if (filter is IInitialise ini && !ini.IsInitialised)
                 {
@@ -281,21 +281,21 @@ namespace MultiFilter
 
         private void TxtFilter_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            FilterTekst_TextChanged(this, null);
+            FilterText_TextChanged(this, null);
 
             SetPopupState(true);
         }
 
-        private void ResultVerwijderen_Click(object sender, MouseButtonEventArgs e)
+        private void DeleteResult_Click(object sender, MouseButtonEventArgs e)
         {
             Label l = (Label)sender;
 
             IResult result = (IResult) l.Tag;
 
-            ActieveFilter.Remove(result);
+            ActiveFilter.Remove(result);
 
-            Command.Execute(new FilterResult() { Resultaten = ActieveFilter.ToList(), Soort = Soort }); 
-            SetEnOfLabel();
+            Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit }); 
+            SetAndOrLabel();
 
 
             TxtFilter.Text = "";
@@ -305,7 +305,7 @@ namespace MultiFilter
         {
             if (e.Key == Key.Enter)
             {
-                var shortcuts = FilterOnderdelen.Where(p => p is ILogicalFilter).Select(p => p as ILogicalFilter).ToList();
+                var shortcuts = Filters.Where(p => p is ILogicalFilter).Select(p => p as ILogicalFilter).ToList();
 
                 var filtergesplit = TxtFilter.Text.Split(' ').ToList() ;
 
@@ -318,7 +318,7 @@ namespace MultiFilter
                     if (shortcut != null)
                     {
                         var getfilter = await shortcut.FilterLogical(TxtFilter.Text);
-                        foreach (var ft in getfilter) FilterUitvoeren(ft);
+                        foreach (var ft in getfilter) ExecuteFilter(ft);
 
                     }
                 }

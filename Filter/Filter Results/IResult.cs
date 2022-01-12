@@ -6,20 +6,20 @@ namespace Filter.Filters
 
     public interface IResult
     {
-        public ICommand UitvoerenCommand { get; }
+        public ICommand ExecuteCommand { get; }
 
         public IFilter Filter { get; set; }
 
-        public KeuzeModel Model { get; set; }
+        public MultipleChoiceModel Model { get; set; }
 
-        Action<IResult> Actie { get; set; }
+        Action<IResult> Action { get; set; }
 
         public Icon Icon { get; set; }
 
-        public bool IsGelijkAan(IResult resultaat)
+        public bool IsEqualTo(IResult result)
         {
-            return Model?.Onderdeel == resultaat.Model?.Onderdeel && Filter?.ShortCut == resultaat.Filter?.ShortCut && 
-                Filter?.Title == resultaat.Filter?.Title && Filter?.Icon?.IconColor == Filter?.Icon?.IconColor;
+            return Model?.Item == result.Model?.Item && Filter?.ShortCut == result.Filter?.ShortCut && 
+                Filter?.Title == result.Filter?.Title && Filter?.Icon?.IconColor == Filter?.Icon?.IconColor;
         }
     }
 }

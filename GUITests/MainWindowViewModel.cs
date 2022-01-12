@@ -24,7 +24,7 @@ namespace GUITests
         public ObservableCollection<Friend> Friends { get; set; }
         public ObservableCollection<IFilter> Filters { get; set; }
         public ICommand FilterCommand { get; set; }
-        public FilterBerekenen<Friend> FilterUitvoerder { get; set; }
+        public FilterExecutor<Friend> FilterUitvoerder { get; set; }
 
 
         public MainWindowViewModel()
@@ -43,7 +43,7 @@ namespace GUITests
             Filters.Add(new LogicalFilter<Friend, DateTime>(new DateOfBirthSetting()));
 
             //Filter uitvoerder initialiseren
-            FilterUitvoerder = new FilterBerekenen<Friend>();
+            FilterUitvoerder = new FilterExecutor<Friend>();
             FilterUitvoerder.Instellen(Filters.ToList());
         }
 
@@ -62,10 +62,10 @@ namespace GUITests
             if (result == null)
                 result = new();
 
-            FilterUitvoerder.Filteren(result.Soort, result.Resultaten); ;
+            FilterUitvoerder.Filter(result.Edit, result.Results); ;
 
             Friends.Clear();
-            FilterUitvoerder.Resultaat.ForEach(p => Friends.Add(p));
+            FilterUitvoerder.Result.ForEach(p => Friends.Add(p));
         }
     }
 }

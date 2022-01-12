@@ -18,157 +18,157 @@ namespace Filter.Filters.Tests
         public void FilterenTest_GewoneFilter()
         {
             var filter = new MultipleChoiceFilter<Friend,Company>(new Testdatacompany() { Title = "Company", Shortcut="C" });
-            var f = new FilterBerekenen<Friend>();
+            var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
             f.Instellen(new List<IFilter>() { filter });
 
 
-            f.Filteren(Soort.En, new List<IResult>() { new KeuzeModelResult(filter, "Luminus", new Company("Luminus"),null,new Icon()) });
+            f.Filter(Edit.And, new List<IResult>() { new MultipleChoiceModelResult(filter, "Luminus", new Company("Luminus"),null,new Icon()) });
 
-            Assert.AreEqual(1, f.Resultaat.Count);
+            Assert.AreEqual(1, f.Result.Count);
         }
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterDan15000_Resultaat0()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
-            var f = new FilterBerekenen<Friend>();
+            var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
             f.Instellen(new List<IFilter>() { filter });
 
 
-            f.Filteren(Soort.En, new List<IResult>() { new LogischResult(filter,">15000", new Icon()) });
+            f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">15000", new Icon()) });
 
-            Assert.AreEqual(0, f.Resultaat.Count);
+            Assert.AreEqual(0, f.Result.Count);
         }
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterDan14000_Resultaat1()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
-            var f = new FilterBerekenen<Friend>();
+            var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
             f.Instellen(new List<IFilter>() { filter });
 
 
-            f.Filteren(Soort.En, new List<IResult>() { new LogischResult(filter,">100", new Icon()) });
+            f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">100", new Icon()) });
 
-            Assert.AreEqual(4, f.Resultaat.Count);
+            Assert.AreEqual(4, f.Result.Count);
         }
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan15000_Resultaat1()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
-            var f = new FilterBerekenen<Friend>();
+            var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
             f.Instellen(new List<IFilter>() { filter });
 
 
-            f.Filteren(Soort.En, new List<IResult>() { new LogischResult(filter,">=145",new Icon()) });
+            f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=145",new Icon()) });
 
-            Assert.AreEqual(1, f.Resultaat.Count);
+            Assert.AreEqual(1, f.Result.Count);
         }
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0_Resultaat8()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
-            var f = new FilterBerekenen<Friend>();
+            var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
             f.Instellen(new List<IFilter>() { filter });
 
 
-            f.Filteren(Soort.En, new List<IResult>() { new LogischResult(filter,">=0", new Icon()) });
+            f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0", new Icon()) });
 
-            Assert.AreEqual(8, f.Resultaat.Count);
+            Assert.AreEqual(8, f.Result.Count);
         }
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0EnKleinerDan11000_1_Resultaat1()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
-            var f = new FilterBerekenen<Friend>();
+            var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
             f.Instellen(new List<IFilter>() { filter });
 
 
-            f.Filteren(Soort.En, new List<IResult>() { new LogischResult(filter,">=0&<100", new Icon()) });
+            f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0&<100", new Icon()) });
 
-            Assert.AreEqual(4, f.Resultaat.Count);
+            Assert.AreEqual(4, f.Result.Count);
         }
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0EnKleinerDan11000_2_Resultaat1()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
-            var f = new FilterBerekenen<Friend>();
+            var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
             f.Instellen(new List<IFilter>() { filter });
 
 
-            f.Filteren(Soort.En, new List<IResult>() { new LogischResult(filter,">=0en<100", new Icon()) });
+            f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0en<100", new Icon()) });
 
-            Assert.AreEqual(4, f.Resultaat.Count);
+            Assert.AreEqual(4, f.Result.Count);
         }
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0OfKleinerDan11000_1_Resultaat8()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
-            var f = new FilterBerekenen<Friend>();
+            var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
             f.Instellen(new List<IFilter>() { filter });
 
 
-            f.Filteren(Soort.En, new List<IResult>() { new LogischResult(filter,">=0|<11000", new Icon()) });
+            f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0|<11000", new Icon()) });
 
-            Assert.AreEqual(8, f.Resultaat.Count);
+            Assert.AreEqual(8, f.Result.Count);
         }
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0OfKleinerDan11000_2_Resultaat8()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
-            var f = new FilterBerekenen<Friend>();
+            var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
             f.Instellen(new List<IFilter>() { filter });
 
 
-            f.Filteren(Soort.En, new List<IResult>() { new LogischResult(filter,">=0of<11000", new Icon()) });
+            f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0of<11000", new Icon()) });
 
-            Assert.AreEqual(8, f.Resultaat.Count);
+            Assert.AreEqual(8, f.Result.Count);
         }
 
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0OfKleinerDan11000MetShortcut_2_Resultaat8()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
-            var f = new FilterBerekenen<Friend>();
+            var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
             f.Instellen(new List<IFilter>() { filter });
 
 
-            f.Filteren(Soort.En, new List<IResult>() { new LogischResult(filter,">=0of<11000",new Icon()) });
+            f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0of<11000",new Icon()) });
 
-            Assert.AreEqual(8, f.Resultaat.Count);
+            Assert.AreEqual(8, f.Result.Count);
         }
 
         [TestMethod()]
         public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0EnKleinerDan13000MetShortcut_2_Resultaat6()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
-            var f = new FilterBerekenen<Friend>();
+            var f = new FilterExecutor<Friend>();
             f.SetData(SeedFriends.GetSeed());
 
             f.Instellen(new List<IFilter>() { filter });
 
 
-            f.Filteren(Soort.En, new List<IResult>() { new LogischResult(filter,">=0en<150",new Icon()) });
+            f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter,">=0en<150",new Icon()) });
 
-            Assert.AreEqual(7, f.Resultaat.Count);
+            Assert.AreEqual(7, f.Result.Count);
         }
     }
 
