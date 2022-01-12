@@ -3,9 +3,9 @@ One filter that every WPF application should have.
 
 Do you recognise the following scene:
 Someone asks you to adapt your application and add a new filter to it, and the first thing you think about is where am i going to put that?
-There is not much room anymore...
+There is not much space left anymore...
 
-With this filter you can easily build a wpf application and use as many filters you need and still have enough room on your window for other things.
+With this filter you can easily build a wpf application and use as many filters you need and still have enough space on your window for other things.
 
 ![Screenshot](https://github.com/CanneytWesley/MultiFilter/blob/master/GUITests/Screenshots/Screenshot2.jpg?raw=true)
 
