@@ -13,69 +13,69 @@ namespace Filter.Filters.Tests
     public class BaseFilterTests
     {
         [TestMethod()]
-        public void VerwijderShortCutTest()
+        public void DeleteShortCutTest()
         {
-            ActionFilter actie = new ActionFilter(new FilterInstellingTestClass());
-            actie.ShortCut = "B";
+            ActionFilter action = new ActionFilter(new FilterInstellingTestClass());
+            action.ShortCut = "B";
 
-            var result = actie.VerwijderShortCut("B boe");
+            var result = action.VerwijderShortCut("B boe");
 
             Assert.AreEqual("boe", result);
         }
 
         [TestMethod()]
-        public void VerwijderShortCutTest2()
+        public void DeleteShortCutTest2()
         {
-            ActionFilter actie = new ActionFilter(new FilterInstellingTestClass());
-            actie.ShortCut = "B";
+            ActionFilter action = new ActionFilter(new FilterInstellingTestClass());
+            action.ShortCut = "B";
 
-            var result = actie.VerwijderShortCut("B");
+            var result = action.VerwijderShortCut("B");
 
             Assert.AreEqual("B", result);
         }
 
         [TestMethod()]
-        public void VerwijderShortCutTest3()
+        public void DeleteShortCutTest3()
         {
-            ActionFilter actie = new ActionFilter(new FilterInstellingTestClass());
-            actie.ShortCut = "B";
+            ActionFilter action = new ActionFilter(new FilterInstellingTestClass());
+            action.ShortCut = "B";
 
-            var result = actie.VerwijderShortCut("Babd");
+            var result = action.VerwijderShortCut("Babd");
 
             Assert.AreEqual("Babd", result);
         }
 
         [TestMethod()]
-        public void TestShortCutTest_GeenShortCut()
+        public void TestShortCutTest_NoShortCut()
         {
-            ActionFilter actie = new ActionFilter(new FilterInstellingTestClass());
-            actie.ShortCut = "B";
+            ActionFilter action = new ActionFilter(new FilterInstellingTestClass());
+            action.ShortCut = "B";
 
-            var result = actie.TestShortCut("Babd");
+            var result = action.TestShortCut("Babd");
 
             Assert.IsTrue(result);
         }
 
         [TestMethod()]
-        public void TestShortCutTest_VerkeerdeShortCut()
+        public void TestShortCutTest_WrongShortCut()
         {
-            ActionFilter actie = new ActionFilter(new FilterInstellingTestClass());
-            actie.SetShortcuts(new List<string>() { "A", "B" });
-            actie.ShortCut = "B";
+            ActionFilter action = new ActionFilter(new FilterInstellingTestClass());
+            action.SetShortcuts(new List<string>() { "A", "B" });
+            action.ShortCut = "B";
 
 
-            var result = actie.TestShortCut("A Babd");
+            var result = action.TestShortCut("A Babd");
 
             Assert.IsFalse(result);
         }
 
         [TestMethod()]
-        public void TestShortCutTest_JuisteShortCut()
+        public void TestShortCutTest_CorrectShortCut()
         {
-            ActionFilter actie = new ActionFilter(new FilterInstellingTestClass());
-            actie.ShortCut = "A";
+            ActionFilter action = new ActionFilter(new FilterInstellingTestClass());
+            action.ShortCut = "A";
 
-            var result = actie.TestShortCut("A Babd");
+            var result = action.TestShortCut("A Babd");
 
             Assert.IsTrue(result);
         }
@@ -85,9 +85,9 @@ namespace Filter.Filters.Tests
         {
             ActionFilter af = new ActionFilter(new FilterInstellingTestClass());
 
-            var resultaat = af.HasThisShortCut("");
+            var result = af.HasThisShortCut("");
 
-            Assert.AreEqual(false, resultaat);
+            Assert.AreEqual(false, result);
         }
 
         [TestMethod()]
@@ -95,9 +95,9 @@ namespace Filter.Filters.Tests
         {
             ActionFilter af = new ActionFilter(new FilterInstellingTestClass());
 
-            var resultaat = af.HasThisShortCut("c bla");
+            var result = af.HasThisShortCut("c bla");
 
-            Assert.AreEqual(true, resultaat);
+            Assert.AreEqual(true, result);
         }
     }
 }

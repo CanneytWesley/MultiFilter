@@ -12,7 +12,7 @@ namespace Filter.Filters.Tests
     {
 
         [TestMethod()]
-        public async Task FilterenTest_ZonderShortcut()
+        public async Task FilterTest_WithoutShortcut()
         {
 
 
@@ -25,7 +25,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(1, result.Count);
         }
         [TestMethod()]
-        public async Task FilterenTest_MetShortcut()
+        public async Task FilterTest_WithShortcut()
         {
             ActionFilter af = new ActionFilter(new FilterInstellingTestClass());
             af.Title = "Leverancier starten";
@@ -36,7 +36,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(1, result.Count);
         }
         [TestMethod()]
-        public async Task FilterenTest_NietToepasselijk()
+        public async Task FilterTest_NonExistingFilter()
         {
             ActionFilter af = new ActionFilter(new FilterInstellingTestClass());
             af.Title = "Leverancier starten";

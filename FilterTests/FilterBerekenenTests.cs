@@ -15,7 +15,7 @@ namespace Filter.Filters.Tests
     public class FilterBerekenenTests
     {
         [TestMethod()]
-        public void FilterenTest_GewoneFilter()
+        public void FilterenTest_RegularFilter()
         {
             var filter = new MultipleChoiceFilter<Friend,Company>(new Testdatacompany() { Title = "Company", Shortcut="C" });
             var f = new FilterExecutor<Friend>();
@@ -29,7 +29,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(1, f.Result.Count);
         }
         [TestMethod()]
-        public void FilterenTest_LogischeFilterTest_LengteGroterDan15000_Resultaat0()
+        public void FilterenTest_LogicalFilterTestLengthGreatherThan15000_Result0()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterExecutor<Friend>();
@@ -43,7 +43,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(0, f.Result.Count);
         }
         [TestMethod()]
-        public void FilterenTest_LogischeFilterTest_LengteGroterDan14000_Resultaat1()
+        public void FilterenTest_LogicalFilterTest_LengthGreaterThan14000_Result1()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterExecutor<Friend>();
@@ -57,7 +57,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(4, f.Result.Count);
         }
         [TestMethod()]
-        public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan15000_Resultaat1()
+        public void FilterenTest_LogicalFilterTest_LengthGreaterOrEqualTo15000_Result1()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterExecutor<Friend>();
@@ -71,7 +71,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(1, f.Result.Count);
         }
         [TestMethod()]
-        public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0_Resultaat8()
+        public void FilterenTest_LogicalFilterTest_LengthGreaterOrEqualTo0_Result8()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterExecutor<Friend>();
@@ -85,7 +85,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(8, f.Result.Count);
         }
         [TestMethod()]
-        public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0EnKleinerDan11000_1_Resultaat1()
+        public void FilterenTest_LogicalFilterTest_LengthGreaterOrEqualTo0AndSmallerThan11000_1_Result1()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterExecutor<Friend>();
@@ -99,7 +99,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(4, f.Result.Count);
         }
         [TestMethod()]
-        public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0EnKleinerDan11000_2_Resultaat1()
+        public void FilterenTest_LogicalFilterTest_LengthGreaterThanOrEqualTo0AndSmallerThan11000_2_Result1()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterExecutor<Friend>();
@@ -113,7 +113,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(4, f.Result.Count);
         }
         [TestMethod()]
-        public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0OfKleinerDan11000_1_Resultaat8()
+        public void FilterenTest_LogicalFilterTest_LengthGreaterThanOrEqualTo0OrSmallerThan11000_1_Result8()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterExecutor<Friend>();
@@ -127,7 +127,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(8, f.Result.Count);
         }
         [TestMethod()]
-        public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0OfKleinerDan11000_2_Resultaat8()
+        public void FilterenTest_LogicalFilterTest_LengthGreaterThanOrEqualTo0OrSmallerThan11000_2_Result8()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterExecutor<Friend>();
@@ -142,7 +142,7 @@ namespace Filter.Filters.Tests
         }
 
         [TestMethod()]
-        public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0OfKleinerDan11000MetShortcut_2_Resultaat8()
+        public void FilterenTest_LogicalFilterTest_LengthGreaterThanOrEqualTo0OrSmallerThan11000WithShortcut_2_Result8()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterExecutor<Friend>();
@@ -157,7 +157,7 @@ namespace Filter.Filters.Tests
         }
 
         [TestMethod()]
-        public void FilterenTest_LogischeFilterTest_LengteGroterOfGelijkAan0EnKleinerDan13000MetShortcut_2_Resultaat6()
+        public void FilterenTest_LogicalFilterTest_LengthGreaterThanOrEqual0AndSmallerThan150WithShortcut_2_Result6()
         {
             var filter = new LogicalFilter<Friend,double>(new WeightFilterInstelling());
             var f = new FilterExecutor<Friend>();

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace Filter.Filter_Berekenaar.Tests
 {
     [TestClass()]
-    public class LogischBerekenenTests
+    public class LogicalCalculationTests
     {
         [TestMethod()]
-        public void BerekenLogicaTest_GroterDan15000()
+        public void CalculateLogicTest_GreaterThan15000()
         {
             LogicalCalculator model = new LogicalCalculator();
 
@@ -26,7 +26,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
-        public void BerekenLogicaTest_GroterDan15000_2()
+        public void CalculateLogicTest_GreaterThan15000_2()
         {
             LogicalCalculator model = new LogicalCalculator();
 
@@ -39,7 +39,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(15000, model.Logic[1].value);
         }
         [TestMethod()]
-        public void BerekenLogicaTest_GroterDan15000_3()
+        public void CalculateLogicTest_GreaterThan15000_3()
         {
             LogicalCalculator model = new LogicalCalculator();
 
@@ -53,7 +53,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
-        public void BerekenLogicaTest_KleinerDan15000()
+        public void CalculateLogicTest_SmallerThan15000()
         {
             LogicalCalculator model = new LogicalCalculator();
 
@@ -67,7 +67,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
-        public void BerekenLogicaTest_GroterDanOfGelijkAan15000()
+        public void CalculateLogicTest_GreaterThanOfEqualTo15000()
         {
             LogicalCalculator model = new LogicalCalculator();
 
@@ -81,7 +81,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
-        public void BerekenLogicaTest_KleinerDanOfGelijkAan15000()
+        public void CalculateLogicTest_SmallerThanOfEqualTo15000()
         {
             LogicalCalculator model = new LogicalCalculator();
 
@@ -95,7 +95,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
-        public void BerekenLogicaTest_GelijkAan15000()
+        public void CalculateLogicTest_EqualTo15000()
         {
             LogicalCalculator model = new LogicalCalculator();
 
@@ -109,7 +109,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
-        public void BerekenLogicaTest_NietGelijkAan15000()
+        public void CalculateLogicTest_NotEqualTo15000()
         {
             LogicalCalculator model = new LogicalCalculator();
 
@@ -123,7 +123,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
-        public void BerekenLogicaTest_NietGelijkAan15000_2()
+        public void CalculateLogicTest_NotEqualTo15000_2()
         {
             LogicalCalculator model = new LogicalCalculator();
 
@@ -137,7 +137,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
-        public void BerekenLogicaTest_HeleLijn()
+        public void CalculateLogicTest_WholeLine()
         {
             LogicalCalculator model = new LogicalCalculator();
 
@@ -153,7 +153,7 @@ namespace Filter.Filter_Berekenaar.Tests
         }
 
         [TestMethod()]
-        public void TestLogischeOpbouwing_StartenMetEn_UnSuccessfull()
+        public void TestLogicalBuild_StartWithAnd_UnSuccessfull()
         {
             LogicalCalculator model = new LogicalCalculator();
 
@@ -163,7 +163,7 @@ namespace Filter.Filter_Berekenaar.Tests
         }
 
         [TestMethod()]
-        public void TestLogischeOpbouwing_EindigenMetEn_UnSuccessfull()
+        public void TestLogicalBuild_StopWithEn_UnSuccessfull()
         {
             LogicalCalculator model = new LogicalCalculator();
 
@@ -172,7 +172,7 @@ namespace Filter.Filter_Berekenaar.Tests
             Assert.AreEqual(false, model.IsSuccess);
         }
         [TestMethod()]
-        public void TestLogischeOpbouwing_2operators_UnSuccessfull()
+        public void TestLogicalBuild_2operators_UnSuccessfull()
         {
             LogicalCalculator model = new LogicalCalculator();
 

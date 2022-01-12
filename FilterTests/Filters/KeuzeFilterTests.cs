@@ -13,7 +13,7 @@ namespace Filter.Filters.Tests
     public class KeuzeFilterTests
     {
         [TestMethod()]
-        public async Task FilterenTest()
+        public async Task FilterTest()
         {
             var kf = new MultipleChoiceFilter<string,string>(new Testdata());
             await kf.Initialise();
@@ -23,7 +23,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(1, result.Count);
         }
         [TestMethod()]
-        public async Task FilterenTest_2()
+        public async Task FilterTest_2()
         {
             var kf = new MultipleChoiceFilter<string,string>(new Testdata());
             await kf.Initialise();
@@ -33,7 +33,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(0, result.Count);
         }
         [TestMethod()]
-        public async Task FilterenTest_3()
+        public async Task FilterTest_3()
         {
             var kf = new MultipleChoiceFilter<string,string>(new Testdata());
             await kf.Initialise();
@@ -43,7 +43,7 @@ namespace Filter.Filters.Tests
             Assert.AreEqual(0, result.Count);
         }
         [TestMethod()]
-        public async Task FilterenTest_4()
+        public async Task FilterTest_4()
         {
             var kf = new MultipleChoiceFilter<string,string>(new Testdata());
             await kf.Initialise();
