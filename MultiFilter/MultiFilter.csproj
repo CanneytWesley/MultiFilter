@@ -6,7 +6,12 @@
     <UseWPF>true</UseWPF>
     <Description>Filter for WPF applications</Description>
     <Company>PCW-Solutions</Company>
-    <Authors>CanneytWesley</Authors>
+    <Authors>PCW-Solutions</Authors>
+    <PackageId>PCW.MultiFilter</PackageId>
+    <PackageIcon>filter.png</PackageIcon>
+    <PackageTags>WPF, Filter</PackageTags>
+    <PackageProjectUrl>https://github.com/CanneytWesley/MultiFilter</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CanneytWesley/MultiFilter</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +19,13 @@
     <EmbeddedResource Remove="_NCrunch_MultiFilter\**" />
     <None Remove="_NCrunch_MultiFilter\**" />
     <Page Remove="_NCrunch_MultiFilter\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="F:\Dropbox\OneDrive - BUYCK.BE\Desktop\filter.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
