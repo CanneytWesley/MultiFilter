@@ -7,7 +7,7 @@ There is not much space left anymore...
 
 With this filter you can easily build a wpf application and use as many filters you need and still have enough space on your window for other things.
 
-![Screenshot](https://github.com/CanneytWesley/MultiFilter/blob/master/GUITests/Screenshots/Screenshot2.jpg?raw=true)
+![Screenshot](https://github.com/CanneytWesley/MultiFilter/blob/master/MultiFilter.GUITests/Screenshots/Screenshot2.jpg?raw=true)
 
 ## The big advantages
 * Less code to maintain
