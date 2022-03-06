@@ -8,6 +8,7 @@
     <PackageIcon>filter.png</PackageIcon>
     <RepositoryUrl>https://github.com/CanneytWesley/MultiFilter</RepositoryUrl>
     <PackageTags>WPF, Filter</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

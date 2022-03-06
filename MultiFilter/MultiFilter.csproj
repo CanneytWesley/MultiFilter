@@ -12,6 +12,7 @@
     <PackageTags>WPF, Filter</PackageTags>
     <PackageProjectUrl>https://github.com/CanneytWesley/MultiFilter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CanneytWesley/MultiFilter</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
