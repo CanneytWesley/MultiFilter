@@ -1,6 +1,5 @@
 ﻿using Filter.Filter_Calculator;
 using Filter.Filter_Results;
-using Filter.Filters;
 using System;
 using System.Collections.Generic;
 

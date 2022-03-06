@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Filter\Filter.csproj" />
+    <ProjectReference Include="..\MultiFilter.Core\MultiFilter.Core.csproj" />
   </ItemGroup>
 
 </Project>
