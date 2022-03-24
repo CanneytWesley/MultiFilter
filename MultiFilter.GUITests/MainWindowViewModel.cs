@@ -39,6 +39,7 @@ namespace MultiFilter.GUITests
             Filters.Add(new LogicalFilter<Friend, double>(new WeightFilterSetting()));
             Filters.Add(new LogicalFilter<Friend, int>(new AgeFilterSetting()));
             Filters.Add(new LogicalFilter<Friend, DateTime>(new DateOfBirthSetting()));
+            Filters.Add(new LogicalFilter<Friend, string>(new CompanySetting()));
 
             //Filter uitvoerder initialiseren
             FilterExecutor = new FilterExecutor<Friend>();

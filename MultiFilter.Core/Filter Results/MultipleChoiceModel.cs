@@ -18,7 +18,8 @@ namespace Filter.Filter_Results
 
         public string Item { get; private set; }
 
-       
+
+
     }
 
 }
