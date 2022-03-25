@@ -1,5 +1,4 @@
 ﻿using Filter.Filter_Calculator;
-using Filter.Filter_Results;
 using GalaSoft.MvvmLight.CommandWpf;
 using GUITests.Data.Gender_filter;
 using GUITests.Data.Postal_codes;
@@ -14,9 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace MultiFilter.GUITests
 {
