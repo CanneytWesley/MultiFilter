@@ -9,6 +9,7 @@ namespace MultiFilter.GUITests.Models
         public int Age { get; set; }
 
         public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfDeath { get; set; }
 
         public Gender Sex { get; set; }
 

@@ -33,6 +33,7 @@ namespace MultiFilter.GUITests
             Filters.Add(new LogicalFilter<Friend, double>(new WeightFilterSetting()));
             Filters.Add(new LogicalFilter<Friend, int>(new AgeFilterSetting()));
             Filters.Add(new LogicalFilter<Friend, DateTime>(new DateOfBirthSetting()));
+            Filters.Add(new LogicalFilter<Friend, DateTime?>(new DateOfDeathSetting()));
             Filters.Add(new LogicalFilter<Friend, string>(new CompanySetting()));
 
             Command = new RelayCommand<FilterResult>(Filter);

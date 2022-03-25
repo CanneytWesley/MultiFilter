@@ -49,6 +49,9 @@ namespace Filter.Filter_Calculator
         
         private void Setup(string filterTitle, Type filterTrigger, Func<T, DateTime> Property, FilterOption val)
             => FilterCalculations.Add(new DateTimeCalculation<T>(filterTitle, filterTrigger, Property, val));
+        
+        private void Setup(string filterTitle, Type filterTrigger, Func<T, DateTime?> Property, FilterOption val)
+            => FilterCalculations.Add(new NullableDateTimeCalculation<T>(filterTitle, filterTrigger, Property, val));
 
         private void Add(IEnumerable<T> items)
         {
@@ -133,7 +136,7 @@ namespace Filter.Filter_Calculator
                             throw new Exception($"{actualDataType} must be public to use in the filter");
 
                         if (genericFilterType == typeof(LogicalFilter<,>) && 
-                            type != typeof(double) && type != typeof(int) && type != typeof(string) && type != typeof(DateTime))
+                            type != typeof(double) && type != typeof(int) && type != typeof(string) && type != typeof(DateTime) && type != typeof(DateTime?))
                             throw new Exception($"Your logical filter has a non existing type '{type}' that you can use in this filter");
 
                         Setup(castedFilterInstelling.Title, type, castedFilterInstelling.PropertyFromDataset, castedFilterInstelling.FilterOptions);
