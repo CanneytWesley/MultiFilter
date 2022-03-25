@@ -3,6 +3,7 @@ using Filter.Filter_Calculator;
 using Filter.Filter_Results;
 using Filter.General_Interfaces;
 using GalaSoft.MvvmLight.CommandWpf;
+using MultiFilter.Core;
 using MultiFilter.Core.Filters;
 using MultiFilter.Core.Filters.Model;
 using System;
@@ -29,28 +30,16 @@ namespace MultiFilter
     /// </summary>
     public partial class MLFilter : UserControl
     {
-        public ObservableCollection<IFilter> Filters
+
+        public FilterMaster FilterMaster
         {
-            get { return (ObservableCollection<IFilter>)GetValue(FilterOnderdelenProperty); }
-            set { SetValue(FilterOnderdelenProperty, value); }
+            get { return (FilterMaster)GetValue(FilterMasterProperty); }
+            set { SetValue(FilterMasterProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FilterOnderdelen.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty FilterOnderdelenProperty =
-            DependencyProperty.Register("Filters", typeof(ObservableCollection<IFilter>), typeof(MLFilter), new PropertyMetadata(null, CollectionChangedCallBack));
-
-
-
-        public ICommand Command
-        {
-            get { return (ICommand)GetValue(CommandProperty); }
-            set { SetValue(CommandProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(ICommand), typeof(MLFilter), new PropertyMetadata(null));
-
+        // Using a DependencyProperty as the backing store for FilterMaster.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FilterMasterProperty =
+            DependencyProperty.Register("FilterMaster", typeof(FilterMaster), typeof(MLFilter), new PropertyMetadata(null, FilterMasterChanged));
 
 
         public int TextBoxWidth
@@ -91,15 +80,24 @@ namespace MultiFilter
 
         }
 
-        private static void CollectionChangedCallBack(DependencyObject d, DependencyPropertyChangedEventArgs e)
+
+        private static void FilterMasterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var pz = (MLFilter)d;
-            if (pz.Filters != null && e.NewValue != e.OldValue)
+            if (pz.FilterMaster != null)
             {
-                pz.Filters.CollectionChanged += Filters_CollectionChanged;
-                Filters_CollectionChanged(pz, null);
+                pz.FilterMaster.TriggerFilterEvent -= pz.TriggerFilter;
+                pz.FilterMaster.TriggerFilterEvent += pz.TriggerFilter;
+                pz.FilterMaster.FilterEventHandler -= pz.ExecuteFilter;
+                pz.FilterMaster.FilterEventHandler += pz.ExecuteFilter;
             }
         }
+
+        private void TriggerFilter(object sender, EventArgs e)
+        {
+            FilterMaster.Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit });
+        }
+
         private static void TekstBoxWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var pz = (MLFilter)d;
@@ -120,16 +118,16 @@ namespace MultiFilter
             else if (Edit == Edit.Or)
                 SetEnOfInformation(Edit.And);
 
-            Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit }); 
+            FilterMaster.Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit }); 
             SetAndOrLabel();
         }
 
 
         private void FilterReset_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            ActiveFilter.Clear(); 
+            ActiveFilter.Clear();
 
-            Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit }); 
+            FilterMaster.Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit }); 
             SetAndOrLabel();
         }
         private void SetEnOfInformation(Edit soort)
@@ -151,8 +149,8 @@ namespace MultiFilter
         private static void Filters_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var pz = (MLFilter)sender;
-            var shortcuts = pz.Filters.Select(p => ((BaseFilter)p).ShortCut).ToList();
-            foreach (var item in pz.Filters)
+            var shortcuts = pz.FilterMaster.Filters.Select(p => ((BaseFilter)p).ShortCut).ToList();
+            foreach (var item in pz.FilterMaster.Filters)
             {
                 ((BaseFilter)item).SetShortcuts(shortcuts);
                 if (item is IFilterExecuteEvent fu)
@@ -171,7 +169,7 @@ namespace MultiFilter
             {
                 ActiveFilter.Add(result);
 
-                Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit });
+                FilterMaster.Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit });
                 SetAndOrLabel();
             }
         }
@@ -199,7 +197,7 @@ namespace MultiFilter
             await Initialise();
 
             var tasks = new List<Task<List<IResult>>>();
-            foreach (var filter in Filters)
+            foreach (var filter in FilterMaster.Filters)
             {
                 tasks.Add(filter.Filter(TxtFilter.Text));
             }
@@ -226,7 +224,7 @@ namespace MultiFilter
         private void CheckShortcut()
         {
             
-            var result = Filters.FirstOrDefault(p => ((BaseFilter)p).HasThisShortCut(TxtFilter.Text));
+            var result = FilterMaster.Filters.FirstOrDefault(p => ((BaseFilter)p).HasThisShortCut(TxtFilter.Text));
             bool result2 = false;
 
             if (result != null)
@@ -274,7 +272,7 @@ namespace MultiFilter
 
         private async Task Initialise()
         {
-            foreach (var filter in Filters)
+            foreach (var filter in FilterMaster.Filters)
             {
                 if (filter is IInitialise ini && !ini.IsInitialised)
                 {
@@ -298,7 +296,7 @@ namespace MultiFilter
 
             ActiveFilter.Remove(result);
 
-            Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit }); 
+            FilterMaster.Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit }); 
             SetAndOrLabel();
 
 
@@ -309,7 +307,7 @@ namespace MultiFilter
         {
             if (e.Key == Key.Enter)
             {
-                var shortcuts = Filters.Where(p => p is ILogicalFilter).Select(p => p as ILogicalFilter).ToList();
+                var shortcuts = FilterMaster.Filters.Where(p => p is ILogicalFilter).Select(p => p as ILogicalFilter).ToList();
 
                 var filtergesplit = TxtFilter.Text.Split(' ').ToList() ;
 
@@ -324,6 +322,8 @@ namespace MultiFilter
                         var getfilter = await shortcut.FilterLogical(TxtFilter.Text);
                         foreach (var ft in getfilter) ExecuteFilter(ft);
 
+                        TxtFilter.Text = "";
+                        SetPopupState(false);
                     }
                 }
             }

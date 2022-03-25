@@ -93,7 +93,7 @@
                     </Grid>
                     <Grid Grid.Row="2" Background="White" >
                         <WrapPanel Background="WhiteSmoke">
-                            <ItemsControl Background="WhiteSmoke" ItemsSource="{Binding Filters,ElementName=UI}">
+                            <ItemsControl Background="WhiteSmoke" ItemsSource="{Binding FilterMaster.Filters,ElementName=UI}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel />

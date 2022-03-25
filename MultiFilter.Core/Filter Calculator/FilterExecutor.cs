@@ -7,7 +7,11 @@ using System.Linq;
 
 namespace Filter.Filter_Calculator
 {
-    public class FilterExecutor<T>
+    public interface IFilterExecutor { 
+    
+    }
+
+    public class FilterExecutor<T> : IFilterExecutor
     {
         private List<T> AllItems;
         private List<T> Items;
