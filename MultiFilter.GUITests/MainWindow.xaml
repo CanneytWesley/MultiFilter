@@ -13,7 +13,7 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <local1:MLFilter  FilterMaster="{Binding FilterMaster}" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" />
+        <local1:MLFilter TextBoxWidth="500"  FilterMaster="{Binding FilterMaster}" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" />
         <DataGrid ItemsSource="{Binding Friends}" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False">
             
         </DataGrid>

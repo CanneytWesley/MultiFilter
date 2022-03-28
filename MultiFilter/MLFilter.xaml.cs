@@ -102,6 +102,7 @@ namespace MultiFilter
         {
             var pz = (MLFilter)d;
             pz.TxtFilter.Width = pz.TextBoxWidth;
+            pz.Popup.Width = pz.TextBoxWidth;
         }
 
 
@@ -261,13 +262,22 @@ namespace MultiFilter
                 TxtInformationAboutFilter.Text = "Er zijn geen resultaten die voldoen aan uw criteria...";
             }
         }
-
+        private Brush TextBoxBorderColor;
         public void SetPopupState(bool state)
         {
+            if (TextBoxBorderColor == null) TextBoxBorderColor = TxtFilter.BorderBrush;
             Popup.IsOpen = state;
 
-            if (!state) MouseHook.UnHook();
-            else MouseHook.SetHook(this);
+            if (!state)
+            {
+                MouseHook.UnHook();
+                TxtFilter.BorderBrush = TextBoxBorderColor;
+            }
+            else
+            {
+                MouseHook.SetHook(this);
+                TxtFilter.BorderBrush = Brushes.SkyBlue;
+            }
         }
 
         private async Task Initialise()
