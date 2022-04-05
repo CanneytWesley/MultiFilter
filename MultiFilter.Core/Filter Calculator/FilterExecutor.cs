@@ -40,6 +40,8 @@ namespace Filter.Filter_Calculator
 
         private void Setup(string filterTitle, Type filterTrigger, Func<T, double> Property, FilterOption val)
             => FilterCalculations.Add(new DoubleCalculation<T>(filterTitle, filterTrigger, Property, val));
+        private void Setup(string filterTitle, Type filterTrigger, Func<T, bool> Property, FilterOption val)
+            => FilterCalculations.Add(new BooleanCalculation<T>(filterTitle, filterTrigger, Property, val));
         
         private void Setup(string filterTitle, Type filterTrigger, Func<T, int> Property, FilterOption val)
             => FilterCalculations.Add(new IntCalculation<T>(filterTitle, filterTrigger, Property, val));
@@ -101,6 +103,8 @@ namespace Filter.Filter_Calculator
                 var type = typeof(object);
                 if (filterResult.Model.Model != null)
                     type = filterResult?.Model?.Model.GetType();
+                else if (filterResult is BooleanResult)
+                    type = typeof(Boolean);
                 else
                     type = filterResult.Filter.GetType().GetGenericArguments()[1];
 
@@ -135,11 +139,19 @@ namespace Filter.Filter_Calculator
                         if (actualDataType.IsNotPublic)
                             throw new Exception($"{actualDataType} must be public to use in the filter");
 
-                        if (genericFilterType == typeof(LogicalFilter<,>) && 
+                        if (genericFilterType == typeof(LogicalFilter<,>) &&
                             type != typeof(double) && type != typeof(int) && type != typeof(string) && type != typeof(DateTime) && type != typeof(DateTime?))
                             throw new Exception($"Your logical filter has a non existing type '{type}' that you can use in this filter");
 
                         Setup(castedFilterInstelling.Title, type, castedFilterInstelling.PropertyFromDataset, castedFilterInstelling.FilterOptions);
+                    }
+                    else if (genericFilterType == typeof(BooleanFilter<>))
+                    {
+                        dynamic castedFilter = Convert.ChangeType(filter, actualFilterType);
+                        Type actualDataType = castedFilter.Data.GetType();
+                        dynamic castedFilterInstelling = Convert.ChangeType(castedFilter.Data, actualDataType);
+
+                        Setup(castedFilterInstelling.Title, typeof(Boolean), castedFilterInstelling.PropertyFromDataset, castedFilterInstelling.FilterOptions);
                     }
                 }
             }

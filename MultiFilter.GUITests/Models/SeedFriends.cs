@@ -18,7 +18,7 @@ namespace MultiFilter.GUITests.Models
                 new Friend() { Name = "Dick Bennet", Age = 45, Company="KBC Bank", DateOfBirth = new DateTime(1995,10,10), PostalCode = "3000", Sex = Gender.Men, Weight=120},
                 new Friend() { Name = "Jack Hughes", Age = 65, Company="KBC Bank", DateOfBirth = new DateTime(1993,7,2), PostalCode = "8000", Sex = Gender.Men, Weight=90},
                 new Friend() { Name = "Tatiana Vandeputte", Age = 78, Company="D’Ieteren", DateOfBirth = new DateTime(1980,12,13), PostalCode = "6000", Sex = Gender.Female, Weight=66},
-                new Friend() { Name = "Liliane Vandemeer", Age = 55, Company="KBC Bank", DateOfBirth = new DateTime(1981,4,19), PostalCode = "8000", Sex = Gender.Female, Weight=54},
+                new Friend() { Name = "Liliane Vandemeer", IsBestFriend = true, Age = 55, Company="KBC Bank", DateOfBirth = new DateTime(1981,4,19), PostalCode = "8000", Sex = Gender.Female, Weight=54},
                 new Friend() { Name = "Thomas Segour", Age = 54, Company="KBC Bank", DateOfBirth = new DateTime(1970,10,12), PostalCode = "1000", Sex = Gender.Other, Weight=160, DateOfDeath = new DateTime(2000,1,1)} ,
             };
         }

@@ -16,6 +16,20 @@ namespace MultiFilter.CoreTests
     public class FilterBerekenenTests
     {
         [TestMethod()]
+        public void BooleanFilterTest1()
+        {
+            var filter = new BooleanFilter<Friend>(new BestFriendSetting() { Title = "Company", Shortcut = "C" });
+            var f = new FilterExecutor<Friend>();
+            f.SetData(SeedFriends.GetSeed());
+
+            f.Setup(new List<IFilter>() { filter });
+
+
+            f.Filter(Edit.And, new List<IResult>() { new BooleanResult(filter, "True",  new Icon()) });
+
+            Assert.AreEqual(1, f.Result.Count);
+        }
+        [TestMethod()]
         public void FilterenTest_RegularFilter()
         {
             var filter = new MultipleChoiceFilter<Friend, Company>(new Testdatacompany() { Title = "Company", Shortcut = "C" });
@@ -185,6 +199,15 @@ namespace MultiFilter.CoreTests
         = FilterOption.Exact;
         public Icon Icon { get; set; }
         = new Icon();
+    }
+
+    public class BestFriendSetting : IBooleanSettings<Friend>
+    {
+        public Func<Friend, bool> PropertyFromDataset { get; set; } = p => p.IsBestFriend;
+        public string Title { get; set; } = "Best friend";
+        public string Shortcut { get; set; } = "BF";
+        public FilterOption FilterOptions { get; set; }
+        public Icon Icon { get; set; }
     }
 
     public class Testdatacompany : IMultipleChoiceSettings<Friend, Company>

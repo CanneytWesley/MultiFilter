@@ -18,5 +18,7 @@ namespace MultiFilter.GUITests.Models
         public string PostalCode { get; set; }
 
         public double Weight { get; set; }
+
+        public bool IsBestFriend { get; set; }
     }
 }

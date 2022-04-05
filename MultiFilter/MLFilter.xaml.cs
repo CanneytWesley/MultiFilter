@@ -323,7 +323,7 @@ namespace MultiFilter
 
         private async Task CreateFilter()
         {
-            var shortcuts = FilterMaster.Filters.Where(p => p is ILogicalFilter).Select(p => p as ILogicalFilter).ToList();
+            var shortcuts = FilterMaster.Filters.Where(p => p is ILogicalFilter || p is IBooleanFilter).ToList();
 
             var filtergesplit = TxtFilter.Text.Split(' ').ToList();
 
@@ -333,9 +333,17 @@ namespace MultiFilter
 
                 var shortcut = shortcuts.FirstOrDefault(p => p.ShortCut.IndexOf(filter, StringComparison.OrdinalIgnoreCase) == 0);
 
-                if (shortcut != null)
+                if (shortcut is ILogicalFilter lf)
                 {
-                    var getfilter = await shortcut.FilterLogical(TxtFilter.Text);
+                    var getfilter = await lf.FilterLogical(TxtFilter.Text);
+                    foreach (var ft in getfilter) ExecuteFilter(ft);
+
+                    TxtFilter.Text = "";
+                    SetPopupState(false);
+                }
+                else if (shortcut is IBooleanFilter bf)
+                {
+                    var getfilter = await bf.Filter(TxtFilter.Text);
                     foreach (var ft in getfilter) ExecuteFilter(ft);
 
                     TxtFilter.Text = "";
