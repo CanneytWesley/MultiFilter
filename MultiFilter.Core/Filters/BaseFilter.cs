@@ -61,7 +61,7 @@ namespace MultiFilter.Core.Filters
         private bool HasShortCut(string uitvoeren)
         {
             if (ShortCuts == null) ShortCuts = new List<string>() { ShortCut };
-            return ShortCuts.Any(p => uitvoeren.ToUpper().StartsWith(p + " "));
+            return ShortCuts.Any(p => uitvoeren.ToUpper().StartsWith(p.ToUpper() + " "));
         }
 
         public BaseFilter()

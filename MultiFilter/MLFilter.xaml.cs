@@ -101,7 +101,7 @@ namespace MultiFilter
         private static void TekstBoxWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var pz = (MLFilter)d;
-            pz.TxtFilter.Width = pz.TextBoxWidth;
+            pz.BorderTxtFilter.Width = pz.TextBoxWidth;
             pz.Popup.Width = pz.TextBoxWidth;
         }
 
@@ -265,18 +265,18 @@ namespace MultiFilter
         private Brush TextBoxBorderColor;
         public void SetPopupState(bool state)
         {
-            if (TextBoxBorderColor == null) TextBoxBorderColor = TxtFilter.BorderBrush;
+            if (TextBoxBorderColor == null) TextBoxBorderColor = BorderTxtFilter.BorderBrush;
             Popup.IsOpen = state;
 
             if (!state)
             {
                 MouseHook.UnHook();
-                TxtFilter.BorderBrush = TextBoxBorderColor;
+                BorderTxtFilter.BorderBrush = TextBoxBorderColor;
             }
             else
             {
                 MouseHook.SetHook(this);
-                TxtFilter.BorderBrush = Brushes.SkyBlue;
+                BorderTxtFilter.BorderBrush = Brushes.SkyBlue;
             }
         }
 
@@ -317,26 +317,36 @@ namespace MultiFilter
         {
             if (e.Key == Key.Enter)
             {
-                var shortcuts = FilterMaster.Filters.Where(p => p is ILogicalFilter).Select(p => p as ILogicalFilter).ToList();
+                await CreateFilter();
+            }
+        }
 
-                var filtergesplit = TxtFilter.Text.Split(' ').ToList() ;
+        private async Task CreateFilter()
+        {
+            var shortcuts = FilterMaster.Filters.Where(p => p is ILogicalFilter).Select(p => p as ILogicalFilter).ToList();
 
-                if (filtergesplit.Count > 1)
+            var filtergesplit = TxtFilter.Text.Split(' ').ToList();
+
+            if (filtergesplit.Count > 1)
+            {
+                var filter = filtergesplit[0];
+
+                var shortcut = shortcuts.FirstOrDefault(p => p.ShortCut.IndexOf(filter, StringComparison.OrdinalIgnoreCase) == 0);
+
+                if (shortcut != null)
                 {
-                    var filter = filtergesplit[0];
+                    var getfilter = await shortcut.FilterLogical(TxtFilter.Text);
+                    foreach (var ft in getfilter) ExecuteFilter(ft);
 
-                    var shortcut = shortcuts.FirstOrDefault(p => p.ShortCut.IndexOf(filter, StringComparison.OrdinalIgnoreCase) == 0);
-
-                    if (shortcut != null)
-                    {
-                        var getfilter = await shortcut.FilterLogical(TxtFilter.Text);
-                        foreach (var ft in getfilter) ExecuteFilter(ft);
-
-                        TxtFilter.Text = "";
-                        SetPopupState(false);
-                    }
+                    TxtFilter.Text = "";
+                    SetPopupState(false);
                 }
             }
+        }
+
+        private async void Grid_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            await CreateFilter();
         }
     }
 }

@@ -29,12 +29,12 @@ namespace Filter.Filter_Calculator
 
             if (FilterOption.HasFlag(FilterOption.IndexOf))
             {
-                var result = allItems.Where(p => Property(p).IndexOf(filterResult.Model.Item, sc) != -1).ToList();
+                var result = allItems.Where(p => Property(p) != null && Property(p).IndexOf(filterResult.Model.Item, sc) != -1).ToList();
                 return result;
             }
             else if (FilterOption.HasFlag(FilterOption.Exact))
             {
-                var result = allItems.Where(p => Property(p) == filterResult.Model.Item).ToList();
+                var result = allItems.Where(p => Property(p) != null && Property(p) == filterResult.Model.Item).ToList();
                 return result;
 
             }

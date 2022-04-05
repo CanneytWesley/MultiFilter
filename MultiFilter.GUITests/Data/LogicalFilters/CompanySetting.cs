@@ -13,7 +13,7 @@ namespace MultiFilter.GUITests.Data.LogicalFilters
         public CompanySetting()
         {
             Title = "Company index";
-            Shortcut = "CO";
+            Shortcut = "Co";
             Icon = new Icon(Brushes.Silver.ToString(), Icons.Gelukt);
             FilterOptions = FilterOption.IndexOf;
             PropertyFromDataset = p => p.Company;

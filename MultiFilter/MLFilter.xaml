@@ -24,7 +24,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Label Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Foreground="SlateGray" Padding="3,6,0,0" >
+        <Label Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="28" Foreground="SlateGray" Padding="3,6,0,0" >
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>
@@ -36,9 +36,57 @@
                 </Style>
             </Label.Style>
         </Label>
-        <TextBox FocusVisualStyle="{x:Null}" BorderBrush="SkyBlue" Background="Transparent" Width="150" Height="28" VerticalAlignment="Top" VerticalContentAlignment="Center" x:Name="TxtFilter" Text="" TextChanged="FilterText_TextChanged" PreviewMouseLeftButtonUp="TxtFilter_MouseDown" KeyUp="TxtFilter_KeyUp" />
-        <Popup x:Name="Popup" Width="150" Height="300" PopupAnimation="Slide" Placement="Bottom" PlacementTarget="{Binding ElementName=TxtFilter}">
-            <Border BorderBrush="SkyBlue" BorderThickness="2,1,2,2">
+        <Border BorderBrush="SkyBlue" BorderThickness="1" Width="150" Height="28" x:Name="BorderTxtFilter" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <Grid VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+            
+        <TextBox FocusVisualStyle="{x:Null}" BorderBrush="Transparent" Height="28" Background="Transparent" VerticalAlignment="Top" VerticalContentAlignment="Center" x:Name="TxtFilter" Text="" TextChanged="FilterText_TextChanged" PreviewMouseLeftButtonUp="TxtFilter_MouseDown" KeyUp="TxtFilter_KeyUp" >
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TextBox}">
+                                <Border x:Name="bg" BorderBrush="Transparent" BorderThickness="1">
+                                    <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="BorderBrush" TargetName="bg" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" TargetName="bg" Value="1"/>
+                                    </Trigger>
+                                    <Trigger Property="IsFocused" Value="True">
+                                                <Setter Property="BorderBrush" TargetName="bg" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" TargetName="bg" Value="1"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+                <Grid Grid.Column="1" Background="Transparent" MouseUp="Grid_MouseUp">
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Cursor" Value="Hand" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Path  Data="{Binding Source={StaticResource IconPaths}, Path=Filter}" Fill="SkyBlue" Height="15" Width="15" Stretch="Uniform" Margin="5,0,5,0">
+                    </Path>
+                </Grid>
+            </Grid>
+        </Border>
+        <Popup x:Name="Popup" Width="150" Height="300" PopupAnimation="Slide" Placement="Bottom" PlacementTarget="{Binding ElementName=BorderTxtFilter}">
+            <Border BorderBrush="SkyBlue" BorderThickness="1,0,1,1">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -82,10 +130,10 @@
                         <Border Background="White" BorderBrush="SkyBlue" BorderThickness="0,1,0,0" Margin="0,0,0,0">
                             <Grid >
                                 <Grid Background="White" ToolTip="Aantal actieve filters" VerticalAlignment="Center" HorizontalAlignment="Stretch" MouseUp="ButtonToonActieveFilters_MouseUp" Grid.Column="0">
-                                    <TextBlock Foreground="SkyBlue" FontWeight="Bold" MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBLogicalFilter" Padding="5,0,0,0" Margin="2" Background="White">
+                                    <TextBlock Foreground="SlateGray" MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBLogicalFilter" Padding="5,0,0,0" Margin="2" Background="White">
 
                                     </TextBlock>
-                                    <TextBlock Foreground="SkyBlue" FontWeight="Bold" Visibility="Collapsed" MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBHuidigeFilter" Padding="5,0,0,0" Margin="2" Background="White">
+                                    <TextBlock Foreground="SlateGray" Visibility="Collapsed" MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBHuidigeFilter" Padding="5,0,0,0" Margin="2" Background="White">
 
                                     </TextBlock>
                                 </Grid>
@@ -102,7 +150,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Margin="1" CornerRadius="2" Padding="3">
+                                    <Border Margin="1" CornerRadius="2" Padding="3" BorderBrush="White">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseUp">
                                                 <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=SetShortCutCommand}" CommandParameter="{Binding ShortCut}"/>
@@ -122,7 +170,7 @@
                                                         <Setter Property="Background" Value="LightBlue" />
                                                     </Trigger>
                                                 </Style.Triggers>
-                                                <Setter Property="Background" Value="Transparent" />
+                                                <Setter Property="Background" Value="White" />
                                             </Style>
                                         </Border.Style>
                                         <Path Data="{Binding Icon.IconPath}" Fill="{Binding Icon.IconColor}" Height="15" Width="15" Margin="2" Stretch="Uniform">
