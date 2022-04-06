@@ -22,7 +22,7 @@ namespace MultiFilter.CoreTests.Filters
 
             var result = await af.Filter("l");
 
-            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(0, result.Count);
         }
         [TestMethod()]
         public async Task FilterTest_WithShortcut()

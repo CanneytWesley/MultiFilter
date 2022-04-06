@@ -226,12 +226,14 @@ namespace MultiFilter
         {
             
             var result = FilterMaster.Filters.FirstOrDefault(p => ((BaseFilter)p).HasThisShortCut(TxtFilter.Text));
-            bool result2 = false;
+            bool isLogischeFilter = false;
+            bool isBooleanFilter = false;
 
             if (result != null)
             {
                 var type = result.GetType();
-                result2 = type.GetInterfaces().Any(p => p == typeof(ILogicalFilter));
+                isLogischeFilter = type.GetInterfaces().Any(p => p == typeof(ILogicalFilter));
+                isBooleanFilter = type.GetInterfaces().Any(p => p == typeof(IBooleanFilter));
                 TBLogicalFilter.Text = result.Title;
             }
             else
@@ -239,7 +241,7 @@ namespace MultiFilter
                 TBLogicalFilter.Text = "";
             }
 
-            if (result != null && result2)
+            if (isLogischeFilter)
             {
                 TxtInformationAboutFilter.Text =
                     "Met deze filter kun je logisch filteren." +
@@ -250,12 +252,22 @@ namespace MultiFilter
                     "en & of | < <= > >= = !=" +
                     Environment.NewLine +
                     Environment.NewLine +
-                    "Enkele voorbeelden: "+
+                    "Enkele voorbeelden: " +
                     Environment.NewLine +
-                    "<15000" + 
+                    "<15000" +
                     Environment.NewLine +
                     "<3en>1";
 
+            }
+            else if (isBooleanFilter)
+            {
+                TxtInformationAboutFilter.Text =
+                    "Dit is een Ja/Nee filter." +
+                    Environment.NewLine +
+                    Environment.NewLine +
+                    "Volgende statussen kunnen gebruikt worden:" +
+                    Environment.NewLine +
+                    "ja, nee, yes, no, 1, 0, true, false";
             }
             else
             {

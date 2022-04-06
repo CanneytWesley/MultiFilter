@@ -32,7 +32,7 @@ namespace MultiFilter.Core.Filters
             return await Task.Run(() =>
             {
 
-                if (!TestShortCut(uitvoeren))
+                if (!HasThisShortCut(uitvoeren))
                     return new List<IResult>();
 
                 var result = AllItems.Where(p => TestShortCut(uitvoeren) && p.Name.IndexOf(RemoveShortCut(uitvoeren), StringComparison.OrdinalIgnoreCase) != -1).ToList();

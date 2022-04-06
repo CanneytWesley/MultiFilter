@@ -142,7 +142,7 @@
                     </Grid>
                     <Grid Grid.Row="2" Background="White" >
                         <WrapPanel >
-                            <ItemsControl Background="WhiteSmoke" ItemsSource="{Binding FilterMaster.Filters,ElementName=UI}">
+                            <ItemsControl Background="White" ItemsSource="{Binding FilterMaster.Filters,ElementName=UI}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel />
@@ -150,7 +150,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Margin="1" CornerRadius="2" Padding="3" BorderBrush="White">
+                                    <Border Margin="1" CornerRadius="0" BorderThickness="0" Padding="3" Background="White">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseUp">
                                                 <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=SetShortCutCommand}" CommandParameter="{Binding ShortCut}"/>
@@ -165,13 +165,12 @@
                                         
                                         <Border.Style>
                                             <Style TargetType="Border">
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="LightBlue" />
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                                <Setter Property="Background" Value="White" />
-                                            </Style>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Cursor" Value="Hand" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
                                         </Border.Style>
                                         <Path Data="{Binding Icon.IconPath}" Fill="{Binding Icon.IconColor}" Height="15" Width="15" Margin="2" Stretch="Uniform">
 

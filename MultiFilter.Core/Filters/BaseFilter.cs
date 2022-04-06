@@ -21,7 +21,7 @@ namespace MultiFilter.Core.Filters
         /// <returns></returns>
         public bool TestShortCut(string uitvoeren)
         {
-            if (HasShortCut(uitvoeren))
+            if (HasShortCut(uitvoeren, out string uitvoerenWithoutShortcut))
             {
                 if (HasThisShortCut(uitvoeren))
                     //Shortcut komt overeen met de shortcut van deze filter
@@ -48,8 +48,8 @@ namespace MultiFilter.Core.Filters
         /// <returns></returns>
         public string RemoveShortCut(string uitvoeren)
         {
-            if (HasShortCut(uitvoeren))
-                return uitvoeren.Substring(1 + ShortCut.Length);
+            if (HasShortCut(uitvoeren, out string uitvoerenWithoutShortcut))
+                return uitvoerenWithoutShortcut;
             else return uitvoeren;
         }
 
@@ -58,10 +58,19 @@ namespace MultiFilter.Core.Filters
         /// </summary>
         /// <param name="uitvoeren"></param>
         /// <returns></returns>
-        private bool HasShortCut(string uitvoeren)
+        private bool HasShortCut(string uitvoeren, out string uitvoerenWithoutShortCut)
         {
             if (ShortCuts == null) ShortCuts = new List<string>() { ShortCut };
-            return ShortCuts.Any(p => uitvoeren.ToUpper().StartsWith(p.ToUpper() + " "));
+            var result = ShortCuts.FirstOrDefault(p => uitvoeren.ToUpper().StartsWith(p.ToUpper() + " "));
+
+            uitvoerenWithoutShortCut = uitvoeren;
+
+            if (result == null) return false;
+            else
+            {
+                uitvoerenWithoutShortCut = uitvoeren.Substring(1 + result.Length);
+                return true;
+            }
         }
 
         public BaseFilter()

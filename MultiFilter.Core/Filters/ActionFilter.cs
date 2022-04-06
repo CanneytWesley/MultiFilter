@@ -22,7 +22,7 @@ namespace MultiFilter.Core.Filters
 
         public async Task<List<IResult>> Filter(string uitvoeren)
         {
-            if (!TestShortCut(uitvoeren))
+            if (!HasThisShortCut(uitvoeren))
                 return new List<IResult>();
 
             var data = await Setting.GetData();
