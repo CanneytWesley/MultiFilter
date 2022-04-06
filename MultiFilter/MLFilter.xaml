@@ -8,6 +8,9 @@
              mc:Ignorable="d" 
              MinWidth="150" Background="Transparent" x:Name="UI" >
     <UserControl.Resources>
+        <SolidColorBrush x:Key="MainColor" Color="SkyBlue" />
+        <SolidColorBrush x:Key="FilterButtonColor" Color="SkyBlue" />
+        <SolidColorBrush x:Key="TextColor" Color="SlateGray" />
             <local:Icons x:Key="IconPaths" />
         <Style TargetType="Grid" x:Key="ButtonStyle">
             <Style.Triggers>
@@ -24,7 +27,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Label Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="28" Foreground="SlateGray" Padding="3,6,0,0" >
+        <Label Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="28" Foreground="{DynamicResource TextColor}" Padding="3,6,0,0" >
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>
@@ -36,7 +39,7 @@
                 </Style>
             </Label.Style>
         </Label>
-        <Border BorderBrush="SkyBlue" BorderThickness="1" Width="150" Height="28" x:Name="BorderTxtFilter" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+        <Border BorderBrush="{DynamicResource MainColor}" BorderThickness="1" Width="150" Height="28" x:Name="BorderTxtFilter" VerticalAlignment="Top" HorizontalAlignment="Stretch">
             <Grid VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -80,13 +83,13 @@
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>
-                    <Path  Data="{Binding Source={StaticResource IconPaths}, Path=Filter}" Fill="SkyBlue" Height="15" Width="15" Stretch="Uniform" Margin="5,0,5,0">
+                    <Path  Data="{Binding Source={StaticResource IconPaths}, Path=Filter}" Fill="{DynamicResource FilterButtonColor}" Height="15" Width="15" Stretch="Uniform" Margin="5,0,5,0">
                     </Path>
                 </Grid>
             </Grid>
         </Border>
         <Popup x:Name="Popup" Width="150" Height="300" PopupAnimation="Slide" Placement="Bottom" PlacementTarget="{Binding ElementName=BorderTxtFilter}">
-            <Border BorderBrush="SkyBlue" BorderThickness="1,0,1,1">
+            <Border BorderBrush="{DynamicResource MainColor}" BorderThickness="1,0,1,1">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -113,13 +116,13 @@
                                             <Path Data="{Binding Icon.IconPath}" Fill="{Binding Icon.IconColor}" Height="15" Width="15" Stretch="Uniform" Margin="5,0,5,0">
 
                                             </Path>
-                                            <Label VerticalAlignment="Center" Grid.Column="1" Content="{Binding Filter.ShortCut}" Foreground="SlateGray" Margin="5,0,5,0" />
+                                            <Label VerticalAlignment="Center" Grid.Column="1" Content="{Binding Filter.ShortCut}" Foreground="{DynamicResource TextColor}" Margin="5,0,5,0" />
                                             <Label VerticalAlignment="Center" Grid.Column="2" Content="{Binding Model.Item }" />
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                            <TextBlock Foreground="SlateGray" Text="Er zijn geen resultaten die voldoen aan uw criteria..." x:Name="TxtInformationAboutFilter" Width="{Binding ActualWidth,ElementName=UI}" TextWrapping="Wrap" Margin="5" >
+                            <TextBlock Foreground="{DynamicResource TextColor}" Text="Er zijn geen resultaten die voldoen aan uw criteria..." x:Name="TxtInformationAboutFilter" Width="{Binding ActualWidth,ElementName=UI}" TextWrapping="Wrap" Margin="5" >
                             </TextBlock>
                         </Grid>
                             
@@ -127,13 +130,13 @@
                     </Grid>
 
                     <Grid Grid.Row="1" MinHeight="30">
-                        <Border Background="White" BorderBrush="SkyBlue" BorderThickness="0,1,0,0" Margin="0,0,0,0">
+                        <Border Background="White" BorderBrush="{DynamicResource MainColor}" BorderThickness="0,1,0,0" Margin="0,0,0,0">
                             <Grid >
                                 <Grid Background="White" ToolTip="Aantal actieve filters" VerticalAlignment="Center" HorizontalAlignment="Stretch" MouseUp="ButtonToonActieveFilters_MouseUp" Grid.Column="0">
-                                    <TextBlock Foreground="SlateGray" MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBLogicalFilter" Padding="5,0,0,0" Margin="2" Background="White">
+                                    <TextBlock Foreground="{DynamicResource TextColor}" MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBLogicalFilter" Padding="5,0,0,0" Margin="2" Background="White">
 
                                     </TextBlock>
-                                    <TextBlock Foreground="SlateGray" Visibility="Collapsed" MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBHuidigeFilter" Padding="5,0,0,0" Margin="2" Background="White">
+                                    <TextBlock Foreground="{DynamicResource TextColor}" Visibility="Collapsed" MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBHuidigeFilter" Padding="5,0,0,0" Margin="2" Background="White">
 
                                     </TextBlock>
                                 </Grid>
@@ -211,9 +214,9 @@
                 </Grid>
             </Border>
         </Popup>
-        <Border Grid.Column="1" BorderThickness="1" BorderBrush="SlateGray" Margin="5,0,0,5" CornerRadius="3" x:Name="BorderLblEnOf" VerticalAlignment="Top">
+        <Border Grid.Column="1" BorderThickness="1" BorderBrush="{DynamicResource TextColor}" Margin="5,0,0,5" CornerRadius="3" x:Name="BorderLblEnOf" VerticalAlignment="Top">
 
-            <Grid Background="SlateGray">
+            <Grid Background="{DynamicResource TextColor}">
                 <Label Grid.Column="1" x:Name="LblEnofOf" Foreground="WhiteSmoke" MouseUp="ButtonEnOf_MouseUp" >
                     <Label.Style>
                         <Style TargetType="Label">

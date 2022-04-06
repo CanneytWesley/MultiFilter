@@ -55,6 +55,44 @@ namespace MultiFilter
 
 
 
+        public Brush FilterBorderColor
+        {
+            get { return (Brush)GetValue(FilterBorderColorProperty); }
+            set { SetValue(FilterBorderColorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for FilterBorderColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FilterBorderColorProperty =
+            DependencyProperty.Register("FilterBorderColor", typeof(Brush), typeof(MLFilter), new PropertyMetadata(Brushes.SkyBlue, FilterBorderColorChanged));
+
+
+
+        public Brush FilterIconColor
+        {
+            get { return (Brush)GetValue(FilterIconColorProperty); }
+            set { SetValue(FilterIconColorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for FilterIconColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FilterIconColorProperty =
+            DependencyProperty.Register("FilterIconColor", typeof(Brush), typeof(MLFilter), new PropertyMetadata(Brushes.SkyBlue, FilterIconColorChanged));
+
+
+
+
+        public Brush FilterTextColor
+        {
+            get { return (Brush)GetValue(FilterTextColorProperty); }
+            set { SetValue(FilterTextColorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for FilterTextColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FilterTextColorProperty =
+            DependencyProperty.Register("FilterTextColor", typeof(Brush), typeof(MLFilter), new PropertyMetadata(Brushes.SlateGray, FilterTextColorChanged));
+
+
+
+
         public ObservableCollection<IResult> ActiveFilter { get; set; }
 
         public Edit Edit { get; set; }
@@ -103,6 +141,30 @@ namespace MultiFilter
             var pz = (MLFilter)d;
             pz.BorderTxtFilter.Width = pz.TextBoxWidth;
             pz.Popup.Width = pz.TextBoxWidth;
+        }
+
+        private static void FilterBorderColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var pz = (MLFilter)d;
+            //SolidColorBrush MyBrush = Brushes.Black;
+
+            pz.Resources["MainColor"] = (SolidColorBrush)pz.FilterBorderColor;
+        }
+
+        private static void FilterIconColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var pz = (MLFilter)d;
+            //SolidColorBrush MyBrush = Brushes.Black;
+
+            pz.Resources["FilterButtonColor"] = (SolidColorBrush)pz.FilterIconColor;
+        }
+
+        private static void FilterTextColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var pz = (MLFilter)d;
+            //SolidColorBrush MyBrush = Brushes.Black;
+
+            pz.Resources["TextColor"] = (SolidColorBrush)pz.FilterTextColor;
         }
 
 
@@ -274,21 +336,17 @@ namespace MultiFilter
                 TxtInformationAboutFilter.Text = "Er zijn geen resultaten die voldoen aan uw criteria...";
             }
         }
-        private Brush TextBoxBorderColor;
         public void SetPopupState(bool state)
         {
-            if (TextBoxBorderColor == null) TextBoxBorderColor = BorderTxtFilter.BorderBrush;
             Popup.IsOpen = state;
 
             if (!state)
             {
                 MouseHook.UnHook();
-                BorderTxtFilter.BorderBrush = TextBoxBorderColor;
             }
             else
             {
                 MouseHook.SetHook(this);
-                BorderTxtFilter.BorderBrush = Brushes.SkyBlue;
             }
         }
 
