@@ -15,8 +15,6 @@ namespace MultiFilter.GUITests.Data.LogicalFilters
         = "Date Of Death";
         public string Shortcut { get; set; }
         = "De";
-        public FilterOption FilterOptions { get; set; }
-        = FilterOption.Exact;
         public Icon Icon { get; set; }
         = new Icon(Brushes.BlueViolet.ToString(), Icons.Freeze);
 

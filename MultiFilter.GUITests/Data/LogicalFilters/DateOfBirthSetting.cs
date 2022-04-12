@@ -16,8 +16,6 @@ namespace MultiFilter.GUITests.Data.LogicalFilters
         = "Date Of Birth";
         public string Shortcut { get; set; }
         = "D";
-        public FilterOption FilterOptions { get; set; }
-        = FilterOption.Exact;
         public Icon Icon { get; set; }
         = new Icon(Brushes.BlueViolet.ToString(), Icons.Freeze);
 

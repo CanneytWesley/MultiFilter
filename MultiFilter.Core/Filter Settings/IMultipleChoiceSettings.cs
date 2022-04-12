@@ -21,8 +21,6 @@ namespace Filter.Filter_Settings
 
         public string Shortcut { get; set; }
 
-        public FilterOption FilterOptions { get; set; }
-
         public Task<List<F>> GetData();
 
         public Icon Icon { get; set; }

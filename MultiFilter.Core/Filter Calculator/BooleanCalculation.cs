@@ -10,14 +10,12 @@ namespace Filter.Filter_Calculator
     {
 
         public Func<T, bool> Property { get; set; }
-        public FilterOption FilterOption { get; set; }
         public Type FilterTrigger { get; set; }
         public string FilterTitle { get; set; }
 
-        public BooleanCalculation(string filterTitle, Type filterTrigger, Func<T, bool> property, FilterOption filterOptie)
+        public BooleanCalculation(string filterTitle, Type filterTrigger, Func<T, bool> property)
         {
             Property = property;
-            FilterOption = filterOptie;
             FilterTrigger = filterTrigger;
             FilterTitle = filterTitle;
         }

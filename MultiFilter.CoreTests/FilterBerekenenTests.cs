@@ -44,6 +44,63 @@ namespace MultiFilter.CoreTests
             Assert.AreEqual(1, f.Result.Count);
         }
         [TestMethod()]
+        public void FilterenTest_RegularFilter_OnlyPart_Equal()
+        {
+            var filter = new MultipleChoiceFilter<Friend, Company>(new Testdatacompany() { Title = "Company", Shortcut = "C" });
+            var f = new FilterExecutor<Friend>();
+            f.SetData(SeedFriends.GetSeed());
+
+            f.Setup(new List<IFilter>() { filter });
+
+
+            f.Filter(Edit.And, new List<IResult>() { new MultipleChoiceModelResult(filter, "Lum", new Company("Luminus"), null, new Icon()) });
+
+            Assert.AreEqual(0, f.Result.Count);
+        }
+        [TestMethod()]
+        public void FilterenTest_RegularFilter_OnlyPart_EndWithStar()
+        {
+            var filter = new MultipleChoiceFilter<Friend, Company>(new Testdatacompany() { Title = "Company", Shortcut = "C" });
+            var f = new FilterExecutor<Friend>();
+            f.SetData(SeedFriends.GetSeed());
+
+            f.Setup(new List<IFilter>() { filter });
+
+
+            f.Filter(Edit.And, new List<IResult>() { new MultipleChoiceModelResult(filter, "Lum*", new Company("Luminus"), null, new Icon()) });
+
+            Assert.AreEqual(1, f.Result.Count);
+        }
+        [TestMethod()]
+        public void FilterenTest_RegularFilter_OnlyPart_StartsWithStar()
+        {
+            var filter = new MultipleChoiceFilter<Friend, Company>(new Testdatacompany() { Title = "Company", Shortcut = "C" });
+            var f = new FilterExecutor<Friend>();
+            f.SetData(SeedFriends.GetSeed());
+
+            f.Setup(new List<IFilter>() { filter });
+
+
+            f.Filter(Edit.And, new List<IResult>() { new MultipleChoiceModelResult(filter, "*uminus", new Company("Luminus"), null, new Icon()) });
+
+            Assert.AreEqual(1, f.Result.Count);
+        }
+        [TestMethod()]
+        public void FilterenTest_RegularFilter_OnlyPart_TwoStar()
+        {
+            var filter = new MultipleChoiceFilter<Friend, Company>(new Testdatacompany() { Title = "Company", Shortcut = "C" });
+            var f = new FilterExecutor<Friend>();
+            f.SetData(SeedFriends.GetSeed());
+
+            f.Setup(new List<IFilter>() { filter });
+
+
+            f.Filter(Edit.And, new List<IResult>() { new MultipleChoiceModelResult(filter, "*um*", new Company("Luminus"), null, new Icon()) });
+
+            Assert.AreEqual(1, f.Result.Count);
+        }
+
+        [TestMethod()]
         public void FilterenTest_LogicalFilterTestLengthGreatherThan15000_Result0()
         {
             var filter = new LogicalFilter<Friend, double>(new WeightFilterInstelling());
@@ -195,8 +252,6 @@ namespace MultiFilter.CoreTests
         = "Lengte filter";
         public string Shortcut { get; set; }
         = "B";
-        public FilterOption FilterOptions { get; set; }
-        = FilterOption.Exact;
         public Icon Icon { get; set; }
         = new Icon();
     }
@@ -206,7 +261,6 @@ namespace MultiFilter.CoreTests
         public Func<Friend, bool> PropertyFromDataset { get; set; } = p => p.IsBestFriend;
         public string Title { get; set; } = "Best friend";
         public string Shortcut { get; set; } = "BF";
-        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
     }
 
@@ -216,7 +270,6 @@ namespace MultiFilter.CoreTests
         public Func<Friend, string> PropertyFromDataset { get; set; } = p => p.Company;
         public string Title { get; set; } = "Company";
         public string Shortcut { get; set; } = "C";
-        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
 
         public Task<List<Company>> GetData()

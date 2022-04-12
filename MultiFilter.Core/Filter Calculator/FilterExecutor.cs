@@ -38,22 +38,22 @@ namespace Filter.Filter_Calculator
             FilterCalculations = new List<ICalculation<T>>();
         }
 
-        private void Setup(string filterTitle, Type filterTrigger, Func<T, double> Property, FilterOption val)
-            => FilterCalculations.Add(new DoubleCalculation<T>(filterTitle, filterTrigger, Property, val));
-        private void Setup(string filterTitle, Type filterTrigger, Func<T, bool> Property, FilterOption val)
-            => FilterCalculations.Add(new BooleanCalculation<T>(filterTitle, filterTrigger, Property, val));
+        private void Setup(string filterTitle, Type filterTrigger, Func<T, double> Property)
+            => FilterCalculations.Add(new DoubleCalculation<T>(filterTitle, filterTrigger, Property));
+        private void Setup(string filterTitle, Type filterTrigger, Func<T, bool> Property)
+            => FilterCalculations.Add(new BooleanCalculation<T>(filterTitle, filterTrigger, Property));
         
-        private void Setup(string filterTitle, Type filterTrigger, Func<T, int> Property, FilterOption val)
-            => FilterCalculations.Add(new IntCalculation<T>(filterTitle, filterTrigger, Property, val));
+        private void Setup(string filterTitle, Type filterTrigger, Func<T, int> Property)
+            => FilterCalculations.Add(new IntCalculation<T>(filterTitle, filterTrigger, Property));
         
-        private void Setup(string filterTitle, Type filterTrigger, Func<T, string> Property, FilterOption val)
-            => FilterCalculations.Add(new StringCalculation<T>(filterTitle, filterTrigger, Property, val));
+        private void Setup(string filterTitle, Type filterTrigger, Func<T, string> Property)
+            => FilterCalculations.Add(new StringCalculation<T>(filterTitle, filterTrigger, Property));
         
-        private void Setup(string filterTitle, Type filterTrigger, Func<T, DateTime> Property, FilterOption val)
-            => FilterCalculations.Add(new DateTimeCalculation<T>(filterTitle, filterTrigger, Property, val));
+        private void Setup(string filterTitle, Type filterTrigger, Func<T, DateTime> Property)
+            => FilterCalculations.Add(new DateTimeCalculation<T>(filterTitle, filterTrigger, Property));
         
-        private void Setup(string filterTitle, Type filterTrigger, Func<T, DateTime?> Property, FilterOption val)
-            => FilterCalculations.Add(new NullableDateTimeCalculation<T>(filterTitle, filterTrigger, Property, val));
+        private void Setup(string filterTitle, Type filterTrigger, Func<T, DateTime?> Property)
+            => FilterCalculations.Add(new NullableDateTimeCalculation<T>(filterTitle, filterTrigger, Property));
 
         private void Add(IEnumerable<T> items)
         {
@@ -143,7 +143,7 @@ namespace Filter.Filter_Calculator
                             type != typeof(double) && type != typeof(int) && type != typeof(string) && type != typeof(DateTime) && type != typeof(DateTime?))
                             throw new Exception($"Your logical filter has a non existing type '{type}' that you can use in this filter");
 
-                        Setup(castedFilterInstelling.Title, type, castedFilterInstelling.PropertyFromDataset, castedFilterInstelling.FilterOptions);
+                        Setup(castedFilterInstelling.Title, type, castedFilterInstelling.PropertyFromDataset);
                     }
                     else if (genericFilterType == typeof(BooleanFilter<>))
                     {
@@ -151,7 +151,7 @@ namespace Filter.Filter_Calculator
                         Type actualDataType = castedFilter.Data.GetType();
                         dynamic castedFilterInstelling = Convert.ChangeType(castedFilter.Data, actualDataType);
 
-                        Setup(castedFilterInstelling.Title, typeof(Boolean), castedFilterInstelling.PropertyFromDataset, castedFilterInstelling.FilterOptions);
+                        Setup(castedFilterInstelling.Title, typeof(Boolean), castedFilterInstelling.PropertyFromDataset);
                     }
                 }
             }

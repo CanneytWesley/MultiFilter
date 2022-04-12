@@ -66,8 +66,6 @@ namespace MultiFilter.CoreTests.Filters
         public string Title { get; set; }
         public string Shortcut { get; set; }
         = "C";
-        public FilterOption FilterOptions { get; set; }
-        = FilterOption.IndexOf;
         public Icon Icon { get; set; }
 
         public Task<List<string>> GetData()

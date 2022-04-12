@@ -8,14 +8,12 @@ namespace Filter.Filter_Calculator
     public class IntCalculation<T> : ICalculation<T>
     {
         public Func<T, int> Property { get; set; }
-        public FilterOption FilterOption { get; set; }
         public Type FilterTrigger { get; set; }
         public string FilterTitle { get; set; }
 
-        public IntCalculation(string fitlerTitle, Type filterTrigger, Func<T, int> property, FilterOption filterOption)
+        public IntCalculation(string fitlerTitle, Type filterTrigger, Func<T, int> property)
         {
             Property = property;
-            FilterOption = filterOption;
             FilterTrigger = filterTrigger;
             FilterTitle = fitlerTitle;
         }

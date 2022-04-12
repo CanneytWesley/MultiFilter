@@ -16,7 +16,6 @@ namespace MultiFilter.GUITests.Data.BooleanFilter
         public Func<Friend, bool> PropertyFromDataset { get; set; } = p => p.IsBestFriend;
         public string Title { get; set; } = "Best friend";
         public string Shortcut { get; set; } = "Bff";
-        public FilterOption FilterOptions { get; set; } = FilterOption.Exact;
         public Icon Icon { get; set; } = new Icon(Brushes.AntiqueWhite.ToString(), Icons.Bericht);
     }
 }

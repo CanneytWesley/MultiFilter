@@ -8,14 +8,12 @@ namespace Filter.Filter_Calculator
     public class NullableDateTimeCalculation<T> : ICalculation<T>
     {
         public Func<T, DateTime?> Property { get; set; }
-        public FilterOption FilterOption { get; set; }
         public Type FilterTrigger { get; set; }
         public string FilterTitle { get; set; }
 
-        public NullableDateTimeCalculation(string filterTitle, Type filterTrigger, Func<T, DateTime?> property, FilterOption filterOption)
+        public NullableDateTimeCalculation(string filterTitle, Type filterTrigger, Func<T, DateTime?> property)
         {
             Property = property;
-            FilterOption = filterOption;
             FilterTrigger = filterTrigger;
             FilterTitle = filterTitle;
         }
@@ -94,14 +92,12 @@ namespace Filter.Filter_Calculator
     public class DateTimeCalculation<T> : ICalculation<T>
     {
         public Func<T, DateTime> Property { get; set; }
-        public FilterOption FilterOption { get; set; }
         public Type FilterTrigger { get; set; }
         public string FilterTitle { get; set; }
 
-        public DateTimeCalculation(string filterTitle, Type filterTrigger, Func<T, DateTime> property, FilterOption filterOption)
+        public DateTimeCalculation(string filterTitle, Type filterTrigger, Func<T, DateTime> property)
         {
             Property = property;
-            FilterOption = filterOption;
             FilterTrigger = filterTrigger;
             FilterTitle = filterTitle;
         }

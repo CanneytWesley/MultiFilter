@@ -17,14 +17,12 @@ namespace MultiFilter.GUITests.Data.ActionFilters
     {
         public string Title { get; set; }
         public string Shortcut { get; set; }
-        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
 
         public MessagesFilterSetting()
         {
             Title = "Acties met berichten, deze berichten worden dan getoond.";
             Shortcut = "A";
-            FilterOptions = FilterOption.Exact;
             Icon = new Icon(Brushes.Blue.ToString(), Icons.Alertbericht);
         }
 

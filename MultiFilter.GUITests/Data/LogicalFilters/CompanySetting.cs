@@ -15,14 +15,12 @@ namespace MultiFilter.GUITests.Data.LogicalFilters
             Title = "Company index";
             Shortcut = "Co";
             Icon = new Icon(Brushes.Silver.ToString(), Icons.Gelukt);
-            FilterOptions = FilterOption.IndexOf;
             PropertyFromDataset = p => p.Company;
         }
 
         public Func<Friend, string> PropertyFromDataset { get; set; }
         public string Title { get; set; }
         public string Shortcut { get; set; }
-        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
     }
 }

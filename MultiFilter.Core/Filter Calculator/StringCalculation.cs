@@ -8,38 +8,46 @@ namespace Filter.Filter_Calculator
     public class StringCalculation<T> : ICalculation<T>
     {
         public Func<T, string> Property { get; set; }
-
-        public FilterOption FilterOption { get; set; }
         public Type FilterTrigger { get; set; }
         public string FilterTitle { get; set; }
 
-        public StringCalculation(string filterTitle, Type filterTrigger, Func<T, string> property, FilterOption filterOptie)
+        public StringCalculation(string filterTitle, Type filterTrigger, Func<T, string> property)
         {
             Property = property;
-            FilterOption = filterOptie;
             FilterTrigger = filterTrigger;
             FilterTitle = filterTitle;
         }
 
         public List<T> FilterResult(List<T> allItems, IResult filterResult)
         {
-            StringComparison sc = StringComparison.OrdinalIgnoreCase;
-            if (FilterOption.HasFlag(FilterOption.OrdinalCase))
-                sc = StringComparison.Ordinal;
+            string filterValue = filterResult.Model.Item;
 
-            if (FilterOption.HasFlag(FilterOption.IndexOf))
+            if (filterValue.StartsWith("*") && filterValue.EndsWith("*"))
             {
-                var result = allItems.Where(p => Property(p) != null && Property(p).IndexOf(filterResult.Model.Item, sc) != -1).ToList();
-                return result;
+                return allItems.Where(p => Property(p) != null && Property(p)
+                               .IndexOf(filterValue.Substring(1,filterValue.Length-2), StringComparison.OrdinalIgnoreCase) != -1)
+                               .ToList();
             }
-            else if (FilterOption.HasFlag(FilterOption.Exact))
+            else if (filterValue.StartsWith("*"))
             {
-                var result = allItems.Where(p => Property(p) != null && Property(p) == filterResult.Model.Item).ToList();
-                return result;
-
+                string cutoff = filterValue.Substring(1, filterValue.Length - 1);
+                return allItems.Where(p => Property(p) != null && Property(p)
+               .EndsWith(cutoff, StringComparison.OrdinalIgnoreCase))
+               .ToList();
             }
-
-            return new List<T>();
+            else if (filterValue.EndsWith("*"))
+            {
+                string cutoff = filterValue.Substring(0, filterValue.Length - 1);
+                return allItems.Where(p => Property(p) != null && Property(p)
+               .StartsWith(cutoff, StringComparison.OrdinalIgnoreCase))
+               .ToList();
+            }
+            else
+            { 
+                return allItems.Where(p => Property(p) != null && Property(p)
+                               .Equals(filterValue, StringComparison.OrdinalIgnoreCase))
+                               .ToList();
+            }
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Filter.Filter_Calculator
         GreaterOrEqualThan,
         Equal,
         NotEqual,
+        Star,
     }
 
     public class LogicalCalculator

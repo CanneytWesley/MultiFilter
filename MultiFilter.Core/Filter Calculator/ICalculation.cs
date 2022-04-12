@@ -7,8 +7,6 @@ namespace Filter.Filter_Calculator
     public interface ICalculation<T>
     {
 
-        public FilterOption FilterOption { get; set; }
-
         public Type FilterTrigger { get; set; }
 
         public string FilterTitle { get; set; }

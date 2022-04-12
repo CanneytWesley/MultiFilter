@@ -16,7 +16,6 @@ namespace MultiFilter.GUITests.Data.Companies
         public Func<Friend, string> PropertyFromDataset { get; set; }
         public string Title { get; set; }
         public string Shortcut { get; set; }
-        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
 
         public CompanyFilterSetting()
@@ -25,7 +24,6 @@ namespace MultiFilter.GUITests.Data.Companies
             PropertyFromDataset = p => p.Company;
             Title = "Companies";
             Shortcut = "C";
-            FilterOptions = FilterOption.IndexOf;
             Icon = new Icon(Brushes.Green.ToString(), Icons.Gelukt);
         }
 

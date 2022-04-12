@@ -18,7 +18,6 @@ namespace GUITests.Data.Gender_filter
         = "Gender";
         public string Shortcut { get; set; }
         = "G";
-        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
         = new Icon(Brushes.AntiqueWhite.ToString(), Icons.Bericht);
 

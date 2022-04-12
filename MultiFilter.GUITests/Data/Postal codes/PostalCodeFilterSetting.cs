@@ -15,7 +15,6 @@ namespace GUITests.Data.Postal_codes
     {
         public string Title { get; set; }
         public string Shortcut { get; set; }
-        public FilterOption FilterOptions { get; set; }
         public Func<PostalCode, string> PropertyToFilterWith { get; set; }
         public Func<Friend, string> PropertyFromDataset { get; set; }
         public Icon Icon { get; set; }
@@ -24,7 +23,6 @@ namespace GUITests.Data.Postal_codes
         {
             Title = "Postal codes";
             Shortcut = "P";
-            FilterOptions = FilterOption.Exact;
             PropertyToFilterWith = p => p.Code;
             PropertyFromDataset = p => p.PostalCode;
             Icon = new Icon(Brushes.Pink.ToString(), Icons.Bericht);

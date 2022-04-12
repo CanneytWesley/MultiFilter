@@ -8,14 +8,12 @@ namespace Filter.Filter_Calculator
     public class DoubleCalculation<T> : ICalculation<T>
     {
         public Func<T, double> Property { get; set; }
-        public FilterOption FilterOption { get; set; }
         public Type FilterTrigger { get; set; }
         public string FilterTitle { get; set; }
 
-        public DoubleCalculation(string filterTitel, Type filterTrigger, Func<T, double> property, FilterOption filterOptie)
+        public DoubleCalculation(string filterTitel, Type filterTrigger, Func<T, double> property)
         {
             Property = property;
-            FilterOption = filterOptie;
             FilterTrigger = filterTrigger;
             FilterTitle = filterTitel;
         }

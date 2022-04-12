@@ -19,7 +19,6 @@ namespace MultiFilter.GUITests.Data.LogicalFilters
         public Func<Friend, double> PropertyFromDataset { get; set; }
         public string Title { get; set; }
         public string Shortcut { get; set; }
-        public FilterOption FilterOptions { get; set; }
         public Icon Icon { get; set; }
 
         public WeightFilterSetting()
@@ -27,7 +26,6 @@ namespace MultiFilter.GUITests.Data.LogicalFilters
             Title = "Weight";
             Shortcut = "W";
             Icon = new Icon(Brushes.Red.ToString(), Icons.Alertbericht);
-            FilterOptions = FilterOption.Exact;
             PropertyFromDataset = p => p.Weight;
         }
     }
