@@ -319,7 +319,7 @@ namespace MultiFilter
                     "<15000" +
                     Environment.NewLine +
                     "<3en>1" + Environment.NewLine + 
-                    "*Steel Construction*";
+                    "*compute*";
 
             }
             else if (isBooleanFilter)
