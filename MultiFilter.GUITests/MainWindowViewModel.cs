@@ -34,9 +34,6 @@ namespace MultiFilter.GUITests
             FilterMaster = new MyFilterFactory<Friend>(Friends);
             
             InvokeFilterCommand = new RelayCommand(InvokeFilter);
-
-
-
         }
 
         private void InvokeFilter()
