@@ -19,7 +19,8 @@ With this filter you can easily build a wpf application and use as many filters 
  ## 3 kind of filters
  * MultipleChoiceFilter: you use a list of items, pick one out of them and use it to filter
  * ActionFilter: you build a set of items and link an action to each item. Like build a report or open a window.
- * LogicalFilter: you use logic to filter on items: < > != ... Example: Age >50
+ * LogicalFilter: you use logic to filter on items: < > != ... Example: Age >50 or windo*
+ * BooleanFilter: There are yes/no filters
  
 ## Implementation
 
