@@ -19,10 +19,18 @@ namespace MultiFilter.Core
         public FilterExecutor<T> FilterExecutor { get; set; }
         public abstract void SetData(List<T> objects);
 
+        public event EventHandler FilterExecuted;
+
         public FilterFactory(ObservableCollection<T> collection)
         {
             Collection = collection;
-            Command = new RelayCommand<FilterResult>(Filter);
+            Command = new RelayCommand<FilterResult>(FilterEvent);
+        }
+
+        public void FilterEvent(FilterResult result)
+        {
+            Filter(result);
+            FilterExecuted?.Invoke(this, EventArgs.Empty);
         }
 
         public override void Filter(FilterResult result)
@@ -33,6 +41,7 @@ namespace MultiFilter.Core
 
             Collection.Clear();
             FilterExecutor.Result.ForEach(p => Collection.Add(p));
+
         }
     }
 
