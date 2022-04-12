@@ -15,7 +15,7 @@ namespace MultiFilter.Core
 {
     public abstract class FilterFactory<T> : FilterMaster
     {
-        private readonly ObservableCollection<T> Collection;
+        public ObservableCollection<T> Collection { get; }
         public FilterExecutor<T> FilterExecutor { get; set; }
         public abstract void SetData(List<T> objects);
 
