@@ -13,7 +13,7 @@
     <PackageProjectUrl>https://github.com/CanneytWesley/MultiFilter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CanneytWesley/MultiFilter</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
   </PropertyGroup>
 
   <ItemGroup>

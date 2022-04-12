@@ -1,5 +1,6 @@
 ﻿using Filter.Filter_Calculator;
 using Filter.Filter_Results;
+using GalaSoft.MvvmLight.CommandWpf;
 using MultiFilter.Core.Filters;
 using MultiFilter.Core.Filters.Model;
 using System;
@@ -14,8 +15,25 @@ namespace MultiFilter.Core
 {
     public abstract class FilterFactory<T> : FilterMaster
     {
+        private readonly ObservableCollection<T> Collection;
         public FilterExecutor<T> FilterExecutor { get; set; }
         public abstract void SetData(List<T> objects);
+
+        public FilterFactory(ObservableCollection<T> collection)
+        {
+            Collection = collection;
+            Command = new RelayCommand<FilterResult>(Filter);
+        }
+
+        public override void Filter(FilterResult result)
+        {
+            if (result == null)
+                result = new();
+            FilterExecutor.Filter(result.Edit, result.Results); ;
+
+            Collection.Clear();
+            FilterExecutor.Result.ForEach(p => Collection.Add(p));
+        }
     }
 
     public abstract class FilterMaster

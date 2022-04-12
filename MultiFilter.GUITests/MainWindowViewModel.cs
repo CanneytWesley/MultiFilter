@@ -25,13 +25,13 @@ namespace MultiFilter.GUITests
         public ICommand InvokeFilterCommand { get; set; }
         
 
-        public MyFilterMaster<Friend> FilterMaster { get; set; }
+        public MyFilterFactory<Friend> FilterMaster { get; set; }
 
 
         public MainWindowViewModel()
         {
             Friends = new ObservableCollection<Friend>();
-            FilterMaster = new MyFilterMaster<Friend>(Friends);
+            FilterMaster = new MyFilterFactory<Friend>(Friends);
             
             InvokeFilterCommand = new RelayCommand(InvokeFilter);
 

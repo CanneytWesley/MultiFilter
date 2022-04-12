@@ -16,13 +16,10 @@ using System.Linq;
 
 namespace MultiFilter.GUITests
 {
-    public class MyFilterMaster<T> : FilterFactory<T>
+    public class MyFilterFactory<T> : FilterFactory<T>
     {
-        private readonly ObservableCollection<T> Friends;
-
-        public MyFilterMaster(ObservableCollection<T> friends)
+        public MyFilterFactory(ObservableCollection<T> friends) : base(friends)
         {
-            this.Friends = friends;
             Filters = new ObservableCollection<IFilter>();
 
             //Filter setup
@@ -37,21 +34,9 @@ namespace MultiFilter.GUITests
             Filters.Add(new LogicalFilter<Friend, string>(new CompanySetting()));
             Filters.Add(new BooleanFilter<Friend>(new Data.BooleanFilter.BestFriendFilterSetting()));
 
-            Command = new RelayCommand<FilterResult>(Filter);
-
             //Filter uitvoerder initialiseren
             FilterExecutor = new FilterExecutor<T>();
             FilterExecutor.Setup(Filters.ToList());
-        }
-
-        public override void Filter(FilterResult result)
-        {
-            if (result == null)
-                    result = new();
-                    FilterExecutor.Filter(result.Edit, result.Results); ;
-
-            Friends.Clear();
-            FilterExecutor.Result.ForEach(p => Friends.Add(p));
         }
 
         public override void SetData(List<T> friends)
