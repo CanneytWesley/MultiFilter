@@ -8,7 +8,7 @@ namespace Filter.Filter_Settings
     /// Een filter instelling dient om een filter volledig te kunnen instellen
     /// </summary>
     /// <typeparam name="T">Het model die je gegevenset is</typeparam>
-    public interface IBooleanSettings<T>
+    public interface IBooleanSettings<T> 
     {
         Func<T, bool> PropertyFromDataset { get; set; }
 
@@ -17,5 +17,7 @@ namespace Filter.Filter_Settings
         public string Shortcut { get; set; }
 
         public Icon Icon { get; set; }
-    }    
+
+    }
+
 }

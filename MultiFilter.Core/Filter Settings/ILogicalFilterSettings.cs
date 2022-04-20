@@ -4,7 +4,7 @@ using System;
 
 namespace Filter.Filter_Settings
 {
-    public interface ILogicalFilterSettings<T, F>
+    public interface ILogicalFilterSettings<T, F> 
     {
         Func<T, F> PropertyFromDataset { get; set; }
 

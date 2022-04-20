@@ -109,7 +109,8 @@ namespace Filter.Filter_Calculator
                     type = filterResult.Filter.GetType().GetGenericArguments()[1];
 
                 var filter = FilterCalculations.FirstOrDefault(p => p.FilterTrigger == type && p.FilterTitle == filterResult.Filter.Title);
-                
+                if (filter == null) return;
+
                 var result = filter.FilterResult(AllItems, filterResult);
 
                 Add(result);
@@ -133,6 +134,7 @@ namespace Filter.Filter_Calculator
                         dynamic castedFilter = Convert.ChangeType(filter, actualFilterType);
                         Type actualDataType = castedFilter.Data.GetType();
                         dynamic castedFilterInstelling = Convert.ChangeType(castedFilter.Data, actualDataType);
+                        if (castedFilterInstelling.PropertyFromDataset == null) return;
 
                         Type type = actualFilterType.GetGenericArguments()[1];
 
@@ -150,6 +152,7 @@ namespace Filter.Filter_Calculator
                         dynamic castedFilter = Convert.ChangeType(filter, actualFilterType);
                         Type actualDataType = castedFilter.Data.GetType();
                         dynamic castedFilterInstelling = Convert.ChangeType(castedFilter.Data, actualDataType);
+                        if (castedFilterInstelling.PropertyFromDataset == null) return;
 
                         Setup(castedFilterInstelling.Title, typeof(Boolean), castedFilterInstelling.PropertyFromDataset);
                     }

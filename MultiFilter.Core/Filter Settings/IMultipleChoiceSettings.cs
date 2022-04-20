@@ -12,7 +12,7 @@ namespace Filter.Filter_Settings
     /// </summary>
     /// <typeparam name="T">Het model die je gegevenset is</typeparam>
     /// <typeparam name="F">Het model waar je mee wil filteren (bvb een lijst van producten)</typeparam>
-    public interface IMultipleChoiceSettings<T, F>
+    public interface IMultipleChoiceSettings<T, F> 
     {
         Func<F, string> PropertyToFilterWith { get; set; }
         Func<T, string> PropertyFromDataset { get; set; }
