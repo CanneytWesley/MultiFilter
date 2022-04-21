@@ -444,5 +444,6 @@ namespace MultiFilter
                 TitelView.Visibility = Visibility.Visible;
             }
         }
+
     }
 }

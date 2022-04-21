@@ -27,6 +27,11 @@ namespace MultiFilter.Core
             Command = new RelayCommand<FilterResult>(FilterEvent);
         }
 
+        public void SetUniqueFilterName(string name)
+        { 
+            
+        }
+
         public void FilterEvent(FilterResult result)
         {
             Filter(result);
