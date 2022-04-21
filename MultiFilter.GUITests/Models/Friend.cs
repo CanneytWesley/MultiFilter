@@ -20,5 +20,6 @@ namespace MultiFilter.GUITests.Models
         public double Weight { get; set; }
 
         public bool IsBestFriend { get; set; }
+        public bool LikesToParty { get; set; }
     }
 }

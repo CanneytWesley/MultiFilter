@@ -32,6 +32,8 @@ namespace MultiFilter.GUITests
             Filters.Add(new LogicalFilter<Friend, DateTime>(new DateOfBirthSetting()));
             Filters.Add(new LogicalFilter<Friend, DateTime?>(new DateOfDeathSetting()));
             Filters.Add(new LogicalFilter<Friend, string>(new CompanySetting()));
+            Filters.Add(new BooleanFilter<Friend>(new Data.BooleanFilter.LikesToPartyFilterSetting()));
+            Filters.Add(new BooleanFilter<Friend>(new Data.BooleanFilter.NonAutonaticFilter()));
             Filters.Add(new BooleanFilter<Friend>(new Data.BooleanFilter.BestFriendFilterSetting()));
 
             //Filter uitvoerder initialiseren
