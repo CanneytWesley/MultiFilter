@@ -74,6 +74,11 @@
             </TextBox.Style>
         </TextBox>
                 <Grid Grid.Column="1" Background="Transparent" MouseUp="Grid_MouseUp">
+                    <Grid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Detail filter" IsCheckable="True" x:Name="ChkDetailFilter" Click="DetailFilter_Click"/>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
                     <Grid.Style>
                         <Style TargetType="Grid">
                             <Style.Triggers>
@@ -88,17 +93,17 @@
                 </Grid>
             </Grid>
         </Border>
-        <Popup x:Name="Popup" Width="150" Height="300" PopupAnimation="Slide" Placement="Bottom" PlacementTarget="{Binding ElementName=BorderTxtFilter}">
+        <Popup x:Name="Popup" Width="150" MinHeight="300" PopupAnimation="Slide" Placement="Bottom" PlacementTarget="{Binding ElementName=BorderTxtFilter}">
             <Border BorderBrush="{DynamicResource MainColor}" BorderThickness="1,0,1,1">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition />
+                        <RowDefinition MinHeight="150" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid Background="White">
                         <Grid>
-                            <ListBox BorderThickness="0" VirtualizingStackPanel.VirtualizationMode="Recycling" x:Name="LstResults" Background="White">
+                            <ListBox Height="300" BorderThickness="0" VirtualizingStackPanel.VirtualizationMode="Recycling" x:Name="LstResults" Background="White">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Height="30" Style="{StaticResource ButtonStyle}" Background="Transparent" HorizontalAlignment="Stretch">
@@ -129,9 +134,9 @@
 
                     </Grid>
 
-                    <Grid Grid.Row="1" MinHeight="30">
+                    <Grid Grid.Row="1">
                         <Border Background="White" BorderBrush="{DynamicResource MainColor}" BorderThickness="0,1,0,0" Margin="0,0,0,0">
-                            <Grid >
+                            <Grid x:Name="TitelView" MinHeight="50">
                                 <Grid Background="White" ToolTip="Aantal actieve filters" VerticalAlignment="Center" HorizontalAlignment="Stretch" MouseUp="ButtonToonActieveFilters_MouseUp" Grid.Column="0">
                                     <TextBlock Foreground="{DynamicResource TextColor}" MaxWidth="190" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="TBLogicalFilter" Padding="5,0,0,0" Margin="2" Background="White">
 
@@ -144,7 +149,7 @@
                         </Border>
                     </Grid>
                     <Grid Grid.Row="2" Background="White" >
-                        <WrapPanel >
+                        <WrapPanel x:Name="ButtonView">
                             <ItemsControl Background="White" ItemsSource="{Binding FilterMaster.Filters,ElementName=UI}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -209,6 +214,79 @@
                                 </Path>
                             </Border>
                         </WrapPanel>
+                        <ScrollViewer  x:Name="DetailView" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                            <StackPanel HorizontalAlignment="Stretch">
+                                
+                            <ItemsControl Background="White" ItemsSource="{Binding FilterMaster.Filters,ElementName=UI}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Margin="1" CornerRadius="0" BorderThickness="0" Padding="3" Background="White">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseUp">
+                                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=SetShortCutCommand}" CommandParameter="{Binding ShortCut}"/>
+                                                </i:EventTrigger>
+                                                <i:EventTrigger EventName="MouseEnter">
+                                                    <i:InvokeCommandAction Command="{Binding MouseOverCommand,ElementName=UI}" CommandParameter="{Binding Title}"/>
+                                                </i:EventTrigger>
+                                                <i:EventTrigger EventName="MouseLeave">
+                                                    <i:InvokeCommandAction Command="{Binding MouseOverCommand,ElementName=UI}" CommandParameter=""/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Cursor" Value="Hand" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                                <StackPanel Orientation="Horizontal">
+                                                    
+                                            <Path Data="{Binding Icon.IconPath}" Fill="{Binding Icon.IconColor}" Height="15" Width="15" Margin="2" Stretch="Uniform">
+
+                                            </Path>
+                                                    <Label Content="{Binding Title}" />
+                                                </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Border Margin="1" CornerRadius="2" Padding="3" MouseUp="FilterReset_MouseUp" >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseEnter">
+                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=MouseOverCommand}" CommandParameter="Alle filters verwijderen"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="MouseLeave">
+                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=MouseOverCommand}" CommandParameter=""/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <Border.Style>
+                                    <Style TargetType="Border" >
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="LightBlue" />
+                                            </Trigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=ActiveFilter.Count}" Value="0">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                        <Setter Property="Background" Value="Transparent" />
+                                    </Style>
+                                </Border.Style>
+                                <Path Fill="Black" Height="15" Width="15" Margin="2" Stretch="Uniform" Data="{Binding Source={StaticResource IconPaths}, Path=Trashcan}">
+
+                                </Path>
+                            </Border>
+
+                            </StackPanel>
+                        </ScrollViewer>
                     </Grid>
                     
                 </Grid>

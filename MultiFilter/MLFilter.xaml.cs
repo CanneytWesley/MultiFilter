@@ -427,5 +427,22 @@ namespace MultiFilter
         {
             await CreateFilter();
         }
+
+
+        private void DetailFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if (ChkDetailFilter.IsChecked == true)
+            {
+                DetailView.Visibility = Visibility.Visible;
+                ButtonView.Visibility = Visibility.Collapsed;
+                TitelView.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                DetailView.Visibility = Visibility.Collapsed;
+                ButtonView.Visibility = Visibility.Visible;
+                TitelView.Visibility = Visibility.Visible;
+            }
+        }
     }
 }

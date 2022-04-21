@@ -31,6 +31,9 @@ namespace MultiFilter.Core.Filters
 
         public Task<List<IResult>> Filter(string uitvoeren)
         {
+            if (!HasThisShortCut(uitvoeren))
+                return Task.FromResult(new List<IResult>());
+
             var answer = RemoveShortCut(uitvoeren).ToLower();
 
             var succes = Translations.TryGetValue(answer.ToLower(), out bool result);
