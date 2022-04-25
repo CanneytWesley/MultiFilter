@@ -32,13 +32,13 @@ namespace MultiFilter.Core
             
         }
 
-        public void FilterEvent(FilterResult result)
+        public async void FilterEvent(FilterResult result)
         {
-            Filter(result);
+            await Filter(result);
             FilterExecuted?.Invoke(this, EventArgs.Empty);
         }
 
-        public override void Filter(FilterResult result)
+        public override Task Filter(FilterResult result)
         {
             if (result == null)
                 result = new();
@@ -47,6 +47,7 @@ namespace MultiFilter.Core
             Collection.Clear();
             FilterExecutor.Result.ForEach(p => Collection.Add(p));
 
+            return Task.CompletedTask;
         }
     }
 
@@ -104,6 +105,6 @@ namespace MultiFilter.Core
         }
 
 
-        public abstract void Filter(FilterResult result);
+        public abstract Task Filter(FilterResult result);
     }
 }
