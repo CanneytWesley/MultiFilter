@@ -24,21 +24,11 @@ namespace MultiFilter.Core
         public FilterFactory(ObservableCollection<T> collection)
         {
             Collection = collection;
-            Command = new RelayCommand<FilterResult>(FilterEvent);
+            Command = new RelayCommand<FilterResult>(async (FilterResult result) => { await Filter(result); });
         }
 
-        public void SetUniqueFilterName(string name)
-        { 
-            
-        }
 
-        public void FilterEvent(FilterResult result)
-        {
-            Filter(result);
-            FilterExecuted?.Invoke(this, EventArgs.Empty);
-        }
-
-        public override void Filter(FilterResult result)
+        public override Task Filter(FilterResult result)
         {
             if (result == null)
                 result = new();
@@ -47,7 +37,12 @@ namespace MultiFilter.Core
             Collection.Clear();
             FilterExecutor.Result.ForEach(p => Collection.Add(p));
 
+            FilterExecuted?.Invoke(this, EventArgs.Empty);
+
+            return Task.CompletedTask;
         }
+        
+        
     }
 
     public abstract class FilterMaster
@@ -104,6 +99,6 @@ namespace MultiFilter.Core
         }
 
 
-        public abstract void Filter(FilterResult result);
+        public abstract Task Filter(FilterResult result);
     }
 }
