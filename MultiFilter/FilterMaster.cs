@@ -37,6 +37,9 @@ namespace MultiFilter.Core
             Collection.Clear();
             FilterExecutor.Result.ForEach(p => Collection.Add(p));
 
+            FilterExecuted?.Invoke(this, EventArgs.Empty);
+
+            return Task.CompletedTask;
         }
         
         
