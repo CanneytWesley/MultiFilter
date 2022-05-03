@@ -89,6 +89,7 @@ namespace Filter.Filter_Calculator
 
         public void SetData(List<T> Items)
         {
+            if (Items == null) AllItems = new List<T>();
             AllItems = Items;
         }
 

@@ -35,7 +35,9 @@ namespace MultiFilter.Core
             FilterExecutor.Filter(result.Edit, result.Results); ;
 
             Collection.Clear();
-            FilterExecutor.Result.ForEach(p => Collection.Add(p));
+
+            if (FilterExecutor.Result != null)
+                FilterExecutor.Result.ForEach(p => Collection.Add(p));
 
             FilterExecuted?.Invoke(this, EventArgs.Empty);
 
