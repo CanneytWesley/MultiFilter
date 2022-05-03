@@ -12,7 +12,7 @@ namespace MultiFilter.GUITests.Models
         public static List<Friend> GetSeed()
         {
             return new List<Friend>() {
-                new Friend() { Name = "Joe Love", Age = 15, Company="KBC Bank", DateOfBirth = new DateTime(1987,5,1), PostalCode = "8000", Sex = Gender.Men, Weight=80,},
+                new Friend() { Name = "Joe Love", Age = 7, Company="KBC Bank", DateOfBirth = new DateTime(1987,5,1), PostalCode = "8000", Sex = Gender.Men, Weight=80,},
                 new Friend() { Name = "Kris Anderson", Age = 22, Company="Luminus", DateOfBirth = new DateTime(1989,7,3), PostalCode = "8000", Sex = Gender.Men, Weight=108},
                 new Friend() { Name = "James Fisher", LikesToParty = true, Age = 30, Company=null, DateOfBirth = new DateTime(1980,2,20), PostalCode = "5000", Sex = Gender.Men, Weight=101},
                 new Friend() { Name = "Dick Bennet", Age = 45, Company="KBC Bank", DateOfBirth = new DateTime(1995,10,10), PostalCode = "3000", Sex = Gender.Men, Weight=120},

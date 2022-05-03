@@ -9,7 +9,7 @@
     <RepositoryUrl>https://github.com/CanneytWesley/MultiFilter</RepositoryUrl>
     <PackageTags>WPF, Filter</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.15</Version>
+    <Version>1.0.16</Version>
   </PropertyGroup>
 
   <ItemGroup>

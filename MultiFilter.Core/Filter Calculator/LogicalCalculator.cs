@@ -49,7 +49,7 @@ namespace Filter.Filter_Calculator
         {
             IsSuccess = true;
 
-            if (text.Length <= 1)
+            if (text.Length <= 0)
             {
                 IsSuccess = false;
                 return;
