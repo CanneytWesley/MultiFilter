@@ -110,6 +110,21 @@ namespace FilterTests.Filter_Calculator
             Assert.AreEqual(true, model.IsSuccess);
         }
         [TestMethod()]
+        public void CalculateLogicTest_EqualTo15000_WithoutEqual()
+        {
+            LogicalCalculator model = new LogicalCalculator();
+
+            model.Calculate("15000");
+
+            Assert.AreEqual(2, model.Logic.Count);
+            Assert.AreEqual(LogicalOperator.Equal, model.Logic[0].Operator);
+            Assert.AreEqual(0, model.Logic[0].value);
+            Assert.AreEqual(LogicalOperator.Value, model.Logic[1].Operator);
+            Assert.AreEqual(15000, model.Logic[1].value);
+            Assert.AreEqual(true, model.IsSuccess);
+        }
+
+        [TestMethod()]
         public void CalculateLogicTest_NotEqualTo15000()
         {
             LogicalCalculator model = new LogicalCalculator();

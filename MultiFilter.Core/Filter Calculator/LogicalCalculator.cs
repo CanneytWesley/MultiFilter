@@ -96,6 +96,9 @@ namespace Filter.Filter_Calculator
             if (text.Length != 0) Logic.Add(new LogicalValue(result));
             if (!otherOK) IsSuccess = false;
 
+            if (Logic.Count == 1 && Logic[0].Operator == LogicalOperator.Value)
+                Logic.Insert(0, new LogicalValue(LogicalOperator.Equal));
+
             TestLogicBuild();
         }
 

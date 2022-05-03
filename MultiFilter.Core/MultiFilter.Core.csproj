@@ -9,11 +9,11 @@
     <RepositoryUrl>https://github.com/CanneytWesley/MultiFilter</RepositoryUrl>
     <PackageTags>WPF, Filter</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.14</Version>
+    <Version>1.0.15</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="F:\Dropbox\OneDrive - BUYCK.BE\Desktop\filter.png">
+    <None Include="..\MultiFilter\filter.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

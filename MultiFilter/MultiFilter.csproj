@@ -13,7 +13,7 @@
     <PackageProjectUrl>https://github.com/CanneytWesley/MultiFilter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CanneytWesley/MultiFilter</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.14</Version>
+    <Version>1.0.15</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,14 +24,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="F:\Dropbox\OneDrive - BUYCK.BE\Desktop\filter.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <ProjectReference Include="..\MultiFilter.Core\MultiFilter.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MultiFilter.Core\MultiFilter.Core.csproj" />
+    <None Update="filter.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
