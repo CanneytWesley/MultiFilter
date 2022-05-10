@@ -402,7 +402,7 @@ namespace MultiFilter
             {
                 var filter = filtergesplit[0];
 
-                var shortcut = shortcuts.FirstOrDefault(p => p.ShortCut.IndexOf(filter, StringComparison.OrdinalIgnoreCase) == 0);
+                var shortcut = shortcuts.FirstOrDefault(p => p.ShortCut.Equals(filter, StringComparison.OrdinalIgnoreCase));
 
                 if (shortcut is ILogicalFilter lf)
                 {
