@@ -140,34 +140,6 @@ namespace MultiFilter
 
         }
 
-        private async Task FilterMaster_Initialise(object sender, EventArgs e)
-        {
-            await ReadFilter();
-        }
-
-        private async Task ReadFilter()
-        {
-            var savedFilters = FilterMaster.ReadFilter();
-            foreach (var filter in savedFilters)
-            {
-                var f = FilterMaster.Filters.FirstOrDefault(p => p.ShortCut.Equals(filter.Shortcut));
-
-                List<IResult> res;
-                if (f is ILogicalFilter lf)
-                {
-                    res = await lf.FilterLogical(filter.Shortcut + " " + filter.FilterValue);
-                }
-                else
-                {
-                    res = await f.Filter(filter.Shortcut + " " + filter.FilterValue);
-                }
-
-                foreach (var r in res) AddFilter(r);
-            }
-
-            FilterMaster.Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit });
-        }
-
         private void TriggerFilter(object sender, EventArgs e)
         {
             FilterMaster.Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit });
