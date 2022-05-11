@@ -40,7 +40,7 @@ namespace MultiFilter.GUITests
             FilterExecutor = new FilterExecutor<T>();
             FilterExecutor.Setup(Filters.ToList());
 
-            DataLocation = new MultiFilter.Data.DataLocation(@"f:\","bestandje");
+            DataLocation = new MultiFilter.Data.DataLocation(@"f:\","filename");
 
         }
 

@@ -213,6 +213,8 @@
 
                                 </Path>
                             </Border>
+                            <Grid x:Name="BDSaveFilter">
+                                
                             <Border Margin="1" CornerRadius="2" Padding="3" MouseUp="FilterSave_MouseUp" >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseEnter">
@@ -238,7 +240,8 @@
                                 <Path Fill="ForestGreen" Height="15" Width="15" Margin="2" Stretch="Uniform" Data="{Binding Source={StaticResource IconPaths}, Path=Save}">
 
                                 </Path>
-                            </Border>
+                                </Border>
+                            </Grid>
 
                         </WrapPanel>
                         <ScrollViewer  x:Name="DetailView" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">

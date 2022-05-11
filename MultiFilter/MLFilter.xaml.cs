@@ -120,9 +120,20 @@ namespace MultiFilter
             SetShortCutCommand = new RelayCommand<string>(SetShortCut);
             SetAndOrLabel();
 
+            Loaded += MLFilter_Loaded;
 
         }
 
+        private void MLFilter_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (FilterMaster != null)
+            {
+                if (FilterMaster.DataLocation.NotValid())
+                    BDSaveFilter.Visibility = Visibility.Collapsed;
+                else
+                    BDSaveFilter.Visibility = Visibility.Visible;
+            }
+        }
 
         private static void FilterMasterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
