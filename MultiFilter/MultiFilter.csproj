@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MultiFilter.Core\MultiFilter.Core.csproj" />
+    <ProjectReference Include="..\MultiFilter.Data\MultiFilter.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

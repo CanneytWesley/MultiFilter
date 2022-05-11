@@ -213,11 +213,37 @@
 
                                 </Path>
                             </Border>
+                            <Border Margin="1" CornerRadius="2" Padding="3" MouseUp="FilterSave_MouseUp" >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseEnter">
+                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=MouseOverCommand}" CommandParameter="Filter opslaan"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="MouseLeave">
+                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=MouseOverCommand}" CommandParameter=""/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <Border.Style>
+                                    <Style TargetType="Border" >
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="LightBlue" />
+                                            </Trigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=ActiveFilter.Count}" Value="0">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                        <Setter Property="Background" Value="Transparent" />
+                                    </Style>
+                                </Border.Style>
+                                <Path Fill="ForestGreen" Height="15" Width="15" Margin="2" Stretch="Uniform" Data="{Binding Source={StaticResource IconPaths}, Path=Save}">
+
+                                </Path>
+                            </Border>
+
                         </WrapPanel>
                         <ScrollViewer  x:Name="DetailView" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
                             <StackPanel HorizontalAlignment="Stretch">
-                                
-                            <ItemsControl Background="White" ItemsSource="{Binding FilterMaster.Filters,ElementName=UI}">
+                                <ItemsControl Background="White" ItemsSource="{Binding FilterMaster.Filters,ElementName=UI}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Vertical" />
@@ -258,33 +284,59 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                            <Border Margin="1" CornerRadius="2" Padding="3" MouseUp="FilterReset_MouseUp" >
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseEnter">
-                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=MouseOverCommand}" CommandParameter="Alle filters verwijderen"/>
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="MouseLeave">
-                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=MouseOverCommand}" CommandParameter=""/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <Border.Style>
-                                    <Style TargetType="Border" >
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="LightBlue" />
-                                            </Trigger>
-                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=ActiveFilter.Count}" Value="0">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                        <Setter Property="Background" Value="Transparent" />
-                                    </Style>
-                                </Border.Style>
-                                <Path Fill="Black" Height="15" Width="15" Margin="2" Stretch="Uniform" Data="{Binding Source={StaticResource IconPaths}, Path=Trashcan}">
+                                    
+                                <Border Margin="1" CornerRadius="2" Padding="3" MouseUp="FilterReset_MouseUp" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseEnter">
+                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=MouseOverCommand}" CommandParameter="Alle filters verwijderen"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="MouseLeave">
+                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=MouseOverCommand}" CommandParameter=""/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Border.Style>
+                                        <Style TargetType="Border" >
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightBlue" />
+                                                </Trigger>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=ActiveFilter.Count}" Value="0">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                            <Setter Property="Background" Value="Transparent" />
+                                        </Style>
+                                    </Border.Style>
+                                    <Path Fill="Black" Height="15" Width="15" Margin="2" Stretch="Uniform" Data="{Binding Source={StaticResource IconPaths}, Path=Trashcan}">
 
-                                </Path>
-                            </Border>
+                                    </Path>
+                                </Border>
+                                <Border Margin="1" CornerRadius="2" Padding="3" MouseUp="FilterSave_MouseUp" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseEnter">
+                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=MouseOverCommand}" CommandParameter="Filter opslaan"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="MouseLeave">
+                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=MouseOverCommand}" CommandParameter=""/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Border.Style>
+                                        <Style TargetType="Border" >
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightBlue" />
+                                                </Trigger>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=ActiveFilter.Count}" Value="0">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                            <Setter Property="Background" Value="Transparent" />
+                                        </Style>
+                                    </Border.Style>
+                                    <Path Fill="ForestGreen" Height="15" Width="15" Margin="2" Stretch="Uniform" Data="{Binding Source={StaticResource IconPaths}, Path=Save}">
 
+                                    </Path>
+                                </Border>
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
