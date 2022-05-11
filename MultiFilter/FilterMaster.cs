@@ -3,6 +3,7 @@ using Filter.Filter_Results;
 using GalaSoft.MvvmLight.CommandWpf;
 using MultiFilter.Core.Filters;
 using MultiFilter.Core.Filters.Model;
+using MultiFilter.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,7 +29,7 @@ namespace MultiFilter.Core
         }
 
 
-        public override Task Filter(FilterResult result)
+        public override Task Filter(FilterResult result = null)
         {
             if (result == null)
                 result = new();
@@ -86,6 +87,38 @@ namespace MultiFilter.Core
             }
         }
 
+        public delegate void AddFilterEvent(IResult r);
+        public event AddFilterEvent AddFilter;
+
+        public async Task Start()
+        {
+            List<DataModel> SavedFilter = new List<DataModel>();
+
+            if (DataLocation != null && !DataLocation.NotValid())
+                SavedFilter = ReadFilter();
+
+            for (int i = 0; i < SavedFilter.Count; i++)
+            {
+                var filter = SavedFilter[i];
+                var f = Filters.FirstOrDefault(p => p.ShortCut.Equals(filter.Shortcut));
+
+                List<IResult> res;
+                if (f is ILogicalFilter lf)
+                {
+                    res = await lf.FilterLogical(filter.Shortcut + " " + filter.FilterValue);
+                }
+                else
+                {
+                    res = await f.Filter(filter.Shortcut + " " + filter.FilterValue);
+                }
+
+                foreach (var r in res) 
+                    AddFilter?.Invoke(r);
+            }
+        }
+
+        public DataLocation DataLocation { get; set; }
+
         public void ExecuteFilter(IResult result)
         {
             FilterEventHandler?.Invoke(result);
@@ -101,6 +134,24 @@ namespace MultiFilter.Core
         }
 
 
-        public abstract Task Filter(FilterResult result);
+        public abstract Task Filter(FilterResult result = null);
+
+        internal void SaveFilter(List<IResult> results)
+        {
+            if (DataLocation == null) return;
+            if (DataLocation.NotValid()) return;
+
+            FilterDataService service = new FilterDataService(DataLocation);
+            service.Save(results);
+        }
+
+        public List<DataModel> ReadFilter()
+        {
+            if (DataLocation == null) return new List<DataModel>();
+            if (DataLocation.NotValid()) return new List<DataModel>() ;
+
+            FilterDataService service = new FilterDataService(DataLocation);
+            return service.Read();
+        }
     }
 }

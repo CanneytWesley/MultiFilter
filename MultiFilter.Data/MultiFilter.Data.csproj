@@ -2,25 +2,25 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <PackageId>PCW.MultiFilter.Core</PackageId>
-    <Company>PCW-Solutions</Company>
-    <PackageProjectUrl>https://github.com/CanneytWesley/MultiFilter</PackageProjectUrl>
+    <Version>1.0.21</Version>
     <PackageIcon>filter.png</PackageIcon>
-    <RepositoryUrl>https://github.com/CanneytWesley/MultiFilter</RepositoryUrl>
+    <Company>PCW-Solutions</Company>
+    <Description>Filter for WPF application</Description>
+    <PackageProjectUrl>https://github.com/CanneytWesley/MultiFilter</PackageProjectUrl>
     <PackageTags>WPF, Filter</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.21</Version>
+    <PackageId>PCW.$(AssemblyName)</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\MultiFilter\filter.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <ProjectReference Include="..\MultiFilter.Core\MultiFilter.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <None Update="filter.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

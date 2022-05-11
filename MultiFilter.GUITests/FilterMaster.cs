@@ -39,13 +39,16 @@ namespace MultiFilter.GUITests
             //Filter uitvoerder initialiseren
             FilterExecutor = new FilterExecutor<T>();
             FilterExecutor.Setup(Filters.ToList());
+
+            DataLocation = new MultiFilter.Data.DataLocation(@"f:\","bestandje");
+
         }
 
         public override void SetData(List<T> friends)
         {
             FilterExecutor.SetData(friends);
 
-            Filter(null);
+            InvokeFilter();
         }
 
 

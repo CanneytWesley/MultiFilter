@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using MultiFilter.Core;
 using MultiFilter.Core.Filters;
 using MultiFilter.Core.Filters.Model;
+using MultiFilter.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -51,6 +52,9 @@ namespace MultiFilter
         // Using a DependencyProperty as the backing store for TextBoxWidth.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TextBoxWidthProperty =
             DependencyProperty.Register("TextBoxWidth", typeof(int), typeof(MLFilter), new PropertyMetadata(150, TekstBoxWidthChanged));
+
+
+
 
 
 
@@ -116,6 +120,7 @@ namespace MultiFilter
             SetShortCutCommand = new RelayCommand<string>(SetShortCut);
             SetAndOrLabel();
 
+
         }
 
 
@@ -128,7 +133,39 @@ namespace MultiFilter
                 pz.FilterMaster.TriggerFilterEvent += pz.TriggerFilter;
                 pz.FilterMaster.FilterEventHandler -= pz.ExecuteFilter;
                 pz.FilterMaster.FilterEventHandler += pz.ExecuteFilter;
+                pz.FilterMaster.AddFilter -= pz.AddFilter;
+                pz.FilterMaster.AddFilter += pz.AddFilter;
             }
+
+
+        }
+
+        private async Task FilterMaster_Initialise(object sender, EventArgs e)
+        {
+            await ReadFilter();
+        }
+
+        private async Task ReadFilter()
+        {
+            var savedFilters = FilterMaster.ReadFilter();
+            foreach (var filter in savedFilters)
+            {
+                var f = FilterMaster.Filters.FirstOrDefault(p => p.ShortCut.Equals(filter.Shortcut));
+
+                List<IResult> res;
+                if (f is ILogicalFilter lf)
+                {
+                    res = await lf.FilterLogical(filter.Shortcut + " " + filter.FilterValue);
+                }
+                else
+                {
+                    res = await f.Filter(filter.Shortcut + " " + filter.FilterValue);
+                }
+
+                foreach (var r in res) AddFilter(r);
+            }
+
+            FilterMaster.Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit });
         }
 
         private void TriggerFilter(object sender, EventArgs e)
@@ -142,6 +179,7 @@ namespace MultiFilter
             pz.BorderTxtFilter.Width = pz.TextBoxWidth;
             pz.Popup.Width = pz.TextBoxWidth;
         }
+
 
         private static void FilterBorderColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -233,6 +271,17 @@ namespace MultiFilter
                 ActiveFilter.Add(result);
 
                 FilterMaster.Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit });
+                SetAndOrLabel();
+            }
+        }
+
+        public void AddFilter(IResult result)
+        {
+            if (ActiveFilter == null) return;
+
+            if (ActiveFilter != null && !ActiveFilter.Any(p => p.IsEqualTo(result)) && result != null)
+            {
+                ActiveFilter.Add(result);
                 SetAndOrLabel();
             }
         }
@@ -339,6 +388,8 @@ namespace MultiFilter
         }
         public void SetPopupState(bool state)
         {
+            if (Popup.IsOpen == state) return;
+
             Popup.IsOpen = state;
 
             if (!state)
@@ -406,19 +457,19 @@ namespace MultiFilter
 
                 if (shortcut is ILogicalFilter lf)
                 {
+                    SetPopupState(false);
                     var getfilter = await lf.FilterLogical(TxtFilter.Text);
                     foreach (var ft in getfilter) ExecuteFilter(ft);
 
                     TxtFilter.Text = "";
-                    SetPopupState(false);
                 }
                 else if (shortcut is IBooleanFilter bf)
                 {
+                    SetPopupState(false);
                     var getfilter = await bf.Filter(TxtFilter.Text);
                     foreach (var ft in getfilter) ExecuteFilter(ft);
 
                     TxtFilter.Text = "";
-                    SetPopupState(false);
                 }
             }
         }
@@ -445,5 +496,11 @@ namespace MultiFilter
             }
         }
 
+        private void FilterSave_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            SetPopupState(false);
+
+            FilterMaster.SaveFilter(ActiveFilter.ToList());
+        }
     }
 }

@@ -32,7 +32,6 @@ namespace MultiFilter.GUITests
         {
             Friends = new ObservableCollection<Friend>();
             FilterMaster = new MyFilterFactory<Friend>(Friends);
-            
             InvokeFilterCommand = new RelayCommand(InvokeFilter);
         }
 

@@ -13,7 +13,7 @@
     <PackageProjectUrl>https://github.com/CanneytWesley/MultiFilter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CanneytWesley/MultiFilter</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.17</Version>
+    <Version>1.0.21.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MultiFilter.Core\MultiFilter.Core.csproj" />
+    <ProjectReference Include="..\MultiFilter.Data\MultiFilter.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
