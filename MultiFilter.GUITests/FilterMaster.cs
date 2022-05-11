@@ -40,15 +40,15 @@ namespace MultiFilter.GUITests
             FilterExecutor = new FilterExecutor<T>();
             FilterExecutor.Setup(Filters.ToList());
 
-            DataLocation = new MultiFilter.Data.DataLocation(@"f:\","bestandje.dat");
+            DataLocation = new MultiFilter.Data.DataLocation(@"f:\","bestandje");
+
         }
 
         public override void SetData(List<T> friends)
         {
             FilterExecutor.SetData(friends);
-            
 
-            Filter();
+            InvokeFilter();
         }
 
 

@@ -8,8 +8,10 @@ using System.Xml.Serialization;
 
 namespace MultiFilter.Data
 {
-    internal class FileService
+    public static class FileService
     {
+        public static Exception LastException;
+
         /// <summary>
         /// Writes the given object instance to an XML file.
         /// <para>Only Public properties and variables will be written to the file. These can be any type though, even other classes.</para>
@@ -29,9 +31,9 @@ namespace MultiFilter.Data
                 writer = new StreamWriter(filePath, append);
                 serializer.Serialize(writer, objectToWrite);
             }
-            catch
-            { 
-            
+            catch (Exception ex)
+            {
+                LastException = ex;
             }
             finally
             {
@@ -56,8 +58,9 @@ namespace MultiFilter.Data
                 reader = new StreamReader(filePath);
                 return (T)serializer.Deserialize(reader);
             }
-            catch
+            catch (Exception ex)
             {
+                LastException = ex;
                 return new T();
             }
             finally

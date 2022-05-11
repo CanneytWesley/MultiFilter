@@ -21,9 +21,6 @@ namespace MultiFilter.Core
         public abstract void SetData(List<T> objects);
 
         public event EventHandler FilterExecuted;
-        public override event AsyncEventHandler Initialise;
-
-        public bool Initialised { get; private set; }
 
         public FilterFactory(ObservableCollection<T> collection)
         {
@@ -34,15 +31,6 @@ namespace MultiFilter.Core
 
         public override Task Filter(FilterResult result = null)
         {
-            if (!Initialised)
-            {
-                Initialised = true;
-                Initialise?.Invoke(this, null);
-
-                if (DataLocation != null && !DataLocation.NotValid() )
-                    return Task.CompletedTask;
-            }
-
             if (result == null)
                 result = new();
             FilterExecutor.Filter(result.Edit, result.Results); ;
@@ -62,8 +50,6 @@ namespace MultiFilter.Core
 
     public abstract class FilterMaster
     {
-        public delegate Task AsyncEventHandler(object sender, EventArgs e);
-        public abstract event AsyncEventHandler Initialise;
         public ICommand Command { get; set; }
         ObservableCollection<IFilter> filters;
         public ObservableCollection<IFilter> Filters
@@ -98,6 +84,36 @@ namespace MultiFilter.Core
                     fu.ExecuteFilter -= ExecuteFilter;
                     fu.ExecuteFilter += ExecuteFilter;
                 }
+            }
+        }
+
+        public delegate void AddFilterEvent(IResult r);
+        public event AddFilterEvent AddFilter;
+
+        public async Task Start()
+        {
+            List<DataModel> SavedFilter = new List<DataModel>();
+
+            if (DataLocation != null && !DataLocation.NotValid())
+                SavedFilter = ReadFilter();
+
+            for (int i = 0; i < SavedFilter.Count; i++)
+            {
+                var filter = SavedFilter[i];
+                var f = Filters.FirstOrDefault(p => p.ShortCut.Equals(filter.Shortcut));
+
+                List<IResult> res;
+                if (f is ILogicalFilter lf)
+                {
+                    res = await lf.FilterLogical(filter.Shortcut + " " + filter.FilterValue);
+                }
+                else
+                {
+                    res = await f.Filter(filter.Shortcut + " " + filter.FilterValue);
+                }
+
+                foreach (var r in res) 
+                    AddFilter?.Invoke(r);
             }
         }
 

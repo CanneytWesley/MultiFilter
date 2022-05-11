@@ -133,8 +133,10 @@ namespace MultiFilter
                 pz.FilterMaster.TriggerFilterEvent += pz.TriggerFilter;
                 pz.FilterMaster.FilterEventHandler -= pz.ExecuteFilter;
                 pz.FilterMaster.FilterEventHandler += pz.ExecuteFilter;
-                pz.FilterMaster.Initialise += pz.FilterMaster_Initialise;
+                pz.FilterMaster.AddFilter -= pz.AddFilter;
+                pz.FilterMaster.AddFilter += pz.AddFilter;
             }
+
 
         }
 
@@ -149,13 +151,21 @@ namespace MultiFilter
             foreach (var filter in savedFilters)
             {
                 var f = FilterMaster.Filters.FirstOrDefault(p => p.ShortCut.Equals(filter.Shortcut));
-                var res = await f.Filter(filter.Shortcut + " " + filter.FilterValue);
-                foreach (var r in res) ExecuteFilter(r);
+
+                List<IResult> res;
+                if (f is ILogicalFilter lf)
+                {
+                    res = await lf.FilterLogical(filter.Shortcut + " " + filter.FilterValue);
+                }
+                else
+                {
+                    res = await f.Filter(filter.Shortcut + " " + filter.FilterValue);
+                }
+
+                foreach (var r in res) AddFilter(r);
             }
 
-            if (savedFilters.Count == 0) 
-                FilterMaster.Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit });
-
+            FilterMaster.Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit });
         }
 
         private void TriggerFilter(object sender, EventArgs e)
@@ -265,6 +275,17 @@ namespace MultiFilter
             }
         }
 
+        public void AddFilter(IResult result)
+        {
+            if (ActiveFilter == null) return;
+
+            if (ActiveFilter != null && !ActiveFilter.Any(p => p.IsEqualTo(result)) && result != null)
+            {
+                ActiveFilter.Add(result);
+                SetAndOrLabel();
+            }
+        }
+
         private void SetAndOrLabel()
         {
             if (ActiveFilter == null)
@@ -367,6 +388,8 @@ namespace MultiFilter
         }
         public void SetPopupState(bool state)
         {
+            if (Popup.IsOpen == state) return;
+
             Popup.IsOpen = state;
 
             if (!state)

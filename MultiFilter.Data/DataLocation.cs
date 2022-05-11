@@ -30,7 +30,7 @@ namespace MultiFilter.Data
             if (Directory == null) return String.Empty;
             if (Filename == null) return String.Empty;
 
-            return Path.Combine(Directory, Path.GetFileNameWithoutExtension( Filename) + ".wes");
+            return Path.Combine(Directory, Filename);
         }
     }
 }

@@ -1,11 +1,26 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Version>1.0.21</Version>
+    <PackageIcon>filter.png</PackageIcon>
+    <Company>PCW-Solutions</Company>
+    <Description>Filter for WPF application</Description>
+    <PackageProjectUrl>https://github.com/CanneytWesley/MultiFilter</PackageProjectUrl>
+    <PackageTags>WPF, Filter</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageId>PCW.$(AssemblyName)</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MultiFilter.Core\MultiFilter.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="filter.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

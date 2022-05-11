@@ -33,7 +33,9 @@ namespace GUITests
 
         private async void IsLoaded(object sender, RoutedEventArgs e)
         {
+            await vm.FilterMaster.Start();
             await vm.LoadData();
+
         }
     }
 }
