@@ -128,7 +128,7 @@ namespace MultiFilter
         {
             if (FilterMaster != null)
             {
-                if (FilterMaster.DataLocation.NotValid())
+                if (FilterMaster.DataLocation == null || FilterMaster.DataLocation.NotValid())
                     BDSaveFilter.Visibility = Visibility.Collapsed;
                 else
                     BDSaveFilter.Visibility = Visibility.Visible;
