@@ -171,6 +171,18 @@ namespace MultiFilter.CoreTests
             Assert.AreEqual(4, f.Result.Count);
         }
         [TestMethod()]
+        public void FilterenTest_LogicalFilterTest_LengthGreaterOrEqualTo0AndSmallerThan11000_1_Result1_MetSpaties()
+        {
+            var filter = new LogicalFilter<Friend, double>(new WeightFilterInstelling());
+            var f = new FilterExecutor<Friend>();
+            f.SetData(SeedFriends.GetSeed());
+            f.Setup(new List<IFilter>() { filter });
+
+            f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter, "   >=    0   &   <    100", new Icon()) });
+
+            Assert.AreEqual(4, f.Result.Count);
+        }
+        [TestMethod()]
         public void FilterenTest_LogicalFilterTest_LengthGreaterThanOrEqualTo0AndSmallerThan11000_2_Result1()
         {
             var filter = new LogicalFilter<Friend, double>(new WeightFilterInstelling());
@@ -239,6 +251,21 @@ namespace MultiFilter.CoreTests
 
 
             f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter, ">=0en<150", new Icon()) });
+
+            Assert.AreEqual(7, f.Result.Count);
+        }
+
+        [TestMethod()]
+        public void FilterenTest_LogicalFilterTest_LengthGreaterThanOrEqual0AndSmallerThan150WithShortcut_MetSpaties()
+        {
+            var filter = new LogicalFilter<Friend, double>(new WeightFilterInstelling());
+            var f = new FilterExecutor<Friend>();
+            f.SetData(SeedFriends.GetSeed());
+
+            f.Setup(new List<IFilter>() { filter });
+
+
+            f.Filter(Edit.And, new List<IResult>() { new LogischResult(filter, ">= 0 en < 150", new Icon()) });
 
             Assert.AreEqual(7, f.Result.Count);
         }

@@ -130,8 +130,6 @@
                             <TextBlock Foreground="{DynamicResource TextColor}" Text="Er zijn geen resultaten die voldoen aan uw criteria..." x:Name="TxtInformationAboutFilter" Width="{Binding ActualWidth,ElementName=UI}" TextWrapping="Wrap" Padding="5" >
                             </TextBlock>
                         </Grid>
-                            
-
                     </Grid>
 
                     <Grid Grid.Row="1">

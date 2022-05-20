@@ -320,22 +320,35 @@ namespace MultiFilter
         {
             
             var result = FilterMaster.Filters.FirstOrDefault(p => ((BaseFilter)p).HasThisShortCut(TxtFilter.Text));
-            bool isLogischeFilter = false;
+            bool isLogischeFilterOther = false;
+            bool isLogischeFilterString = false;
             bool isBooleanFilter = false;
 
             if (result != null)
             {
                 var type = result.GetType();
-                isLogischeFilter = type.GetInterfaces().Any(p => p == typeof(ILogicalFilter));
-                isBooleanFilter = type.GetInterfaces().Any(p => p == typeof(IBooleanFilter));
-                TBLogicalFilter.Text = result.Title;
+
+                if (type.GetGenericTypeDefinition() == typeof(LogicalFilter<,>))
+                {
+                    var args = type.GetGenericArguments();
+                    if (args.Length > 1)
+                    {
+                        if (args[1] == typeof(string)) isLogischeFilterString = true;
+                        else isLogischeFilterOther = true;
+                    }
+                }
+                else
+                {
+                    isBooleanFilter = type.GetInterfaces().Any(p => p == typeof(IBooleanFilter));
+                    TBLogicalFilter.Text = result.Title;
+                }
             }
             else
             {
                 TBLogicalFilter.Text = "";
             }
 
-            if (isLogischeFilter)
+            if (isLogischeFilterOther)
             {
                 TxtInformationAboutFilter.Text =
                     "Met deze filter kun je logisch filteren." +
@@ -350,8 +363,20 @@ namespace MultiFilter
                     Environment.NewLine +
                     "<15000" +
                     Environment.NewLine +
-                    "<3en>1" + Environment.NewLine + 
-                    "*compute*";
+                    "<3en>1";
+
+            }
+            else if (isLogischeFilterString)
+            {
+                TxtInformationAboutFilter.Text =
+                    "Met deze filter kun je logisch filteren." +
+                    Environment.NewLine +
+                    Environment.NewLine +
+                    "Exact filteren: Appel" +
+                    Environment.NewLine +
+                    "Of ongeveer: Ap*" +
+                    Environment.NewLine +
+                    "Of ongeveer: *Ap";
 
             }
             else if (isBooleanFilter)

@@ -55,16 +55,17 @@ namespace Filter.Filter_Calculator
                 return;
             }
 
-            text = text.Replace(" ", "");
+            text = text.Trim();
 
             for (int i = 0; i < text.Length-1; i++)
             {
                 if (text.Length >= 2 && 
                     Operators.TryGetValue(text.Substring(i, 2).ToUpper(), out LogicalOperator valDouble))
                 {
-                    if (i != 0)
+                    string sub = text.Substring(0, i);
+                    if (i != 0 && !string.IsNullOrWhiteSpace(sub))
                     {
-                        bool isDoubleOK = TryParse(text.Substring(0, i), out decimal resultDouble);
+                        bool isDoubleOK = TryParse(sub, out decimal resultDouble);
                         if (text.Length != 0) Logic.Add(new LogicalValue(resultDouble));
 
                         if (!isDoubleOK) IsSuccess = false;
@@ -77,9 +78,10 @@ namespace Filter.Filter_Calculator
                 }
                 else if (Operators.TryGetValue(text.Substring(i, 1).ToUpper(), out LogicalOperator valSingle))
                 {
-                    if (i != 0)
+                    string sub = text.Substring(0, i);
+                    if (i != 0 && !string.IsNullOrWhiteSpace(sub))
                     {
-                        bool SingleOK = TryParse(text.Substring(0, i), out decimal resultSingle);
+                        bool SingleOK = TryParse(sub, out decimal resultSingle);
                         if (text.Length != 0) Logic.Add(new LogicalValue(resultSingle));
 
                         if (!SingleOK) IsSuccess = false;
