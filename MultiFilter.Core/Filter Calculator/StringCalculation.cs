@@ -45,6 +45,7 @@ namespace Filter.Filter_Calculator
             else
             { 
                 return allItems.Where(p => Property(p) != null && Property(p)
+                               .Trim()
                                .Equals(filterValue, StringComparison.OrdinalIgnoreCase))
                                .ToList();
             }

@@ -510,5 +510,22 @@ namespace MultiFilter
 
             FilterMaster.SaveFilter(ActiveFilter.ToList());
         }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+            {
+                var filter = (IResult)((Grid)sender).Tag;
+
+                ActiveFilter.Remove(filter);
+
+                FilterMaster.Command.Execute(new FilterResult() { Results = ActiveFilter.ToList(), Edit = Edit });
+                SetAndOrLabel();
+
+
+                TxtFilter.Text = filter.Filter.ShortCut + " " + filter.Model.Item;
+                TxtFilter.CaretIndex = TxtFilter.Text.Length;
+            }
+        }
     }
 }

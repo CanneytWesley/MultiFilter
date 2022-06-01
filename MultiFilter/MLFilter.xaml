@@ -370,7 +370,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="1" BorderBrush="CornflowerBlue" Margin="5,0,0,5" CornerRadius="3">
-                        <Grid Background="CornflowerBlue" ToolTip="{Binding Filter.Title}">
+                        <Grid Background="CornflowerBlue" Tag="{Binding }" ToolTip="{Binding Filter.Title}" MouseDown="Grid_MouseDown">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition />

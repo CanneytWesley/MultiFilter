@@ -77,6 +77,7 @@ namespace MultiFilter.GUITests.Data.Companies
                 new Company("Kuwait Petroleum (Belgium)"),
                 new Company("Eurelec Trading"),
                 new Company("Barry Callebaut Belgium NV"),
+                new Company("Barry*Co"),
 
 
 
