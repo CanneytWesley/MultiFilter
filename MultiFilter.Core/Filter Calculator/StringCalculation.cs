@@ -5,6 +5,8 @@ using System.Linq;
 
 namespace Filter.Filter_Calculator
 {
+
+
     public class StringCalculation<T> : ICalculation<T>
     {
         public Func<T, string> Property { get; set; }
@@ -17,15 +19,18 @@ namespace Filter.Filter_Calculator
             FilterTrigger = filterTrigger;
             FilterTitle = filterTitle;
         }
-
-        public List<T> FilterResult(List<T> allItems, IResult filterResult)
+        public StringCalculation(string filterTitle, Func<T, string> property)
         {
-            string filterValue = filterResult.Model.Item;
+            Property = property;
+            FilterTitle = filterTitle;
+        }
 
+        public List<T> FilterResult(List<T> allItems, string filterValue)
+        {
             if (filterValue.StartsWith("*") && filterValue.EndsWith("*"))
             {
                 return allItems.Where(p => Property(p) != null && Property(p)
-                               .IndexOf(filterValue.Substring(1,filterValue.Length-2), StringComparison.OrdinalIgnoreCase) != -1)
+                               .IndexOf(filterValue.Substring(1, filterValue.Length - 2), StringComparison.OrdinalIgnoreCase) != -1)
                                .ToList();
             }
             else if (filterValue.StartsWith("*"))
@@ -43,12 +48,17 @@ namespace Filter.Filter_Calculator
                .ToList();
             }
             else
-            { 
+            {
                 return allItems.Where(p => Property(p) != null && Property(p)
                                .Trim()
                                .Equals(filterValue, StringComparison.OrdinalIgnoreCase))
                                .ToList();
             }
+        }
+
+        public List<T> FilterResult(List<T> allItems, IResult filterResult)
+        {
+            return FilterResult(allItems, filterResult.Model.Item);
         }
     }
 }
