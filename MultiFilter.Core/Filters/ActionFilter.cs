@@ -18,6 +18,7 @@ namespace MultiFilter.Core.Filters
             Title = setting.Title;
             Icon = setting.Icon;
             ShortCut = setting.Shortcut;
+            InformationText = setting.InformationText;
         }
 
         public async Task<List<IResult>> Filter(string uitvoeren)

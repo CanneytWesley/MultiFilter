@@ -18,6 +18,7 @@ namespace MultiFilter.GUITests.Data.LogicalFilters
         = "D";
         public Icon Icon { get; set; }
         = new Icon(Brushes.BlueViolet.ToString(), Icons.Freeze);
+        public string InformationText { get; set; }
 
         public DateOfBirthSetting()
         {

@@ -12,5 +12,6 @@ namespace MultiFilter.GUITests.Data.BooleanFilter
         public string Title { get; set; } = "Likes To Party";
         public string Shortcut { get; set; } = "lt";
         public Icon Icon { get; set; } = new Icon(Brushes.AntiqueWhite.ToString(), Icons.Bericht);
+        public string InformationText { get; set; }
     }
 }

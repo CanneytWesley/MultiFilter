@@ -57,6 +57,7 @@ namespace MultiFilter.Core.Filters
             Icon = data.Icon;
             Title = data.Title;
             ShortCut = data.Shortcut;
+            InformationText = data.InformationText;
         }
 
 

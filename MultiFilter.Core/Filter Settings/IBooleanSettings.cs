@@ -17,6 +17,7 @@ namespace Filter.Filter_Settings
         public string Shortcut { get; set; }
 
         public Icon Icon { get; set; }
+        public string InformationText { get; set; }
 
     }
 

@@ -17,6 +17,7 @@ namespace MultiFilter.Core.Filters
             ShortCut = data.Shortcut;
             Icon = data.Icon;
             Data = data;
+            InformationText = data.InformationText;
         }
         public Task<List<IResult>> Filter(string uitvoeren)
         {

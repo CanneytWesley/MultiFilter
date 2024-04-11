@@ -20,6 +20,7 @@ namespace MultiFilter.GUITests.Data.LogicalFilters
         public string Title { get; set; }
         public string Shortcut { get; set; }
         public Icon Icon { get; set; }
+        public string InformationText { get; set; }
 
         public WeightFilterSetting()
         {

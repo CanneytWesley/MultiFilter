@@ -17,5 +17,8 @@ namespace MultiFilter.GUITests.Data.BooleanFilter
         public string Title { get; set; } = "Best friend";
         public string Shortcut { get; set; } = "Bff";
         public Icon Icon { get; set; } = new Icon(Brushes.AntiqueWhite.ToString(), Icons.Bericht);
+        public string InformationText { get; set; } = "This property is used to give more information about the filter";
+
+
     }
 }

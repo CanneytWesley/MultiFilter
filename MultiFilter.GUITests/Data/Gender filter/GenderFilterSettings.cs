@@ -20,6 +20,7 @@ namespace GUITests.Data.Gender_filter
         = "G";
         public Icon Icon { get; set; }
         = new Icon(Brushes.AntiqueWhite.ToString(), Icons.Bericht);
+        public string InformationText { get; set; }
 
         public Task<List<Gender>> GetData()
         {

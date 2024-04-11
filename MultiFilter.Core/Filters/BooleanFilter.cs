@@ -25,6 +25,7 @@ namespace MultiFilter.Core.Filters
             ShortCut = data.Shortcut;
             Icon = data.Icon;
             Data = data;
+            InformationText = data.InformationText;
         }
 
         public IBooleanSettings<T> Data { get; }

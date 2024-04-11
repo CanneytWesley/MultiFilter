@@ -17,6 +17,7 @@ namespace MultiFilter.GUITests.Data.LogicalFilters
         = "De";
         public Icon Icon { get; set; }
         = new Icon(Brushes.BlueViolet.ToString(), Icons.Freeze);
+        public string InformationText { get; set; }
 
         public DateOfDeathSetting()
         {

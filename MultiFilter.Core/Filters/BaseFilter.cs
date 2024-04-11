@@ -12,6 +12,7 @@ namespace MultiFilter.Core.Filters
         public string Title { get; set; }
         public string ShortCut { get; set; } = "A";
         public Icon Icon { get; set; }
+        public string InformationText { get; set; }
 
         /// <summary>
         /// Indien er een shortcut aanwezig is wordt deze gecontroleerd tegenover de huidige shortcut

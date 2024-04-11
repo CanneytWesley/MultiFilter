@@ -19,6 +19,8 @@ namespace MultiFilter.Core.Filters.Model
         public string Title { get; }
         string ShortCut { get; set; }
 
+        public string InformationText { get; set; }
+
         Icon Icon { get; set; }
     }
 }

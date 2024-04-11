@@ -17,6 +17,7 @@ namespace MultiFilter.GUITests.Data.Companies
         public string Title { get; set; }
         public string Shortcut { get; set; }
         public Icon Icon { get; set; }
+        public string InformationText { get; set; }
 
         public CompanyFilterSetting()
         {

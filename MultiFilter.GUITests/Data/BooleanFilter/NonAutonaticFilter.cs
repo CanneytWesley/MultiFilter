@@ -12,5 +12,6 @@ namespace MultiFilter.GUITests.Data.BooleanFilter
         public string Title { get; set; } = "Does not filter automatically";
         public string Shortcut { get; set; } = "f";
         public Icon Icon { get; set; } = new Icon(Brushes.AntiqueWhite.ToString(), Icons.Bericht);
+        public string InformationText { get; set; }
     }
 }

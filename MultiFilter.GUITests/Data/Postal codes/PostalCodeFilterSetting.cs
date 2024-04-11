@@ -18,6 +18,7 @@ namespace GUITests.Data.Postal_codes
         public Func<PostalCode, string> PropertyToFilterWith { get; set; }
         public Func<Friend, string> PropertyFromDataset { get; set; }
         public Icon Icon { get; set; }
+        public string InformationText { get; set; }
 
         public PostalCodeFilterSetting()
         {

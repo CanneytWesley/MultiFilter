@@ -323,30 +323,39 @@ namespace MultiFilter
             bool isLogischeFilterOther = false;
             bool isLogischeFilterString = false;
             bool isBooleanFilter = false;
+            string tekst = "";
 
             if (result != null)
             {
-                var type = result.GetType();
-
-                if (type.GetGenericTypeDefinition() == typeof(LogicalFilter<,>))
+                if (!string.IsNullOrWhiteSpace(result.InformationText))
                 {
-                    var args = type.GetGenericArguments();
-                    if (args.Length > 1)
-                    {
-                        if (args[1] == typeof(string)) isLogischeFilterString = true;
-                        else isLogischeFilterOther = true;
-                    }
+                    tekst = result.InformationText;
                 }
                 else
                 {
-                    isBooleanFilter = type.GetInterfaces().Any(p => p == typeof(IBooleanFilter));
-                    TBLogicalFilter.Text = result.Title;
+                    var type = result.GetType();
+
+                    if (type.GetGenericTypeDefinition() == typeof(LogicalFilter<,>))
+                    {
+                        var args = type.GetGenericArguments();
+                        if (args.Length > 1)
+                        {
+                            if (args[1] == typeof(string)) isLogischeFilterString = true;
+                            else isLogischeFilterOther = true;
+                        }
+                    }
+                    else
+                    {
+                        isBooleanFilter = type.GetInterfaces().Any(p => p == typeof(IBooleanFilter));
+                        TBLogicalFilter.Text = result.Title;
+                    }
                 }
             }
             else
             {
                 TBLogicalFilter.Text = "";
             }
+
 
             if (isLogischeFilterOther)
             {
@@ -388,6 +397,10 @@ namespace MultiFilter
                     "Volgende statussen kunnen gebruikt worden:" +
                     Environment.NewLine +
                     "ja, nee, yes, no, 1, 0, true, false";
+            }
+            else if (!string.IsNullOrWhiteSpace(tekst))
+            {
+                TxtInformationAboutFilter.Text = tekst;
             }
             else
             {

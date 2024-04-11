@@ -24,5 +24,6 @@ namespace Filter.Filter_Settings
         public Task<List<F>> GetData();
 
         public Icon Icon { get; set; }
+        public string InformationText { get; set; }
     } 
 }

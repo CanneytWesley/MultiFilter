@@ -14,6 +14,7 @@ namespace MultiFilter.GUITests.Data.LogicalFilters
         public string Title { get; set; }
         public string Shortcut { get; set; }
         public Icon Icon { get; set; }
+        public string InformationText { get; set; }
 
         public AgeFilterSetting()
         {
@@ -21,6 +22,7 @@ namespace MultiFilter.GUITests.Data.LogicalFilters
             Shortcut = "AG";
             Icon = new Icon(Brushes.Green.ToString(), Icons.Alertbericht);
             PropertyFromDataset = p => p.Age;
+            
         }
     }
 }
