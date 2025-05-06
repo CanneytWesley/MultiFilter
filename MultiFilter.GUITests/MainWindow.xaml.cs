@@ -1,4 +1,8 @@
-﻿using MultiFilter.GUITests;
+﻿using Filter.Filter_Calculator;
+using Filter.Filter_Results;
+using MultiFilter.Core;
+using MultiFilter.Data;
+using MultiFilter.GUITests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +37,8 @@ namespace GUITests
 
         private async void IsLoaded(object sender, RoutedEventArgs e)
         {
-            await vm.FilterMaster.Start();
+
+            await vm.FilterMaster.Start(new List<DataModel>() { new DataModel() { FilterValue = "KBC*", Shortcut = "Co", Title = "" } }); ;
             await vm.LoadData();
 
         }

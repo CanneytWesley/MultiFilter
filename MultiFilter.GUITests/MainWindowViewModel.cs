@@ -1,4 +1,5 @@
 ﻿using Filter.Filter_Calculator;
+using Filter.Filter_Results;
 using GalaSoft.MvvmLight.CommandWpf;
 using GUITests.Data.Gender_filter;
 using GUITests.Data.Postal_codes;
@@ -11,6 +12,7 @@ using MultiFilter.GUITests.Data.Companies;
 using MultiFilter.GUITests.Data.LogicalFilters;
 using MultiFilter.GUITests.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,6 +35,7 @@ namespace MultiFilter.GUITests
             Friends = new ObservableCollection<Friend>();
             FilterMaster = new MyFilterFactory<Friend>(Friends);
             InvokeFilterCommand = new RelayCommand(InvokeFilter);
+
         }
 
         private void InvokeFilter()
@@ -47,7 +50,7 @@ namespace MultiFilter.GUITests
                 FilterMaster.SetData(SeedFriends.GetSeed());
             //});
 
-            
+
         }
 
     }

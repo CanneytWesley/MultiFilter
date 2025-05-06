@@ -90,12 +90,15 @@ namespace MultiFilter.Core
         public delegate void AddFilterEvent(IResult r);
         public event AddFilterEvent AddFilter;
 
-        public async Task Start()
+        public async Task Start(List<DataModel> vooringesteldefilters = null)
         {
             List<DataModel> SavedFilter = new List<DataModel>();
 
             if (DataLocation != null && !DataLocation.NotValid())
                 SavedFilter = ReadFilter();
+
+            if (SavedFilter != null)
+                SavedFilter.AddRange(vooringesteldefilters);
 
             for (int i = 0; i < SavedFilter.Count; i++)
             {

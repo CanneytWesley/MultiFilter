@@ -1,4 +1,5 @@
 ﻿using Filter.Filter_Calculator;
+using Filter.Filter_Results;
 using GalaSoft.MvvmLight.CommandWpf;
 using GUITests.Data.Gender_filter;
 using GUITests.Data.Postal_codes;
@@ -40,6 +41,13 @@ namespace MultiFilter.GUITests
             FilterExecutor = new FilterExecutor<T>();
             FilterExecutor.Setup(Filters.ToList());
 
+            //FilterExecutor.Filter(Edit.And, new List<Filter.Filter_Results.IResult>() { new LogicalFilter<Friend, string>() { d  } })
+
+
+
+
+
+
             DataLocation = new MultiFilter.Data.DataLocation(@"f:\","filename");
 
         }
@@ -49,6 +57,9 @@ namespace MultiFilter.GUITests
             FilterExecutor.SetData(friends);
 
             InvokeFilter();
+
+
+
         }
 
 
