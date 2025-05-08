@@ -146,9 +146,16 @@ namespace MultiFilter
                 pz.FilterMaster.FilterEventHandler += pz.ExecuteFilter;
                 pz.FilterMaster.AddFilter -= pz.AddFilter;
                 pz.FilterMaster.AddFilter += pz.AddFilter;
+                pz.FilterMaster.RemoveAllFilter -= pz.removeFilter;
+                pz.FilterMaster.RemoveAllFilter += pz.removeFilter;
             }
 
 
+        }
+
+        private void removeFilter(object sender, EventArgs e)
+        {
+            FilterReset_MouseUp(null, null);
         }
 
         private void TriggerFilter(object sender, EventArgs e)

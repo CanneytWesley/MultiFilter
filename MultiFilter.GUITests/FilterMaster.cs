@@ -41,7 +41,6 @@ namespace MultiFilter.GUITests
             FilterExecutor = new FilterExecutor<T>();
             FilterExecutor.Setup(Filters.ToList());
 
-            //FilterExecutor.Filter(Edit.And, new List<Filter.Filter_Results.IResult>() { new LogicalFilter<Friend, string>() { d  } })
 
 
 
@@ -61,7 +60,6 @@ namespace MultiFilter.GUITests
 
 
         }
-
 
     }
 }

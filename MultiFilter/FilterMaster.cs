@@ -89,6 +89,12 @@ namespace MultiFilter.Core
 
         public delegate void AddFilterEvent(IResult r);
         public event AddFilterEvent AddFilter;
+        public event EventHandler RemoveAllFilter;
+
+        public void ResetFilter()
+        {
+            RemoveAllFilter?.Invoke(this, EventArgs.Empty);
+        }
 
         public async Task Start(List<DataModel> vooringesteldefilters = null)
         {

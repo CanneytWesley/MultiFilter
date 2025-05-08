@@ -38,7 +38,6 @@ namespace GUITests
         private async void IsLoaded(object sender, RoutedEventArgs e)
         {
 
-            await vm.FilterMaster.Start(new List<DataModel>() { new DataModel() { FilterValue = "KBC*", Shortcut = "Co", Title = "" } }); ;
             await vm.LoadData();
 
         }

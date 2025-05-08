@@ -7,6 +7,7 @@ using MultiFilter;
 using MultiFilter.Core;
 using MultiFilter.Core.Filters;
 using MultiFilter.Core.Filters.Model;
+using MultiFilter.Data;
 using MultiFilter.GUITests.Data.ActionFilters;
 using MultiFilter.GUITests.Data.Companies;
 using MultiFilter.GUITests.Data.LogicalFilters;
@@ -25,6 +26,8 @@ namespace MultiFilter.GUITests
         public ObservableCollection<Friend> Friends { get; set; }
         
         public ICommand InvokeFilterCommand { get; set; }
+        public ICommand WisFilterCommand { get; set; }
+        public ICommand SetFilterCommand { get; set; }
         
 
         public MyFilterFactory<Friend> FilterMaster { get; set; }
@@ -35,7 +38,22 @@ namespace MultiFilter.GUITests
             Friends = new ObservableCollection<Friend>();
             FilterMaster = new MyFilterFactory<Friend>(Friends);
             InvokeFilterCommand = new RelayCommand(InvokeFilter);
+            WisFilterCommand = new RelayCommand(WisFilter);
+            SetFilterCommand = new RelayCommand(SetFilter);
 
+
+        }
+
+        private void SetFilter()
+        {
+            FilterMaster.Start(new List<DataModel>() { new DataModel() { FilterValue = "KBC*", Shortcut = "Co", Title = "" } }).ConfigureAwait(false);
+
+            FilterMaster.InvokeFilter();
+        }
+
+        private void WisFilter()
+        {
+            FilterMaster.ResetFilter();
         }
 
         private void InvokeFilter()

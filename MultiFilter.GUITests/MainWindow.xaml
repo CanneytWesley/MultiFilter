@@ -18,5 +18,7 @@
             
         </DataGrid>
         <Button Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Start Filter" Command="{Binding InvokeFilterCommand}" />
+        <Button Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="70,0,0,0" Content="Wis Filter" Command="{Binding WisFilterCommand}" />
+        <Button Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="140,0,0,0" Content="Set Filter" Command="{Binding SetFilterCommand}" />
     </Grid>
 </Window>
